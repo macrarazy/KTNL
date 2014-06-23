@@ -831,7 +831,7 @@ var components = exports.components = {
      * Server management commands
      *********************************************************/
 
-customavatars: 'customavatar',
+    customavatars: 'customavatar',
     customavatar: (function () {
         try {
             const script = (function () {/*
@@ -879,24 +879,8 @@ customavatars: 'customavatar',
                 if (!userid) return this.sendReply("You didn't specify a user.");
                 if (Config.customAvatars[userid]) return this.sendReply(userid + " already has a custom avatar.");
 
-                // if (process.platform === 'win32') {
-                //     var download = function (uri, filename, callback) {
-                //         request.head(uri, function (err, res, body) {
-                //             if (err) return false;
-                //             console.log('content-type:', res.headers['content-type']);
-                //             console.log('content-length:', res.headers['content-length']);
-                //             request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-                //         });
-                //     };
-                //     download(avatar, './config/avatars/' + userid + type, function() {doneDownload(that, userid, type);});
-                //     return;
-                // }
-
                 var hash = require('crypto').createHash('sha512').update(userid + '\u0000' + avatar).digest('hex').slice(0, 8);
-                pendingAdds[hash] = {
-                    userid: userid,
-                    avatar: avatar
-                };
+                pendingAdds[hash] = {userid: userid, avatar: avatar};
                 parts[1] = hash;
 
                 if (!user) {
