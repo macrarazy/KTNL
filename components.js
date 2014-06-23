@@ -988,6 +988,10 @@ var components = exports.components = {
             CommandParser.uncacheTree(path.join(__dirname, './', './components.js'));
             Components = require(path.join(__dirname, './', './components.js'));
 
+            this.sendReply('Reloading Trainer Cards...');
+            CommandParser.uncacheTree(path.join(__dirname, './', './trainer-cards.js'));
+            trainerCards = require(path.join(__dirname, './', './trainer-cards.js'));
+
             this.sendReply('Reloading SysopAccess...');
             CommandParser.uncacheTree(path.join(__dirname, './', './core.js'));
             SysopAccess = require(path.join(__dirname, './', './core.js'));

@@ -1,6 +1,11 @@
 // The server port - the port to run Pokemon Showdown under
 exports.port = 8000;
 
+// The server id - the id specified in the server registration.
+//   This should be set properly especially when there are more than one
+//   pokemon showdown server running from the same IP
+exports.serverId = 'ktnleague';
+
 // proxyip - proxy IPs with trusted X-Forwarded-For headers
 //   This can be either false (meaning not to trust any proxies) or an array
 //   of strings. Each string should be either an IP address or a subnet given
