@@ -343,6 +343,7 @@ var components = exports.components = {
             "(Quit: oh god how did this get here i am not good with computer)",
             "was unfortunate and didn't get a cool message.",
             "The Immortal accidently kicked {{user}} from the server!",
+            "{{user}} Went To Twerk In The Grocery Store.",//bought by ktn greninja
         ];
 
         return function (target, room, user) {
