@@ -891,7 +891,7 @@ var User = (function () {
 		this.lastConnected = Date.now();
 	};
 	User.prototype.onDisconnect = function (connection) {
-		Core.stdout('lastSeen', this.userid, Date.now());
+		io.stdoutString('db/lastOnline.csv', this, 'lastOnline', Date.now());
 		for (var i = 0; i < this.connections.length; i++) {
 			if (this.connections[i] === connection) {
 				// console.log('DISCONNECT: ' + this.userid);
