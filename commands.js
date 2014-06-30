@@ -1051,7 +1051,7 @@ var commands = exports.commands = {
 			return this.sendReply("Battle hotpatching is not supported with the single process hack.");
 
 		} else if (target === 'formats') {
-			/*try {
+			try {
 				// uncache the tools.js dependency tree
 				CommandParser.uncacheTree('./tools.js');
 				// reload tools.js
@@ -1069,8 +1069,7 @@ var commands = exports.commands = {
 				return this.sendReply("Formats have been hotpatched.");
 			} catch (e) {
 				return this.sendReply("Something failed while trying to hotpatch formats: \n" + e.stack);
-			}*/
-			return this.sendReply("Formats hotpatching is not supported with the single process hack.");
+			}
 
 		} else if (target === 'learnsets') {
 			try {
