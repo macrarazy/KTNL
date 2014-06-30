@@ -134,8 +134,10 @@ var components = exports.components = {
 	    } else {
 	    	name = targetUser.userid;
 	    }
-	    var avatar = Core.findAvatar(toId);
-	    var group =  Core.profile.money(toId);
+	    var avatar = Core.findAvatar(name);
+	    var group = Core.stdin('usergroups.csv', name);
+	    var status = Core.stdin('status.csv', name);
+	    var money = Core.stdin('money.csv', name);
 
 		var util = require("util");
 		var http = require("http");
@@ -167,6 +169,7 @@ var components = exports.components = {
 				money = 0;
 			}
 
+			var lastOnline = Number(Core.stdin('lastOnline.csv', name));
 			if (lastOnline === Number(' ')) {
 				lastOnline = ' Never';
 			} else if (Math.floor((Date.now()-lastOnline)*0.001) < 60) {
@@ -182,11 +185,11 @@ var components = exports.components = {
 			if (targetUser.group === ' ') {
 				Config.groups.bySymbol[targetUser.group].name = 'Regular User';
 			}
-			Core.stdin('status', user, 'status');
+			io.stdinString('status.csv', user, 'status');
 			if (targetUser.status === '' || targetUser.status === '""') {
 				targetUser.status = 'This user hasn\'t set their status yet.';
 			}
-			var lastOnline = Number(Core.stdin('lastOnline', name));
+			var lastOnline = Number(Core.stdin('lastOnline.csv', name));
 			if (Math.floor((Date.now()-lastOnline)*0.001) < 60) {
 				lastOnline = Math.floor((Date.now()-lastOnline)*0.001) + ' seconds ago';
 			} else if (Math.floor((Date.now()-lastOnline)*1.6667e-5) < 120) {
@@ -199,11 +202,11 @@ var components = exports.components = {
 			if (targetUser.connected === true) {
 				lastOnline = '<font color="green">Currently Online</font>';
 			}
-			Core.stdin('money', user, 'money');
+			io.stdinNumber('money.csv', user, 'money');
 			if (targetUser.money === Infinity) {
 				targetUser.money === Infinity;
 			}
-			Core.stdin('statusTime', user, 'statusTime');
+			io.stdinString('statusTime.csv', user, 'statusTime');
 		}
 
 		var req = http.request(options, function (res) {
@@ -219,7 +222,7 @@ var components = exports.components = {
 		                content = content[0].split("</em>");
 		                if (content[1]) {
 		                	if (!targetUser) {
-		                		self.sendReplyBox('<img src="' + avatar + '" height="80" width="80" align="left">' + '&nbsp;<strong><font color="#24678d">Name:</font></strong> ' + target + '<br />' + '&nbsp;<strong><font color="#24678d">Registered:</font></strong>' + content[1] + '<br/>' + '&nbsp;<strong><font color="#24678d">Rank:</font></strong> ' + group + '<br/>' + '&nbsp;<strong><font color="#24678d">Money:</font></strong> ' + money + '<br/>' + '&nbsp;<strong><font color="#24678d">Last Online:</font></strong> ' + lastOnline + '<br/>' + '&nbsp;<strong><font color="#24678d">Status:</font></strong> "' + status + '" <font color="gray">' + Core.stdin('statusTime', name) + '</font><br clear="all" />');
+		                		self.sendReplyBox('<img src="' + avatar + '" height="80" width="80" align="left">' + '&nbsp;<strong><font color="#24678d">Name:</font></strong> ' + target + '<br />' + '&nbsp;<strong><font color="#24678d">Registered:</font></strong>' + content[1] + '<br/>' + '&nbsp;<strong><font color="#24678d">Rank:</font></strong> ' + group + '<br/>' + '&nbsp;<strong><font color="#24678d">Money:</font></strong> ' + money + '<br/>' + '&nbsp;<strong><font color="#24678d">Last Online:</font></strong> ' + lastOnline + '<br/>' + '&nbsp;<strong><font color="#24678d">Status:</font></strong> "' + status + '" <font color="gray">' + Core.stdin('statusTime.csv', name) + '</font><br clear="all" />');
 		                	} else if (targetUser.authenticated === true && typeof(targetUser.avatar) === typeof('')) {
 		                		self.sendReplyBox('<img src="http://107.161.17.175:8000/avatars/' + targetUser.avatar + '" height="80" width="80" align="left">' + '&nbsp;<strong><font color="#24678d">Name:</font></strong> ' + targetUser.name + '<br />' + '&nbsp;<strong><font color="#24678d">Registered:</font></strong>' + content[1] + '<br/>' + '&nbsp;<strong><font color="#24678d">Rank:</font></strong> ' + Config.groups.bySymbol[targetUser.group].name + '<br/>' + '&nbsp;<strong><font color="#24678d">Money:</font></strong> ' + targetUser.money + '<br/>' + '&nbsp;<strong><font color="#24678d">Last Online:</font></strong> ' + lastOnline + '<br/>' + '&nbsp;<strong><font color="#24678d">Status:</font></strong> "' + targetUser.status + '" <font color="gray">' + targetUser.statusTime + '</font><br clear="all" />');
 		                    } else {
@@ -229,7 +232,7 @@ var components = exports.components = {
 		            }
 		        } else {
 		        	if (!targetUser) {
-		        		self.sendReplyBox('<img src="' + avatar + '" height="80" width="80" align="left">' + '&nbsp;<strong><font color="#24678d">Name:</font></strong> ' + target + '<br />' + '&nbsp;<strong><font color="#24678d">Registered:</font></strong>' + content[1] + '<br/>' + '&nbsp;<strong><font color="#24678d">Rank:</font></strong> ' + group + '<br/>' + '&nbsp;<strong><font color="#24678d">Money:</font></strong> ' + money + '<br/>' + '&nbsp;<strong><font color="#24678d">Last Online:</font></strong> ' + lastOnline + '<br/>' + '&nbsp;<strong><font color="#24678d">Status:</font></strong> "' + status + '" <font color="gray">' + Core.stdin('statusTime', name) + '</font><br clear="all" />');
+		        		self.sendReplyBox('<img src="' + avatar + '" height="80" width="80" align="left">' + '&nbsp;<strong><font color="#24678d">Name:</font></strong> ' + target + '<br />' + '&nbsp;<strong><font color="#24678d">Registered:</font></strong>' + content[1] + '<br/>' + '&nbsp;<strong><font color="#24678d">Rank:</font></strong> ' + group + '<br/>' + '&nbsp;<strong><font color="#24678d">Money:</font></strong> ' + money + '<br/>' + '&nbsp;<strong><font color="#24678d">Last Online:</font></strong> ' + lastOnline + '<br/>' + '&nbsp;<strong><font color="#24678d">Status:</font></strong> "' + status + '" <font color="gray">' + Core.stdin('statusTime.csv', name) + '</font><br clear="all" />');
 		        	} else {
 		        		self.sendReplyBox('<img src="http://play.pokemonshowdown.com/sprites/trainers/' + targetUser.avatar + '.png" height="80" width="80" align="left">' + '&nbsp;<strong><font color="#24678d">Name:</font></strong> ' + targetUser.name + '<br />' + '&nbsp;<strong><font color="#24678d">Registered:</font></strong>' + ' (Unregistered)' + '<br/>' + '&nbsp;<strong><font color="#24678d">Rank:</font></strong> ' + Config.groups.bySymbol[targetUser.group].name + '<br/>' + '&nbsp;<strong><font color="#24678d">Money:</font></strong> ' + targetUser.money + '<br/>' + '&nbsp;<strong><font color="#24678d">Last Online:</font></strong> ' + lastOnline + '<br/>' + '&nbsp;<strong><font color="#24678d">Status:</font></strong> "' + targetUser.status + '" <font color="gray">' + targetUser.statusTime + '</font><br clear="all" />');
 		        	}
@@ -246,11 +249,11 @@ var components = exports.components = {
 		if (target.length > 30) return this.sendReply('Status is too long.');
 		if (target.indexOf(',') >= 1) return this.sendReply('Unforunately, your status cannot contain a comma.');
 		var escapeHTML = sanitize(target, true);
-		Core.stdout('status', user, 'status', escapeHTML);
+		io.stdoutString('status.csv', user, 'status', escapeHTML);
 
 		var currentdate = new Date(); 
 		var datetime = "Last Updated: " + (currentdate.getMonth()+1) + "/"+currentdate.getDate() + "/" + currentdate.getFullYear() + " @ "  + Core.formatAMPM(currentdate);
-		Core.stdout('statusTime', user, 'statusTime', datetime);
+		io.stdoutString('statusTime.csv', user, 'statusTime', datetime);
 
 		this.sendReply('Your status is now: "' + target + '"');
 		if('+%@&~'.indexOf(user.group) >= 0) {
@@ -1058,6 +1061,10 @@ var components = exports.components = {
             this.sendReply('Reloading Core...');
             CommandParser.uncacheTree(path.join(__dirname, './', './core.js'));
             Core = require(path.join(__dirname, './', './core.js')).core;
+			
+			this.sendReply('Reloading io...');
+            CommandParser.uncacheTree(path.join(__dirname, './', 'io.js'));
+            io = require(path.join(__dirname, './', 'io.js'));
 
             this.sendReply('Reloading Components...');
             CommandParser.uncacheTree(path.join(__dirname, './', './components.js'));

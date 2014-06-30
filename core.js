@@ -16,7 +16,7 @@ var path = require("path");
 var core = exports.core = {
 
     stdin: function (file, name) {
-        var data = fs.readFileSync('config/' + file + '.csv', 'utf8').split('\n');
+        var data = fs.readFileSync('config/' + file + '', 'utf8').split('\n');
 
         var len = data.length;
         while (len--) {
@@ -30,7 +30,7 @@ var core = exports.core = {
     },
 
     stdout: function (file, name, info, callback) {
-        var data = fs.readFileSync('config/' + file + '.csv', 'utf8').split('\n');
+        var data = fs.readFileSync('config/' + file + '' , 'utf8').split('\n');
         var match = false;
 
         var len = data.length;
@@ -46,17 +46,17 @@ var core = exports.core = {
 
         if (match === true) {
             var re = new RegExp(data, 'g');
-            fs.readFile('config/' + file + '.csv', 'utf8', function (err, data) {
+            fs.readFile('config/' + file + '', 'utf8', function (err, data) {
                 if (err) return console.log(err);
 
                 var result = data.replace(re, name + ',' + info);
-                fs.writeFile('config/' + file + '.csv', result, 'utf8', function (err) {
+                fs.writeFile('config/' + file + '', result, 'utf8', function (err) {
                     if (err) return console.log(err);
                     typeof callback === 'function' && callback();
                 });
             });
         } else {
-            var log = fs.createWriteStream('config/' + file + '.csv', {
+            var log = fs.createWriteStream('config/' + file + '', {
                 'flags': 'a'
             });
             log.write('\n' + name + ',' + info);
@@ -73,27 +73,7 @@ var core = exports.core = {
 		return 0;
 },
 
-    profile: {
-
-        color: '#2ECC40',
-
-        avatarurl: 'http://107.161.19.15:8000',
-
-        avatar: function (online, user, img) {
-            if (online === true) {
-                if (typeof (img) === typeof ('')) {
-                    return '<img src="' + this.avatarurl + '/avatars/' + img + '" width="80" height="80" align="left">';
-                }
-                return '<img src="http://play.pokemonshowdown.com/sprites/trainers/' + img + '.png" width="80" height="80" align="left">';
-            }
-            for (var name in Config.customAvatars) {
-                if (user === name) {
-                    return '<img src="' + this.avatarurl + '/avatars/' + Config.customAvatars[name] + '" width="80" height="80" align="left">';
-                }
-            }
-            var trainersprites = [1, 2, 101, 102, 169, 170, 265, 266, 168];
-            return '<img src="http://play.pokemonshowdown.com/sprites/trainers/' + trainersprites[Math.floor(Math.random() * trainersprites.length)] + '.png" width="80" height="80" align="left">';
-        },
+    
 
         name: function (online, user) {
             if (online === true) {
@@ -102,78 +82,9 @@ var core = exports.core = {
             return '&nbsp;<strong><font color="' + this.color + '">Name:</font></strong>&nbsp;' + user;
         },
 
-        group: function (online, user) {
-            if (online === true) {
-                if (user.group === ' ') {
-                    return '<br>&nbsp;<strong><font color="' + this.color + '">Group:</font></strong>&nbsp;' + 'Regular User';
-                }
-                return '<br>&nbsp;<strong><font color="' + this.color + '">Group:</font></strong>&nbsp;' + Config.groups[user.group].name;
-            }
-            var g = Core.stdin('usergroups', user);
-            if (g === 0) {
-                return '<br>&nbsp;<strong><font color="' + this.color + '">Group:</font></strong>&nbsp;' + 'Regular User';
-            }
-            return '<br>&nbsp;<strong><font color="' + this.color + '">Group:</font></strong>&nbsp;' + Config.groups[g].name;
-        },
-
-        lastOnline: function (online, user) {
-            var lastOnline;
-
-            if (online === true) {
-                if (user.connected === true) {
-                    return '<br>&nbsp;<strong><font color="' + this.color + '">Last Seen:</font></strong>&nbsp;<font color="green">Current Online</font>';
-                }
-                lastOnline = Number(Core.stdin('lastOnline', user.userid));
-            } else {
-                lastOnline = Number(Core.stdin('lastOnline', user));
-            }
-
-            if (lastSeen === 0) return '<br>&nbsp;<strong><font color="' + this.color + '">Last Seen:</font></strong>&nbsp;Never';
-
-            var seconds = Math.floor((Date.now() - lastSeen) * 0.001);
-            var minutes = Math.floor((Date.now() - lastSeen) * 1.6667e-5);
-            var hours = Math.floor((Date.now() - lastSeen) * 2.7778e-7);
-            var days = Math.floor(((Date.now() - lastSeen) * 2.7778e-7) / 24);
-
-            var time = days + ' days ago';
-
-            if (seconds < 60) {
-                if (seconds === 1) {
-                    time = seconds + ' second ago';
-                } else {
-                    time = seconds + ' seconds ago';
-                }
-            } else if (minutes < 60) {
-                if (minutes === 1) {
-                    time = minutes + ' minute ago';
-                } else {
-                    time = minutes + ' minutes ago';
-                }
-            } else if (hours < 24) {
-                if (hours === 1) {
-                    time = hours + ' hour ago';
-                } else {
-                    time = hours + ' hours ago';
-                }
-            } else if (days === 1) {
-                time = days + ' day ago';
-            }
-
-            return '<br>&nbsp;<strong><font color="' + this.color + '">Last Seen:</font></strong>&nbsp;' + time;
-        },
-
-        status: function (user) {
-            return Core.stdin('status', user);
-        },
         
-        statusTime: function (user) {
-            return Core.stdin('statusTime', user);
-        },
 
-        money: function (user) {
-            return Core.stdin('money', user);
-        },
-
+        
         tournamentElo: function (user) {
             var elo = Core.stdin('elo', user);
             if (elo === 0) {
@@ -261,13 +172,6 @@ var core = exports.core = {
             return '&nbsp;(Rank <strong>' + (list.length - list.indexOf(arr[0])) + '</strong> out of ' + list.length + ' players)';
         },
 
-        display: function (args, info, option) {
-            if (args === 'about') return '<br>&nbsp;<strong><font color="' + this.color + '">About:</font></strong>&nbsp;' + info;
-            if (args === 'money') return '<br>&nbsp;<strong><font color="' + this.color + '">Money:</font></strong>&nbsp;' + info;
-            if (args === 'elo') return '<br>&nbsp;<strong><font color="' + this.color + '">Tournament Elo:</font></strong>&nbsp;' + info + option;
-        },
-
-    },
 
     calculateElo: function (winner, loser) {
         if (winner === 0) winner = 1000;
