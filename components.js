@@ -134,8 +134,8 @@ var components = exports.components = {
 	    } else {
 	    	name = targetUser.userid;
 	    }
-	    var avatar = Core.findAvatar(name);
-	    var group = Core.stdin('usergroups', name);
+	    var avatar = Core.findAvatar(userId);
+	    var group =  Core.profile.money(userId);
 	    var status = Core.stdin('status', name);
 	    var money = Core.stdin('money', name);
 
