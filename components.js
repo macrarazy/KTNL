@@ -136,8 +136,6 @@ var components = exports.components = {
 	    }
 	    var avatar = Core.findAvatar(toId);
 	    var group =  Core.profile.money(toId);
-	    var status = Core.stdin('status', name);
-	    var money = Core.stdin('money', name);
 
 		var util = require("util");
 		var http = require("http");
@@ -169,7 +167,6 @@ var components = exports.components = {
 				money = 0;
 			}
 
-			var lastOnline = Number(Core.stdin('lastOnline', name));
 			if (lastOnline === Number(' ')) {
 				lastOnline = ' Never';
 			} else if (Math.floor((Date.now()-lastOnline)*0.001) < 60) {
