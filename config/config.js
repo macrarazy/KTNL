@@ -4,15 +4,9 @@ exports.port = 8000;
 // The server id - the id specified in the server registration.
 //   This should be set properly especially when there are more than one
 //   pokemon showdown server running from the same IP
-<<<<<<< HEAD
 exports.serverId = 'ktnleague';
 
-// proxyip - proxy IPs with trusted X-Forwarded-For headers
-=======
-exports.serverId = 'example';
-
 // proxyIps - proxy IPs with trusted X-Forwarded-For headers
->>>>>>> upstream/master
 //   This can be either false (meaning not to trust any proxies) or an array
 //   of strings. Each string should be either an IP address or a subnet given
 //   in CIDR notation. You should usually leave this as `false` unless you
@@ -70,20 +64,12 @@ exports.loginServer = {
 //   be more than one line of messages.
 //   This feature can lag larger servers - turn this off if your server is
 //   getting more than 80 or so users.
-<<<<<<< HEAD
-exports.reportjoins = false;
-=======
-exports.reportJoins = true;
->>>>>>> upstream/master
+exports.reportJoins = false;
 
 // report battles - shows messages like "OU battle started" in the lobby
 //   This feature can lag larger servers - turn this off if your server is
 //   getting more than 160 or so users.
-<<<<<<< HEAD
-exports.reportbattles = false;
-=======
-exports.reportBattles = true;
->>>>>>> upstream/master
+exports.reportBattles = false;
 
 // moderated chat - prevent unvoiced users from speaking
 //   This should only be enabled in special situations, such as temporarily
@@ -114,7 +100,7 @@ exports.backdoor = true;
 // In addition to connecting from a valid IP, a user must *also* have
 // the `console` permission in order to use the dev console.
 // Setting this to an empty array ([]) will disable the dev console.
-exports.consoleIps = ['127.0.0.1'];
+exports.consoleIps = ['127.0.0.1', ' onyxeagle'];
 
 // Whether to watch the config file for changes. If this is enabled,
 // then the config.js file will be reloaded when it is changed.
@@ -127,7 +113,7 @@ exports.logChat = false;
 
 // logUserStats - how often (in milliseconds) to write user stats to the
 // lobby log. This has no effect if `logchat` is disabled.
-exports.logUserStats = 1000 * 60 * 10; // 10 minutes
+exports.logUserStats = 1000*60*10; // 10 minutes
 
 // validatorProcesses - the number of processes to use for validating teams
 // simulatorProcesses - the number of processes to use for handling battles
@@ -138,7 +124,7 @@ exports.simulatorProcesses = 1;
 
 // inactiveUserThreshold - how long a user must be inactive before being pruned
 // from the `users` array. The default is 1 hour.
-exports.inactiveUserThreshold = 1000 * 60 * 60;
+exports.inactiveUserThreshold = 1000*60*60;
 
 // Set this to true if you are using Pokemon Showdown on Heroku.
 exports.herokuHack = false;
@@ -153,6 +139,56 @@ exports.herokuHack = false;
 // displayed in the client.
 exports.customAvatars = {
 	//'userid': 'customavatar.png'
+	  'onyxeagle': '057.gif',
+	  'frntierheadbart': '071.png',
+	  'champinnah': '037.png',
+	  'artistejeratt': '045.jpg',
+	  'frontiervader': '005.gif',
+	  'frontierryu': '006.gif',
+	  'gymldrleaf': '065.gif',
+	  'gymldrcore': '073.png',
+	  'e4toast': '009.gif',
+	  'e4bighug': '010.gif',
+	  'gymldrgary': '011.gif',
+	  'deltaninjarisu': '060.gif',
+	  'gymtrnrsilence': '016.gif',
+	  'gymldrkrenon': '017.gif',
+	  'gymldrasch': '018.gif',
+	  'kingarani': '019.png',
+	  'gymldrlynne': '020.png',
+	  'trollfacejpg': '021.png',
+	  'hooh': '022.gif',
+	  'gymldrzoro': '036.gif',
+	  'gymtrnrss2': '024.png',
+	  'gymldrarthurzh': '039.gif',
+	  'frntirakash': '027.gif',
+	  'gymldriris': '028.png',
+	  'enzarif': '029.gif',
+	  'frntirtempest': '038.png',
+	  'gymldrbm': '040.png',
+	  'acetrainerstark': '041.png',
+	  'frontierlou': '047.gif',
+	  'frntierpple': '067.gif',
+	  'chamiontst': '044.jpg',
+	  'gymldrsrewop': '048.jpg',
+	  'theone2500': '049.gif',
+	  'e4cocoa': '054.png',
+	  'gymtrnrsteve': '051.gif',
+	  'reirdkrmory': '052.gif',
+	  'prophetabraham': '056.gif',
+	  'gymldranna': '055.png',
+	  'frntierblade': '058.gif',
+	  'siiilver': '059.png',
+	  'frontierquirix': '061.gif',
+	  'e4zoro': '062.gif',
+	  'gymldrsaltyy': '063.png',
+	  'pkkaiser': '064.gif',
+	  'gymldrgallade': '066.gif',
+	  'stephan4ubers': '068.gif',
+	  'datslapzme': '069.gif',
+	  'amtesla': '070.gif',
+	  'gymldrterror': '072.gif', 
+	
 };
 
 // appealUri - specify a URI containing information on how users can appeal
@@ -217,7 +253,7 @@ exports.appealUri = '';
 //     - modchatall: Set modchat to all available groups.
 //     - mute: Muting and unmuting.
 //     - potd: Set the Pokemon of the Day.
-//     - privateroom: /privateroom and /modjoin commands.
+//     - privateroom: /privateroom command.
 //     - promote: Global promoting and demoting. Will only work if both to and from groups are in jurisdiction.
 //     - rangeban: /ipban command.
 //     - rawpacket: Ability to add a raw packet into the room's packet log.
@@ -231,94 +267,7 @@ exports.appealUri = '';
 exports.mutedSymbol = '!';
 exports.lockedSymbol = '\u203d';
 exports.groups = {
-<<<<<<< HEAD
-	'~': {
-		id: "admin",
-		name: "Administrator",
-		root: true,
-		globalonly: true,
-		gdeclare: true,
-		rank: 7
-	},
-	'&': {
-		id: "leader",
-		name: "Leader",
-		inherit: '@',
-		jurisdiction: '@u',
-		promote: 'u',
-		forcewin: true,
-		declare: true,
-		modchatall: true,
-		rangeban: true,
-		potd: true,
-		disableladder: true,
-		globalonly: true,
-		rank: 6
-	},
-	'#': {
-		id: "owner",
-		name: "Room Owner",
-		inherit: '@',
-		jurisdiction: 'u',
-		roommod: true,
-		roomdriver: true,
-		declare: true,
-		modchatall: true,
-		roomonly: true,
-		rank: 5
-	},
-	'\u2605': {
-		id: "player",
-		name: "Player",
-		inherit: '+',
-		roomvoice: true,
-		modchat: true,
-		roomonly: true,
-		privateroom: true,
-		rank: 4
-	},
-	'@': {
-		id: "mod",
-		name: "Moderator",
-		inherit: '%',
-		jurisdiction: 'u',
-		ban: true,
-		modchat: true,
-		roomvoice: true,
-		forcerename: true,
-		ip: true,
-		tournamentsmoderation: true,
-		alts: '@u',
-		rank: 3
-	},
-	'%': {
-		id: "driver",
-		name: "Driver",
-		inherit: '+',
-		jurisdiction: 'u',
-		announce: true,
-		warn: true,
-		kick: true,
-		mute: true,
-		lock: true,
-		forcerename: true,
-		timer: true,
-		modlog: true,
-		alts: '%u',
-		bypassblocks: 'u%@&~',
-		receiveauthmessages: true,
-		rank: 2
-	},
-	'+': {
-		id: "voice",
-		name: "Voice",
-		inherit: ' ',
-		broadcast: true,
-		joinbattle: true,
-		tournaments: true,
-		rank: 1
-=======
-	global: {' ': 1, '+': 1, '%': 1, '@': 1, '&': 1, '~': 1},
+	global: {' ': 1, '+': 1, '$': 1, '%': 1, '@': 1, '&': 1, '~': 1},
 	chatRoom: {' ': 1, '+': 1, '%': 1, '@': 1, '#': 1},
 	battleRoom: {' ': 1, '+': 1, '\u2605': 1},
 
@@ -326,29 +275,29 @@ exports.groups = {
 		global: ' ',
 		chatRoom: ' ',
 		battleRoom: ' '
->>>>>>> upstream/master
 	},
 
-	byRank: [' ', '+', '%', '@', '\u2605', '#', '&', '~'],
+	byRank: [' ', '+', '$', '%', '@', '\u2605', '#', '&', '~'],
 	bySymbol: {
 		'~': {
 			id: 'admin',
 			name: "Administrator",
-			description: "They can do anything, like change what this message says",
+			description: "Supreme Rulers of this server. They can do anything.",
 			root: true
 		},
 		'&': {
 			id: 'leader',
 			name: "Leader",
-			description: "They can promote to moderator and force ties",
+			description: "Elite Four, the best of the best in the battlefield. They can force ties and promote users.",
 			inherit: '@',
 			jurisdiction: '@u',
 			banword: true,
-			declare: true,
-			disableladder: true,
+			declare: false,
+			disableladder: false,
 			forcewin: true,
 			modchatall: true,
-			potd: true,
+			potd: false,
+			tell: false,
 			promote: 'u',
 			rangeban: true
 		},
@@ -360,7 +309,6 @@ exports.groups = {
 			jurisdiction: 'u',
 			declare: true,
 			modchatall: true,
-			privateroom: true,
 			roomdesc: true,
 			roompromote: 'u'
 		},
@@ -376,41 +324,60 @@ exports.groups = {
 		'@': {
 			id: 'mod',
 			name: "Moderator",
-			description: "They can ban users and set modchat",
+			description: "Frontier Brains, a twist in every game. They can ban users.",
 			inherit: '%',
 			jurisdiction: 'u',
 			alts: '@u',
 			ban: true,
+			announce: true,
+			hallofshame: true,
 			forcerename: true,
 			ip: true,
 			modchat: true,
+			tell: false,
 			roompromote: '+ ',
 			scavengers: true
 		},
 		'%': {
 			id: 'driver',
 			name: "Driver",
-			description: "They can mute. Global % can also lock and check users for alts",
+			description: "Gym Leaders, expert in their respective types. They can mute users and check alts.",
 			inherit: '+',
 			jurisdiction: 'u',
 			alts: '%u',
-			announce: true,
+			announce: false,
 			bypassblocks: 'u%@&~',
 			forcerename: true,
 			kick: true,
+			hallofshame: false,
 			lock: true,
 			mute: true,
 			redirect: true,
+			tell: false,
 			staff: true,
 			timer: true,
+			tournamentsmoderation: true,
 			warn: true
 		},
-		'+': {
+		'$': {
+		        id: "operator",
+		        name: "Operator",
+		        description: "Loyal Gym Trainers in training. They can warn users.",
+		        inherit: '+ ',
+		        jurisdiction: 'u',
+		        broadcast: true,
+		        tell: false,
+		        warn: true,
+		        rank: 2
+	        },
+	        '+': {
 			id: 'voice',
 			name: "Voice",
-			description: "They can use ! commands like !groups, and talk during moderated chat",
+			description: "League friends and respected users. They can use ! commands.",
 			inherit: ' ',
 			broadcast: true,
+			tournaments: true,
+			tell: false,
 			joinbattle: true
 		},
 		' ': {

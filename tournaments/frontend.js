@@ -831,7 +831,7 @@ CommandParser.commands.tournament = function (paramString, room, user) {
         else
             commandHandler.call(this, tournament, user, params, cmd);
     }
-};
+	};
 
 exports.Tournament = Tournament;
 exports.TournamentGenerators = TournamentGenerators;

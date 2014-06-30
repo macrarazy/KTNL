@@ -63,6 +63,15 @@ var core = exports.core = {
             typeof callback === 'function' && callback();
         }
     },
+	findAvatar: function (name) {
+        var info = "";
+        for (user in Config.customAvatars) {
+        if (user === name) {
+        return Config.customAvatars[user];
+		}
+	}
+		return 0;
+},
 
     profile: {
 
@@ -168,6 +177,63 @@ var core = exports.core = {
             }
             return Math.floor(Number(elo));
         },
+		HueToRgb: function (m1, m2, hue) {
+	    var v;
+	    if (hue < 0)
+	        hue += 1;
+	    else if (hue > 1)
+	        hue -= 1;
+
+	    if (6 * hue < 1)
+	        v = m1 + (m2 - m1) * hue * 6;
+	    else if (2 * hue < 1)
+	        v = m2;
+	    else if (3 * hue < 2)
+	        v = m1 + (m2 - m1) * (2 / 3 - hue) * 6;
+	    else
+	        v = m1;
+
+	    return (255 * v).toString(16);
+	},
+
+	hashColor: function (name) {
+	    var crypto = require('crypto');
+	    var hash = crypto.createHash('md5').update(name).digest('hex');
+	    var H = parseInt(hash.substr(4, 4), 16) % 360;
+	    var S = parseInt(hash.substr(0, 4), 16) % 50 + 50;
+	    var L = parseInt(hash.substr(8, 4), 16) % 20 + 25;
+
+	    var m1, m2, hue;
+	    var r, g, b
+	        S /= 100;
+	    L /= 100;
+	    if (S == 0)
+	        r = g = b = (L * 255).toString(16);
+	    else {
+	        if (L <= 0.5)
+	            m2 = L * (S + 1);
+	        else
+	            m2 = L + S - L * S;
+	        m1 = L * 2 - m2;
+	        hue = H / 360;
+	        r = this.HueToRgb(m1, m2, hue + 1 / 3);
+	        g = this.HueToRgb(m1, m2, hue);
+	        b = this.HueToRgb(m1, m2, hue - 1 / 3);
+	    }
+
+	    return 'rgb(' + r + ', ' + g + ', ' + b + ');';
+	},
+
+	formatAMPM: function(date) {
+		var hours = date.getHours();
+		var minutes = date.getMinutes();
+		var ampm = hours >= 12 ? 'PM' : 'AM';
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'
+		minutes = minutes < 10 ? '0'+minutes : minutes;
+		var strTime = hours + ':' + minutes + ' ' + ampm;
+		return strTime;
+	},
 
         rank: function (user) {
             var data = fs.readFileSync('config/elo.csv', 'utf-8');
