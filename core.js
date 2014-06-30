@@ -116,16 +116,16 @@ var core = exports.core = {
             return '<br>&nbsp;<strong><font color="' + this.color + '">Group:</font></strong>&nbsp;' + Config.groups[g].name;
         },
 
-        lastSeen: function (online, user) {
-            var lastSeen;
+        lastOnline: function (online, user) {
+            var lastOnline;
 
             if (online === true) {
                 if (user.connected === true) {
                     return '<br>&nbsp;<strong><font color="' + this.color + '">Last Seen:</font></strong>&nbsp;<font color="green">Current Online</font>';
                 }
-                lastSeen = Number(Core.stdin('lastSeen', user.userid));
+                lastOnline = Number(Core.stdin('lastOnline', user.userid));
             } else {
-                lastSeen = Number(Core.stdin('lastSeen', user));
+                lastOnline = Number(Core.stdin('lastOnline', user));
             }
 
             if (lastSeen === 0) return '<br>&nbsp;<strong><font color="' + this.color + '">Last Seen:</font></strong>&nbsp;Never';
@@ -162,8 +162,12 @@ var core = exports.core = {
             return '<br>&nbsp;<strong><font color="' + this.color + '">Last Seen:</font></strong>&nbsp;' + time;
         },
 
-        about: function (user) {
-            return Core.stdin('about', user);
+        status: function (user) {
+            return Core.stdin('status', user);
+        },
+        
+        statusTime: function (user) {
+            return Core.stdin('statusTime', user);
         },
 
         money: function (user) {
