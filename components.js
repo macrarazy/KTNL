@@ -282,14 +282,14 @@ var components = exports.components = {
 
     buy: function (target, room, user) {
         if (!target) this.parse('/help buy');
-        var userMoney = Number(Core.stdin('money', user.userid));
+        var userMoney = Number(Core.stdin('money.csv', user.userid));
         var shop = Core.shop(false);
         var len = shop.length;
         while (len--) {
             if (target.toLowerCase() === shop[len][0].toLowerCase()) {
                 var price = shop[len][2];
                 if (price > userMoney) return this.sendReply('You don\'t have enough money for this. You need ' + (price - userMoney) + ' more bucks to buy ' + target + '.');
-                Core.stdout('money', user.userid, (userMoney - price));
+                Core.stdout('money.csv', user.userid, (userMoney - price));
                 if (target.toLowerCase() === 'symbol') {
                     user.canCustomSymbol = true;
                     this.sendReply('You have purchased a custom symbol. You will have this until you log off for more than an hour. You may now use /customsymbol now.');
@@ -324,8 +324,8 @@ var components = exports.components = {
         if (parts[1] < 1) return this.sendReply('You can\'t transfer less than one buck at a time.');
         if (String(parts[1]).indexOf('.') >= 0) return this.sendReply('You cannot transfer money with decimals.');
 
-        var userMoney = Core.stdin('money', user.userid);
-        var targetMoney = Core.stdin('money', targetUser.userid);
+        var userMoney = Core.stdin('money.csv', user.userid);
+        var targetMoney = Core.stdin('money.csv', targetUser.userid);
 
         if (parts[1] > Number(userMoney)) return this.sendReply('You cannot transfer more money than what you have.');
 
@@ -337,8 +337,8 @@ var components = exports.components = {
         userMoney = Number(userMoney) - transferMoney;
         targetMoney = Number(targetMoney) + transferMoney;
 
-        Core.stdout('money', user.userid, userMoney, function () {
-            Core.stdout('money', targetUser.userid, targetMoney);
+        Core.stdout('money.csv', user.userid, userMoney, function () {
+            Core.stdout('money.csv', targetUser.userid, targetMoney);
         });
 
         this.sendReply('You have successfully transferred ' + transferMoney + ' ' + b + ' to ' + targetUser.name + '. You now have ' + userMoney + ' bucks.');
@@ -648,10 +648,10 @@ var components = exports.components = {
         var giveMoney = Number(cleanedUp);
         if (giveMoney === 1) b = 'buck';
 
-        var money = Core.stdin('money', targetUser.userid);
+        var money = Core.stdin('money.csv', targetUser.userid);
         var total = Number(money) + Number(giveMoney);
 
-        Core.stdout('money', targetUser.userid, total);
+        Core.stdout('money.csv', targetUser.userid, total);
 
         this.sendReply(targetUser.name + ' was given ' + giveMoney + ' ' + b + '. This user now has ' + total + ' bucks.');
         targetUser.send(user.name + ' has given you ' + giveMoney + ' ' + b + '. You now have ' + total + ' bucks.');
@@ -679,10 +679,10 @@ var components = exports.components = {
         var takeMoney = Number(cleanedUp);
         if (takeMoney === 1) b = 'buck';
 
-        var money = Core.stdin('money', targetUser.userid);
+        var money = Core.stdin('money.csv', targetUser.userid);
         var total = Number(money) - Number(takeMoney);
 
-        Core.stdout('money', targetUser.userid, total);
+        Core.stdout('money.csv', targetUser.userid, total);
 
         this.sendReply(targetUser.name + ' has losted ' + takeMoney + ' ' + b + '. This user now has ' + total + ' bucks.');
         targetUser.send(user.name + ' has taken ' + takeMoney + ' ' + b + ' from you. You now have ' + total + ' bucks.');
