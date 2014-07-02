@@ -578,24 +578,24 @@ var Tournament = (function () {
     Tournament.prototype.onBattleWin = function (room, winner) {
         var from = Users.get(room.p1);
         var to = Users.get(room.p2);
-        var fromElo = Number(Core.stdin('elo', toId(from)));
-        var toElo = Number(Core.stdin('elo', toId(to)));
+        var fromElo = Number(Core.stdin('elo.csv', toId(from)));
+        var toElo = Number(Core.stdin('elo.csv', toId(to)));
 
         var result = 'draw';
         if (from === winner) {
             result = 'win';
             if (this.room.isOfficial && this.generator.users.size >= 8) {
                 var arr = Core.calculateElo(fromElo, toElo);
-                Core.stdout('elo', toId(from), arr[0], function () {
-                    Core.stdout('elo', toId(to), arr[1]);
+                Core.stdout('elo.csv', toId(from), arr[0], function () {
+                    Core.stdout('elo.csv', toId(to), arr[1]);
                 });
             }
         } else if (to === winner) {
             result = 'loss';
             if (this.room.isOfficial && this.generator.users.size >= 8) {
                 var arr = Core.calculateElo(toElo, fromElo);
-                Core.stdout('elo', toId(to), arr[0], function () {
-                    Core.stdout('elo', toId(from), arr[1]);
+                Core.stdout('elo.csv', toId(to), arr[0], function () {
+                    Core.stdout('elo.csv', toId(from), arr[1]);
                 });
             }
         }
@@ -675,23 +675,23 @@ var Tournament = (function () {
             var rid = toId(runnerUp); // runnerUp's userid
 
             // file i/o
-            var winnerMoney = Number(Core.stdin('money', wid));
-            var tourWin = Number(Core.stdin('tourWins', wid));
+            var winnerMoney = Number(Core.stdin('money.csv', wid));
+            var tourWin = Number(Core.stdin('tourWins.csv', wid));
             Core.stdout('money', wid, (winnerMoney + firstMoney), function () {
-                var winnerElo = Number(Core.stdin('elo', wid));
+                var winnerElo = Number(Core.stdin('elo.csv', wid));
                 if (runnerUp) {
-                    var runnerUpMoney = Number(Core.stdin('money', rid)),
-                        runnerUpElo = Number(Core.stdin('elo', rid));
-                    Core.stdout('money', rid, (runnerUpMoney + secondMoney), function () {
-                        Core.stdout('tourWins', wid, (tourWin + 1), function () {
-                            Core.stdout('elo', wid, (winnerElo + 50), function () {
-                                Core.stdout('elo', rid, (runnerUpElo + 25));
+                    var runnerUpMoney = Number(Core.stdin('money.csv', rid)),
+                        runnerUpElo = Number(Core.stdin('elo.csv', rid));
+                    Core.stdout('money.csv', rid, (runnerUpMoney + secondMoney), function () {
+                        Core.stdout('tourWins.csv', wid, (tourWin + 1), function () {
+                            Core.stdout('elo.csv', wid, (winnerElo + 50), function () {
+                                Core.stdout('elo.csv', rid, (runnerUpElo + 25));
                             });
                         });
                     });
                 } else {
-                    Core.stdout('tourWins', wid, (tourWin + 1), function () {
-                        Core.stdout('elo', wid, (winnerElo + 50));
+                    Core.stdout('tourWins.csv', wid, (tourWin + 1), function () {
+                        Core.stdout('elo.csv', wid, (winnerElo + 50));
                     });
                 }
             });
