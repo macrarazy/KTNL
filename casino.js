@@ -33,7 +33,7 @@ global.dice = {
                 }
             }
     };
-
+ var cmds = {
 startdice: function(target, room, user) {
      if(!this.can('broadcast'))  return;
      
@@ -82,4 +82,6 @@ enddice: function(target, room, user) {
     if(!dice[room.id]) return this.sendReply('There is no dice game, why don\'t you start one with /startdice.');
     room.addRaw('<b>'+ user.name + ' has ended the dice game</b>');
     delete dice[room.id];
-    }, 
+    }
+ };
+ Object.merge(CommandParser.commands, cmds);
