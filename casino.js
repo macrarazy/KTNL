@@ -2,7 +2,7 @@ var dice = {
     compareRolls: function(rolls, players , room) {
         var winner = Users.users[players[1]].userid; 
         var loser = Users.users[players[0]];
-        if(rolls[Users.users[players[0]]] > rolls[Users.users[players[1]]]) winner = Users.users[players[0]].userid; loser = \Users.users[players[1]].userid;
+        if(rolls[Users.users[players[0]]] > rolls[Users.users[players[1]]]) winner = Users.users[players[0]].userid; loser = Users.users[players[1]].userid;
         if(!rolls[Users.users[players[1]] === rolls[Users.users[players[0]]]]) {
         room.addRaw(Users.users[players[0]].name + ' rolled a <font color=red>' + rolls[Users.users[players[0]]] +'</font>');
         room.addRaw(Users.users[players[1]].name + ' rolled a <font color=red>' + rolls[Users.users[players[1]]] + '</font>');
