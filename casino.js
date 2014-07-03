@@ -1,7 +1,7 @@
 var dice = {
     compareRolls: function(rolls, players , room) {
         var winner = Users.users[players[1]].userid; 
-        var loser = Users.users[players[0]];
+        var loser = Users.users[players[0]].userid;
         if(rolls[Users.users[players[0]]] > rolls[Users.users[players[1]]]) winner = Users.users[players[0]].userid; loser = Users.users[players[1]].userid;
         if(!rolls[Users.users[players[1]] === rolls[Users.users[players[0]]]]) {
         room.addRaw(Users.users[players[0]].name + ' rolled a <font color=red>' + rolls[Users.users[players[0]]] +'</font>');
@@ -10,13 +10,13 @@ var dice = {
 
         var cleanedUp = dice.bet;
         var giveMoney = Number(cleanedUp);
-        var money = Core.stdin('money.csv', Users.users[winner]);
+        var money = Core.stdin('money.csv', Users.users[winner].userid);
         var total = Number(money) + Number(giveMoney);
         Core.stdout('money.csv', Users.users[winner].userid, total);
         
         var cleanedDown = dice.bet;
         var takeMoney = Number(cleanedDown);
-        var bucks = Core.stdin('money.csv', Users.users[loser]);
+        var bucks = Core.stdin('money.csv', Users.users[loser].userid);
         var amount = Number(bucks) - Number(takeMoney);
         Core.stdout('money.csv', Users.users[loser].userid, amount);
         }
@@ -35,7 +35,7 @@ var dice = {
 startdice: function(target, room, user) {
      if(!this.can('broadcast'))  return;
      
-if(isNaN(target)) return this.sendReply('Please use a real number fren.');
+if(isNaN(target) || !target) return this.sendReply('Please use a real number fren.');
 
 if(dice[room.id]) return this.sendReply('There is already a dice game in this room fren.');
 
