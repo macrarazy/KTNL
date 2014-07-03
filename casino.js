@@ -43,7 +43,7 @@ if(dice[room.id]) return this.sendReply('There is already a dice game in this ro
 
 var target = parseInt(target)
 
-if(user.money > target) return this.sendReply('You cannot bet more than you have fren.');
+if(user.money < target) return this.sendReply('You cannot bet more than you have fren.');
 
  var b = 'bucks';
  
@@ -61,20 +61,19 @@ this.add('|raw|<div class="infobox"><h2><center><font color=#24678d>' + user.nam
  
  joindice: function(target, room, user) {
      if(!dice[room.id]) return this.sendReply('There is no dice game in this room fren.');
-
+     if(user.money < dice[room.id].bet || isNaN(user.money)) return this.sendReply('You cannot bet more than you have fren.');
      if(!dice[room.id].players.indexOf(user.userid) === -1) {
      this.sendReply('You\'re already in this game fren.');
      return false;
 }
      room.addRaw('<b>'+ user.name + ' has joined the game of dice.</b>');
+     dice[room.id].players.push(user.userid);
 if(dice[room.id].players.length === 2) {
          room.addRaw('<b>The dice game has started!</b>');
          dice.generateRolls(dice[room.id].players, room);
          dice.compareRolls(dice[room.id].rolls, dice[room.id].players, room);
          return true;
          }
-
-     dice[room.id].players.push(user.userid);
      },
 
 enddice: function(target, room, user) {
