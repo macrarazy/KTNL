@@ -1,4 +1,4 @@
-global.dice = {
+var ice = {
     compareRolls: function(rolls, players , room) {
         var winner = Users.users[players[1]].userid; 
         var loser = rolls[Users.users[players[0]]];
@@ -20,16 +20,16 @@ global.dice = {
         var amount = Number(bucks) - Number(takeMoney);
         Core.stdout('money.csv', Users.users[winner],amount);
         
-        delete dice[room.id];
+        delete this[room.id];
         }
         else  { 
             return room.add('It was a draw, both frens keep their money');
-            delete dice[room.id];
+            delete this[room.id];
         }
         },
         generateRolls: function(players, room) {
             for(var i=0; i<players.length; i++) {
-                dice[room.id].rolls[Users.users[players[i]]] = Math.floor(Math.random()*6);
+                this[room.id].rolls[Users.users[players[i]]] = Math.floor(Math.random()*6);
                 }
             }
     };
