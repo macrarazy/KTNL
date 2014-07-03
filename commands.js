@@ -714,7 +714,7 @@ var commands = exports.commands = {
 		if (target.length > MAX_REASON_LENGTH) {
 			return this.sendReply("The note is too long. It cannot exceed " + MAX_REASON_LENGTH + " characters.");
 		}
-		if (!this.can('staff', room)) return false;
+		if (!this.can('receiveauthmessages', null, room)) return false;
 		return this.privateModCommand("(" + user.name + " notes: " + target + ")");
 	},
 
@@ -920,7 +920,7 @@ var commands = exports.commands = {
 		// Specific case for modlog command. Room can be indicated with a comma, lines go after the comma.
 		// Otherwise, the text is defaulted to text search in current room's modlog.
 		var roomId = room.id;
-		var roomLogs = {};
+		var hideIps = !user.can('ban');
 
 		if (target.indexOf(',') > -1) {
 			var targets = target.split(',');
@@ -940,7 +940,7 @@ var commands = exports.commands = {
 		var filename = '';
 		var command = '';
 		if (roomId === 'all' && wordSearch) {
-			if (!this.can('staff')) return;
+			if (!this.can('modlog')) return;
 			roomNames = 'all rooms';
 			// Get a list of all the rooms
 			var fileList = fs.readdirSync('logs/modlog');
@@ -948,11 +948,12 @@ var commands = exports.commands = {
 				filename += 'logs/modlog/' + fileList[i] + ' ';
 			}
 		} else {
-			if (!this.can('staff', Rooms.get(roomId))) return;
+			if (!this.can('modlog', null, Rooms.get(roomId))) return;
 			roomNames = 'the room ' + roomId;
 			filename = 'logs/modlog/modlog_' + roomId + '.txt';
 		}
 
+		var roomLogs = {};
 		// Seek for all input rooms for the lines or text
 		command = 'tail -' + lines + ' ' + filename;
 		var grepLimit = 100;
@@ -967,6 +968,9 @@ var commands = exports.commands = {
 				connection.popup("/modlog empty on " + roomNames + " or erred - modlog does not support Windows");
 				console.log("/modlog error: " + error);
 				return false;
+			}
+			if (stdout && hideIps) {
+				stdout = stdout.replace(/\([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\)/g, '');
 			}
 			if (lines) {
 				if (!stdout) {
