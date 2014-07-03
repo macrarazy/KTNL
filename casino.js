@@ -60,7 +60,7 @@ this.add('|raw|<div class="infobox"><h2><center><font color=#24678d>' + user.nam
  joindice: function(target, room, user) {
      if(!dice[room.id]) return this.sendReply('There is no dice game in this room fren.');
      if(user.money < dice[room.id].bet) return this.sendReply('You cannot bet more than you have fren.');
-     if(!dice[room.id].players.indexOf(user.userid) === -1) {
+     if(!dice[room.id].players.indexOf(user.userid) > -1) {
      this.sendReply('You\'re already in this game fren.');
      return false;
 }
