@@ -1062,9 +1062,13 @@ var components = exports.components = {
             CommandParser.uncacheTree(path.join(__dirname, './', './core.js'));
             Core = require(path.join(__dirname, './', './core.js')).core;
 			
-			this.sendReply('Reloading io...');
+	    this.sendReply('Reloading io...');
             CommandParser.uncacheTree(path.join(__dirname, './', 'io.js'));
             io = require(path.join(__dirname, './', 'io.js'));
+            
+            this.sendReply('Reloading casino...');
+            CommandParser.uncacheTree(path.join(__dirname, './', 'casino.js'));
+            dice = require(path.join(__dirname, './', 'casino.js'));
 
             this.sendReply('Reloading Components...');
             CommandParser.uncacheTree(path.join(__dirname, './', './components.js'));
