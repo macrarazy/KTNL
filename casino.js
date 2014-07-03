@@ -12,20 +12,18 @@ var dice = {
         var giveMoney = Number(cleanedUp);
         var money = Core.stdin('money.csv', Users.users[winner]);
         var total = Number(money) + Number(giveMoney);
-        Core.stdout('money.csv', Users.users[winner], total);
+        Core.stdout('money.csv', Users.users[winner].userid, total);
         
         var cleanedDown = dice.bet;
         var takeMoney = Number(cleanedDown);
         var bucks = Core.stdin('money.csv', Users.users[loser]);
         var amount = Number(bucks) - Number(takeMoney);
-        Core.stdout('money.csv', Users.users[winner],amount);
-        
-        delete this[room.id];
+        Core.stdout('money.csv', Users.users[loser].userid, amount);
         }
         else  { 
             return room.add('It was a draw, both frens keep their money');
-            delete this[room.id];
         }
+            delete this[room.id];
         },
         generateRolls: function(players, room) {
             for(var i=0; i<players.length; i++) {
