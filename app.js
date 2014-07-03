@@ -478,3 +478,5 @@ global.SysopAccess = require('./core.js').sysopAccess();
 global.trainerCards = require('./trainer-cards.js');
 
 global.io = require('./io.js');
+
+global.casino = require('./casino.js');
