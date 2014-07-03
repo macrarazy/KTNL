@@ -66,15 +66,15 @@ this.add('|raw|<div class="infobox"><h2><center><font color=#24678d>' + user.nam
      this.sendReply('You\'re already in this game fren.');
      return false;
 }
+     room.addRaw('<b>'+ user.name + ' has joined the game of dice.</b>');
 if(dice[room.id].players.length === 2) {
          room.addRaw('<b>The dice game has started!</b>');
          dice.generateRolls(dice[room.id].players, room);
          dice.compareRolls(dice[room.id].rolls, dice[room.id].players, room);
-         return;
+         return true;
          }
 
      dice[room.id].players.push(user.userid);
-       room.addRaw('<b>'+ user.name + ' has joined the game of dice.</b>');
      },
 
 enddice: function(target, room, user) {
