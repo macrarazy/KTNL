@@ -1,4 +1,4 @@
-var ice = {
+var dice = {
     compareRolls: function(rolls, players , room) {
         var winner = Users.users[players[1]].userid; 
         var loser = rolls[Users.users[players[0]]];
