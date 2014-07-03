@@ -70,7 +70,7 @@ if(dice[room.id].players.length === 2) {
          room.addRaw('<b>The dice game has started!</b>');
          dice.generateRolls(dice[room.id].players, room);
          dice.compareRolls(dice[room.id].rolls, dice[room.id].players, room);
-         return true;
+         return 'gg';
          }
      },
 
