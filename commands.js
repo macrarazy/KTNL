@@ -921,7 +921,7 @@ var commands = exports.commands = {
 			return this.sendReply("The note is too long. It cannot exceed " + MAX_REASON_LENGTH + " characters.");
 		}
 		if (!this.can('receiveauthmessages', null, room)) return false;
-		return this.privateModCommand("(" + user.name + " notes: " + target + ")");
+		return this.privateModCommand("(" + user.name + " notes: " + target + ")");t
 	},
 
 	demote: 'promote',
