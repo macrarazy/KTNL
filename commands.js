@@ -615,9 +615,9 @@ var commands = exports.commands = {
 		if (!targetRoom) {
 			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
 		}
-		if (!targetRoom.isLocked && user.group != '~') {
+		/*if (!targetRoom.isLocked && user.group != '~') {
 			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' is currently locked for users to join.");
-		}
+		}*/
 		if (targetRoom.isPrivate) {
 			if (targetRoom.modjoin) {
 				var userGroup = user.group;
