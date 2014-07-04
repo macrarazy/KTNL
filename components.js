@@ -77,11 +77,6 @@ var components = exports.components = {
 
         this.popupReply('Administrators:\n--------------------\n' + buffer.admins + '\n\nLeaders:\n-------------------- \n' + buffer.leaders + '\n\nModerators:\n-------------------- \n' + buffer.mods + '\n\nDrivers:\n--------------------\n' + buffer.drivers + '\n\nVoices:\n-------------------- \n' + buffer.voices + '\n\n\t\t\t\tTotal Staff Members: ' + numStaff);
     },
-    
-    credits: function (target, room, user) {
-    	if (!this.canBroadcast()) return;
-    	
-    },
 
     regdate: function (target, room, user, connection) {
         if (!this.canBroadcast()) return;
@@ -125,94 +120,146 @@ var components = exports.components = {
     },
 
     atm: 'profile',
-    profile: function (target, room, user, connection, cmd) {
-        if (!this.canBroadcast()) return;
-        if (cmd === 'atm') return this.sendReply('Use /profile instead.');
-        if (target.length >= 19) return this.sendReply('Usernames are required to be less than 19 characters long.');
+	profile: function (target, room, user, connection) {
+	    if (!this.canBroadcast()) return;
 
-        var targetUser = this.targetUserOrSelf(target);
+	    if (target.length >= 19) {
+	    	return this.sendReply('Usernames are required to be less than 19 characters long.');
+	    }
 
-        if (!targetUser) {
-            var userId = toId(target);
-            var money = Core.profile.money(userId);
-            var elo = Core.profile.tournamentElo(userId);
-            var about = Core.profile.about(userId);
+	    var targetUser = this.targetUserOrSelf(target);
+	    var name = '';
+	    if (!targetUser) {
+	    	name = toId(target);
+	    } else {
+	    	name = targetUser.userid;
+	    }
+	    var avatar = Core.findAvatar(name);
+	    var group = Core.stdin('usergroups.csv', name);
+	    var status = Core.stdin('status.csv', name);
+	    var money = Core.stdin('money.csv', name);
 
-            if (elo === 1000 && about === 0) {
-                return this.sendReplyBox(Core.profile.avatar(false, userId) + Core.profile.name(false, userId) + Core.profile.group(false, userId) + Core.profile.lastSeen(false, userId) + Core.profile.display('money', money) + '<br clear="all">');
-            }
-            if (elo === 1000) {
-                return this.sendReplyBox(Core.profile.avatar(false, userId) + Core.profile.name(false, userId) + Core.profile.group(false, userId) + Core.profile.display('about', about) + Core.profile.lastSeen(false, userId) + Core.profile.display('money', money) + '<br clear="all">');
-            }
-            if (about === 0) {
-                return this.sendReplyBox(Core.profile.avatar(false, userId) + Core.profile.name(false, userId) + Core.profile.group(false, userId) + Core.profile.lastSeen(false, userId) + Core.profile.display('money', money) + Core.profile.display('elo', elo, Core.profile.rank(userId)) + '<br clear="all">');
-            }
-            return this.sendReplyBox(Core.profile.avatar(false, userId) + Core.profile.name(false, target) + Core.profile.group(false, userId) + Core.profile.display('about', about) + Core.profile.lastSeen(false, userId) + Core.profile.display('money', money) + Core.profile.display('elo', elo, Core.profile.rank(userId)) + '<br clear="all">');
-        }
+		var util = require("util");
+		var http = require("http");
 
-        var money = Core.profile.money(targetUser.userid);
-        var elo = Core.profile.tournamentElo(toId(targetUser.userid));
-        var about = Core.profile.about(targetUser.userid);
+		var options = {
+		    host: "www.pokemonshowdown.com",
+		    port: 80,
+		    path: "/forum/~" + name
+		};
 
-        if (elo === 1000 && about === 0) {
-            return this.sendReplyBox(Core.profile.avatar(true, targetUser, targetUser.avatar) + Core.profile.name(true, targetUser) + Core.profile.group(true, targetUser) + Core.profile.lastSeen(true, targetUser) + Core.profile.display('money', money) + '<br clear="all">');
-        }
-        if (elo === 1000) {
-            return this.sendReplyBox(Core.profile.avatar(true, targetUser, targetUser.avatar) + Core.profile.name(true, targetUser) + Core.profile.group(true, targetUser) + Core.profile.display('about', about) + Core.profile.lastSeen(true, targetUser) + Core.profile.display('money', money) + '<br clear="all">');
-        }
-        if (about === 0) {
-            return this.sendReplyBox(Core.profile.avatar(true, targetUser, targetUser.avatar) + Core.profile.name(true, targetUser) + Core.profile.group(true, targetUser) + Core.profile.lastSeen(true, targetUser) + Core.profile.display('money', money) + Core.profile.display('elo', elo, Core.profile.rank(targetUser.userid)) + '<br clear="all">');
-        }
-        return this.sendReplyBox(Core.profile.avatar(true, targetUser, targetUser.avatar) + Core.profile.name(true, targetUser) + Core.profile.group(true, targetUser) + Core.profile.display('about', about) + Core.profile.lastSeen(true, targetUser) + Core.profile.display('money', money) + Core.profile.display('elo', elo, Core.profile.rank(targetUser.userid)) + '<br clear="all">');
-    },
+		var content = "";
+		var self = this;
 
-    setabout: 'about',
-    about: function (target, room, user) {
-        if (!target) return this.parse('/help about');
-        if (target.length > 30) return this.sendReply('About cannot be over 30 characters.');
+		if (!targetUser) {
+			if (typeof(avatar) === typeof('')) {
+				avatar = 'http://107.161.17.175:8000/avatars/' + avatar;
+			} else {
+				avatar = 'http://play.pokemonshowdown.com/sprites/trainers/168.png';
+			}
+			if (group === ' ') {
+				group = 'Regular User';
+			} else {
+				group = Config.groups.bySymbol[group].name;
+			}
+			if (status === ' ') {
+				status = 'This user hasn\'t set their status yet.';
+			}
+			if (money === '' || money === ' ') {
+				money = 0;
+			}
 
-        var now = Date.now();
+			var lastOnline = Number(Core.stdin('lastOnline.csv', name));
+			if (lastOnline === Number(' ')) {
+				lastOnline = ' Never';
+			} else if (Math.floor((Date.now()-lastOnline)*0.001) < 60) {
+				lastOnline = Math.floor((Date.now()-lastOnline)*0.001) + ' seconds ago';
+			} else if (Math.floor((Date.now()-lastOnline)*1.6667e-5) < 120) {
+				lastOnline = Math.floor((Date.now()-lastOnline)*1.6667e-5) + ' minutes ago'; 
+			} else if (Math.floor((Date.now()-lastOnline)*2.7778e-7) < 48) {
+				lastOnline = Math.floor((Date.now()-lastOnline)*2.7778e-7) + ' hours ago';
+			} else {
+				lastOnline = (Math.floor((Date.now()-lastOnline)*2.7778e-7)/24) + ' days ago';
+			}
+		} else {
+			if (targetUser.group === ' ') {
+				Config.groups.bySymbol[targetUser.group].name = 'Regular User';
+			}
+			io.stdinString('status.csv', user, 'status');
+			if (targetUser.status === '' || targetUser.status === '""') {
+				targetUser.status = 'This user hasn\'t set their status yet.';
+			}
+			var lastOnline = Number(Core.stdin('lastOnline.csv', name));
+			if (Math.floor((Date.now()-lastOnline)*0.001) < 60) {
+				lastOnline = Math.floor((Date.now()-lastOnline)*0.001) + ' seconds ago';
+			} else if (Math.floor((Date.now()-lastOnline)*1.6667e-5) < 120) {
+				lastOnline = Math.floor((Date.now()-lastOnline)*1.6667e-5) + ' minutes ago'; 
+			} else if (Math.floor((Date.now()-lastOnline)*2.7778e-7) < 48) {
+				lastOnline = Math.floor((Date.now()-lastOnline)*2.7778e-7) + ' hours ago';
+			} else {
+				lastOnline = (Math.floor((Date.now()-lastOnline)*2.7778e-7)/24) + ' days ago';
+			}
+			if (targetUser.connected === true) {
+				lastOnline = '<font color="green">Currently Online</font>';
+			}
+			io.stdinNumber('money.csv', user, 'money');
+			if (targetUser.money === Infinity) {
+				targetUser.money === Infinity;
+			}
+			io.stdinString('statusTime.csv', user, 'statusTime');
+		}
 
-        if ((now - user.lastAbout) * 0.001 < 30) {
-            this.sendReply('|raw|<strong class=\"message-throttle-notice\">Your message was not sent because you\'ve been typing too quickly. You must wait ' + Math.floor(
-                (30 - (now - user.lastAbout) * 0.001)) + ' seconds</strong>');
-            return;
-        }
+		var req = http.request(options, function (res) {
+		    res.setEncoding("utf8");
+		    res.on("data", function (chunk) {
+		        content += chunk;
+		    });
+		    res.on("end", function () {
+		        content = content.split("<em");
+		        if (content[1]) {
+		            content = content[1].split("</p>");
+		            if (content[0]) {
+		                content = content[0].split("</em>");
+		                if (content[1]) {
+		                	if (!targetUser) {
+		                		self.sendReplyBox('<img src="' + avatar + '" height="80" width="80" align="left">' + '&nbsp;<strong><font color="#24678d">Name:</font></strong> ' + target + '<br />' + '&nbsp;<strong><font color="#24678d">Registered:</font></strong>' + content[1] + '<br/>' + '&nbsp;<strong><font color="#24678d">Rank:</font></strong> ' + group + '<br/>' + '&nbsp;<strong><font color="#24678d">Money:</font></strong> ' + money + '<br/>' + '&nbsp;<strong><font color="#24678d">Last Online:</font></strong> ' + lastOnline + '<br/>' + '&nbsp;<strong><font color="#24678d">Status:</font></strong> "' + status + '" <font color="gray">' + Core.stdin('statusTime.csv', name) + '</font><br clear="all" />');
+		                	} else if (targetUser.authenticated === true && typeof(targetUser.avatar) === typeof('')) {
+		                		self.sendReplyBox('<img src="http://107.161.17.175:8000/avatars/' + targetUser.avatar + '" height="80" width="80" align="left">' + '&nbsp;<strong><font color="#24678d">Name:</font></strong> ' + targetUser.name + '<br />' + '&nbsp;<strong><font color="#24678d">Registered:</font></strong>' + content[1] + '<br/>' + '&nbsp;<strong><font color="#24678d">Rank:</font></strong> ' + Config.groups.bySymbol[targetUser.group].name + '<br/>' + '&nbsp;<strong><font color="#24678d">Money:</font></strong> ' + targetUser.money + '<br/>' + '&nbsp;<strong><font color="#24678d">Last Online:</font></strong> ' + lastOnline + '<br/>' + '&nbsp;<strong><font color="#24678d">Status:</font></strong> "' + targetUser.status + '" <font color="gray">' + targetUser.statusTime + '</font><br clear="all" />');
+		                    } else {
+		                    	self.sendReplyBox('<img src="http://play.pokemonshowdown.com/sprites/trainers/' + targetUser.avatar + '.png" height="80" width="80" align="left">' + '&nbsp;<strong><font color="#24678d">Name:</font></strong> ' + targetUser.name + '<br />' + '&nbsp;<strong><font color="#24678d">Registered:</font></strong>' + content[1] + '<br/>' + '&nbsp;<strong><font color="#24678d">Rank:</font></strong> ' + Config.groups.bySymbol[targetUser.group].name + '<br/>' + '&nbsp;<strong><font color="#24678d">Money:</font></strong> ' + targetUser.money + '<br/>' + '&nbsp;<strong><font color="#24678d">Last Online:</font></strong> ' + lastOnline + '<br/>' + '&nbsp;<strong><font color="#24678d">Status:</font></strong> "' + targetUser.status + '" <font color="gray">' + targetUser.statusTime + '</font><br clear="all" />');
+		                    }
+		                }
+		            }
+		        } else {
+		        	if (!targetUser) {
+		        		self.sendReplyBox('<img src="' + avatar + '" height="80" width="80" align="left">' + '&nbsp;<strong><font color="#24678d">Name:</font></strong> ' + target + '<br />' + '&nbsp;<strong><font color="#24678d">Registered:</font></strong>' + content[1] + '<br/>' + '&nbsp;<strong><font color="#24678d">Rank:</font></strong> ' + group + '<br/>' + '&nbsp;<strong><font color="#24678d">Money:</font></strong> ' + money + '<br/>' + '&nbsp;<strong><font color="#24678d">Last Online:</font></strong> ' + lastOnline + '<br/>' + '&nbsp;<strong><font color="#24678d">Status:</font></strong> "' + status + '" <font color="gray">' + Core.stdin('statusTime.csv', name) + '</font><br clear="all" />');
+		        	} else {
+		        		self.sendReplyBox('<img src="http://play.pokemonshowdown.com/sprites/trainers/' + targetUser.avatar + '.png" height="80" width="80" align="left">' + '&nbsp;<strong><font color="#24678d">Name:</font></strong> ' + targetUser.name + '<br />' + '&nbsp;<strong><font color="#24678d">Registered:</font></strong>' + ' (Unregistered)' + '<br/>' + '&nbsp;<strong><font color="#24678d">Rank:</font></strong> ' + Config.groups.bySymbol[targetUser.group].name + '<br/>' + '&nbsp;<strong><font color="#24678d">Money:</font></strong> ' + targetUser.money + '<br/>' + '&nbsp;<strong><font color="#24678d">Last Online:</font></strong> ' + lastOnline + '<br/>' + '&nbsp;<strong><font color="#24678d">Status:</font></strong> "' + targetUser.status + '" <font color="gray">' + targetUser.statusTime + '</font><br clear="all" />');
+		        	}
+		        }
+		        room.update();
+		    });
+		});
+		req.end();
+	},
 
-        user.lastAbout = now;
+	setstatus: 'status',
+	status: function(target, room, user){
+		if (!target) return this.sendReply('|raw|Set your status for profile. Usage: /status <i>status information</i>');
+		if (target.length > 30) return this.sendReply('Status is too long.');
+		if (target.indexOf(',') >= 1) return this.sendReply('Unforunately, your status cannot contain a comma.');
+		var escapeHTML = sanitize(target, true);
+		io.stdoutString('status.csv', user, 'status', escapeHTML);
 
-        target = Tools.escapeHTML(target);
-        target = target.replace(/[^A-Za-z\d ]+/g, '');
+		var currentdate = new Date(); 
+		var datetime = "Last Updated: " + (currentdate.getMonth()+1) + "/"+currentdate.getDate() + "/" + currentdate.getFullYear() + " @ "  + Core.formatAMPM(currentdate);
+		io.stdoutString('statusTime.csv', user, 'statusTime', datetime);
 
-        var data = Core.stdin('about', user.userid);
-        if (data === target) return this.sendReply('This about is the same as your current one.');
-
-        Core.stdout('about', user.userid, target);
-
-        this.sendReply('Your about is now: "' + target + '"');
-    },
-    
-    ft: 'forcetalk',
-    forcesay: 'forcetalk',
-    forcetalk: function(target, room, user) {
-	if (!this.can('hotpatch')) return false;
-	target = this.splitTarget(target);
-	var targetUser = this.targetUser;
-	if (!targetUser) return this.sendReply('No target specified.'); 
-	this.send('|c|'+targetUser.name+'|'+target);
-    },
-
-    breaklink: 'unlink',
-    unlink: function(target, room, user) {
-	if (!this.can('lock')) return false;
-	target = this.splitTarget(target);
-	var targetUser = this.targetUser;
-	var alts = targetUser.getAlts();
-	if (!targetUser)  return this.sendReply('Specify who\'s links to unlink!'); 
-	if (alts.get) room.add('|unlink|'+alts);
-	this.send('|unlink|'+targetUser+'');
-	this.sendReply(targetUser.name+'\'s links have been removed. Be sure not to open those links!')
-    },
+		this.sendReply('Your status is now: "' + target + '"');
+		if('+%@&~'.indexOf(user.group) >= 0) {
+			room.add('|raw|<b> * <font color="' + Core.hashColor(user.name) + '">' + user.name + '</font> set their status to: </b>"' + escapeHTML + '"');
+		}
+	},
 
     tourladder: 'tournamentladder',
     tournamentladder: function (target, room, user) {
@@ -235,14 +282,14 @@ var components = exports.components = {
 
     buy: function (target, room, user) {
         if (!target) this.parse('/help buy');
-        var userMoney = Number(Core.stdin('money', user.userid));
+        var userMoney = Number(Core.stdin('money.csv', user.userid));
         var shop = Core.shop(false);
         var len = shop.length;
         while (len--) {
             if (target.toLowerCase() === shop[len][0].toLowerCase()) {
                 var price = shop[len][2];
                 if (price > userMoney) return this.sendReply('You don\'t have enough money for this. You need ' + (price - userMoney) + ' more bucks to buy ' + target + '.');
-                Core.stdout('money', user.userid, (userMoney - price));
+                Core.stdout('money.csv', user.userid, (userMoney - price));
                 if (target.toLowerCase() === 'symbol') {
                     user.canCustomSymbol = true;
                     this.sendReply('You have purchased a custom symbol. You will have this until you log off for more than an hour. You may now use /customsymbol now.');
@@ -277,8 +324,8 @@ var components = exports.components = {
         if (parts[1] < 1) return this.sendReply('You can\'t transfer less than one buck at a time.');
         if (String(parts[1]).indexOf('.') >= 0) return this.sendReply('You cannot transfer money with decimals.');
 
-        var userMoney = Core.stdin('money', user.userid);
-        var targetMoney = Core.stdin('money', targetUser.userid);
+        var userMoney = Core.stdin('money.csv', user.userid);
+        var targetMoney = Core.stdin('money.csv', targetUser.userid);
 
         if (parts[1] > Number(userMoney)) return this.sendReply('You cannot transfer more money than what you have.');
 
@@ -290,8 +337,8 @@ var components = exports.components = {
         userMoney = Number(userMoney) - transferMoney;
         targetMoney = Number(targetMoney) + transferMoney;
 
-        Core.stdout('money', user.userid, userMoney, function () {
-            Core.stdout('money', targetUser.userid, targetMoney);
+        Core.stdout('money.csv', user.userid, userMoney, function () {
+            Core.stdout('money.csv', targetUser.userid, targetMoney);
         });
 
         this.sendReply('You have successfully transferred ' + transferMoney + ' ' + b + ' to ' + targetUser.name + '. You now have ' + userMoney + ' bucks.');
@@ -370,6 +417,7 @@ var components = exports.components = {
             "(Quit: oh god how did this get here i am not good with computer)",
             "was unfortunate and didn't get a cool message.",
             "The Immortal accidently kicked {{user}} from the server!",
+            "{{user}} Went To Twerk In The Grocery Store.",//bought by ktn greninja
         ];
 
         return function (target, room, user) {
