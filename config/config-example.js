@@ -100,7 +100,7 @@ exports.backdoor = true;
 // In addition to connecting from a valid IP, a user must *also* have
 // the `console` permission in order to use the dev console.
 // Setting this to an empty array ([]) will disable the dev console.
-exports.consoleIps = ['127.0.0.1', ' onyxeagle'];
+exports.consoleIps = ['127.0.0.1', 'macrarazy', 'prfssrstein'];
 
 // Whether to watch the config file for changes. If this is enabled,
 // then the config.js file will be reloaded when it is changed.
@@ -139,56 +139,6 @@ exports.herokuHack = false;
 // displayed in the client.
 exports.customAvatars = {
 	//'userid': 'customavatar.png'
-	  'onyxeagle': '057.gif',
-	  'frntierheadbart': '071.png',
-	  'champinnah': '037.png',
-	  'artistejeratt': '045.jpg',
-	  'frontiervader': '005.gif',
-	  'frontierryu': '006.gif',
-	  'gymldrleaf': '065.gif',
-	  'gymldrcore': '073.png',
-	  'e4toast': '009.gif',
-	  'e4bighug': '010.gif',
-	  'gymldrgary': '011.gif',
-	  'deltaninjarisu': '060.gif',
-	  'gymtrnrsilence': '016.gif',
-	  'gymldrkrenon': '017.gif',
-	  'gymldrasch': '018.gif',
-	  'kingarani': '019.png',
-	  'gymldrlynne': '020.png',
-	  'trollfacejpg': '021.png',
-	  'hooh': '022.gif',
-	  'gymldrzoro': '036.gif',
-	  'gymtrnrss2': '024.png',
-	  'gymldrarthurzh': '039.gif',
-	  'frntirakash': '027.gif',
-	  'gymldriris': '028.png',
-	  'enzarif': '029.gif',
-	  'frntirtempest': '038.png',
-	  'gymldrbm': '040.png',
-	  'acetrainerstark': '041.png',
-	  'frontierlou': '047.gif',
-	  'frntierpple': '067.gif',
-	  'chamiontst': '044.jpg',
-	  'gymldrsrewop': '048.jpg',
-	  'theone2500': '049.gif',
-	  'e4cocoa': '054.png',
-	  'gymtrnrsteve': '051.gif',
-	  'reirdkrmory': '052.gif',
-	  'prophetabraham': '056.gif',
-	  'gymldranna': '055.png',
-	  'frntierblade': '058.gif',
-	  'siiilver': '059.png',
-	  'frontierquirix': '061.gif',
-	  'e4zoro': '062.gif',
-	  'gymldrsaltyy': '063.png',
-	  'pkkaiser': '064.gif',
-	  'gymldrgallade': '066.gif',
-	  'stephan4ubers': '068.gif',
-	  'datslapzme': '069.gif',
-	  'amtesla': '070.gif',
-	  'gymldrterror': '072.gif', 
-	
 };
 
 // appealUri - specify a URI containing information on how users can appeal
