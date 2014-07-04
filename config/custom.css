@@ -1,0 +1,98 @@
+/**
+ * Custom CSS declarations
+ *
+ * If your server is registered, you can create a file named `custom.css`
+ * in the `config` directory and populate it with CSS rules to override the
+ * normal client styles, when the client is connected to your server. In
+ * other words, you can use this facility to introduce a custom theme for
+ * your server.
+ */
+ 
+/*#header{
+	background-color:#;
+}
+
+body {
+	background:#;
+}
+
+.backdrop {
+	background-image: url("battle-background") !important;
+}
+
+.ps-room .battle-log-add {
+    background-color:#
+}
+
+.trainer strong {
+	color:#;
+}
+
+.battle-log h2 {
+	background-color:#;
+	border-color:#;
+}
+
+.chat small {
+	color:#
+}
+
+.userlist li em.group {
+	color:#;
+}
+
+.pm-window.focused h3:hover {
+	background-color:#; 
+	border-color:#;
+}
+
+.pm-window.focused h3 {
+	background-color:#;
+	border-color:#;
+}
+
+.pm-window h3 {
+	background-color:#;
+	border-color:#;
+}
+
+.pm-log-add {
+	background-color:#;
+	border-color:#;
+}
+
+.pm-log-add.focused {
+	background-color:#;
+	border-color:#;
+}
+
+.chat-log-add {
+	background-color:#
+}
+
+.mainmenuwrapper {
+	background-image:url("http://fc05.deviantart.net/fs71/i/2013/356/5/9/day_9_bisharp_by_xheliak-d6z04hz.png");
+}
+
+.chat-log {
+	background: url("chat-background") right top no-repeat;
+	font-size:10pt;
+	overflow:auto
+}
+
+.menugroup .button{
+	background:#
+}
+
+.menugroup .menugroup{
+	text-align:center
+}
+
+.button:hover{
+	background:#
+}
+
+.userlist {
+	border-left:1px solid #;
+	background:#;
+}*/
