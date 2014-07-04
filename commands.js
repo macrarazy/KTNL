@@ -175,6 +175,24 @@ var commands = exports.commands = {
 		}
 		return this.sendReply("The room '" + target + "' isn't registered.");
 	},
+	
+	leagueroom: function (target, room, user) {
+		if (!this.can('makeroom')) return;
+		if (!room.chatRoomData) {
+			return this.sendReply('/leagueroom - This room can\'t be marked as a league');
+		}
+		if (target === 'off') {
+			delete room.isLeague;
+			this.addModCommand(user.name+' has made this chat room a normal room.');
+			delete room.chatRoomData.isLeague;
+			Rooms.global.writeChatRoomData();
+		} else {
+			room.isLeague = true;
+			this.addModCommand(user.name+' made this room a league room.');
+			room.chatRoomData.isLeague = true;
+			Rooms.global.writeChatRoomData();
+		}
+	},
 
 	privateroom: function (target, room, user) {
 		if (!this.can('privateroom', room)) return;
@@ -232,6 +250,39 @@ var commands = exports.commands = {
 			Rooms.global.writeChatRoomData();
 		}
 	},
+	
+	roomlist: function(target, room, user, connection) {
+		if (!user.can('makeroom')) return false;
+			for (var u in Rooms.rooms) {
+				if (Rooms.rooms[u].type === "chat") {
+					if (!Rooms.rooms[u].active && !Rooms.rooms[u].isPrivate) {
+						connection.sendTo(room.id, '|raw|INACTIVE: <font color=red><b>'+u+'</b></font>');
+					}
+					if (Rooms.rooms[u].isPrivate && Rooms.rooms[u].active) {
+						connection.sendTo(room.id, '|raw|PRIVATE: <b>'+u+'</b>');
+					}
+					if (!Rooms.rooms[u].active && Rooms.rooms[u].isPrivate) {
+						connection.sendTo(room.id, '|raw|INACTIVE and PRIVATE: <font color=red><b>'+u+'</font></b>');
+					}
+					if (Rooms.rooms[u].active && !Rooms.rooms[u].isPrivate) {
+						connection.sendTo(room.id, '|raw|<font color=green>'+u+'</font>');
+				}
+			}
+		}
+	},
+
+	inactiverooms: function(target, room, user, connection) {
+		if (!user.can('makeroom')) return false;
+		for (var u in Rooms.rooms) {
+			if (!Rooms.rooms[u].active && Rooms.rooms[u].type == 'chat') {
+				if (Rooms.rooms[u].isPrivate) {
+					connection.sendTo(room.id, '|raw|INACTIVE and PRIVATE: <font color=red><b>'+u+'</b></font>');
+				} else {
+					connection.sendTo(room.id, '|raw|INACTIVE: <font color=red><b>'+u+'</b></font>');
+				}
+			}
+		}
+	},
 
 	roomdesc: function (target, room, user) {
 		if (!target) {
@@ -253,6 +304,72 @@ var commands = exports.commands = {
 		}
 	},
 	
+	roomintro: function (target, room, user) {
+		if (!target) {
+			if (!this.canBroadcast()) return;
+			var re = /(https?:\/\/(([-\w\.]+)+(:\d+)?(\/([\w/_\.]*(\?\S+)?)?)?))/g;
+			if (!room.introMessage) return this.sendReply("This room does not have an introduction set.");
+			this.sendReplyBox(room.introMessage);
+			if (!this.broadcasting && user.can('declare', null, room)) {
+				this.sendReply('Source:');
+				this.sendReplyBox('<code>'+Tools.escapeHTML(room.introMessage)+'</code>');
+			}
+			return;
+		}
+		if (!this.can('declare', null, room)) return false;
+		if (!this.canHTML(target)) return;
+		if (!/</.test(target)) {
+			// not HTML, do some simple URL linking
+			var re = /(https?:\/\/(([-\w\.]+)+(:\d+)?(\/([\w/_\.]*(\?\S+)?)?)?))/g;
+			target = target.replace(re, '<a href="$1">$1</a>');
+		}
+
+		if (!target.trim()) target = '';
+		room.introMessage = target;
+		this.sendReply("(The room introduction has been changed to:)");
+		this.sendReplyBox(target);
+
+		if (room.chatRoomData) {
+			room.chatRoomData.introMessage = room.introMessage;
+			Rooms.global.writeChatRoomData();
+		}
+	},
+	
+	closeleague: 'openleague',
+	openleague: function (target, room, user, connection, cmd) {
+		if (!room.isLeague) return this.sendReply("This is not a league room, if it is, get a Leader or Admin to set the room as a league room.");
+		if (!this.can('roommod', null, room)) return false;
+		if (!room.chatRoomData) {
+			return this.sendReply("This room cannot have a league toggle option.");
+		}
+		if (cmd === 'closeleague') {
+			if (!room.isOpen) return this.sendReply('The league is already marked as closed.');
+			delete room.isOpen;
+			delete room.chatRoomData.isOpen;
+			Rooms.global.writeChatRoomData();
+			return this.sendReply('This league has now been marked as closed.');
+		}
+		else {
+			if (room.isOpen) return this.sendReply('The league is already marked as open.');
+			room.isOpen = true;
+			room.chatRoomData.isOpen = true;
+			Rooms.global.writeChatRoomData();
+			return this.sendReply('This league has now been marked as open.');
+		}
+	},
+
+	leaguestatus: function (target, room, user) {
+		if (!room.isLeague) return this.sendReply("This is not a league room, if it is, get a Leader or Admin to set the room as a league room.");
+		if (!this.canBroadcast()) return;
+		if (room.isOpen) {
+			return this.sendReplyBox(room.title+' is <font color="green"><b>open</b></font> to challengers.');
+		}
+		else if (!room.isOpen) {
+			return this.sendReplyBox(room.title+' is <font color="red"><b>closed</b></font> to challengers.');
+		}
+		else return this.sendReply('This league does not have a status set.');
+	},
+
 	roomfounder: function (target, room, user) {
 		if (!room.chatRoomData) {
 			return this.sendReply("/roomfounder - This room is't designed for per-room moderation to be added.");
@@ -336,6 +453,30 @@ var commands = exports.commands = {
 		if (targetUser) targetUser.updateIdentity();
 		if (room.chatRoomData) Rooms.global.writeChatRoomData();
 	},
+	
+	/*roomlock: 'lockroom',
+	lockroom: function(target, room, user) {
+		if (!room.auth) {
+			return this.sendReply("Only unofficial chatrooms can be locked.");
+		}
+		if (room.auth[user.userid] != '#' && user.group != '~') {
+			return this.sendReply('/lockroom - Access denied.');
+		}
+		room.lockedRoom = true;
+		this.addModCommand(user.name + ' has locked the room.');
+	},
+
+	roomunlock: 'unlockroom',
+	unlockroom: function(target, room, user) {
+		if (!room.auth) {
+			return this.sendReply("Only unofficial chatrooms can be unlocked.");
+		}
+		if (room.auth[user.userid] != '#' && user.group != '~') {
+			return this.sendReply('/unlockroom - Access denied.');
+		}
+		room.lockedRoom = false;
+		this.addModCommand(user.name + ' has unlocked the room.');
+	},*/
 
 	autojoin: function (target, room, user, connection) {
 		Rooms.global.autojoinRooms(user, connection);
@@ -932,6 +1073,29 @@ var commands = exports.commands = {
 		targetUser.resetName();
 		targetUser.send("|nametaken||" + user.name + " has forced you to change your name. " + target);
 	},
+	
+	flogout: 'forcelogout',
+	forcelogout: function(target, room, user) {
+		if(!user.can('hotpatch')) return;
+		if (!this.canTalk()) return false;
+
+		if (!target) return this.sendReply('/forcelogout [username], [reason] OR /flogout [username], [reason] - You do not have to add a reason');
+
+		target = this.splitTarget(target);
+		var targetUser = this.targetUser;
+
+		if (!targetUser) {
+			return this.sendReply('User '+this.targetUsername+' not found.');
+		}
+
+		if (targetUser.can('hotpatch')) return this.sendReply('You cannot force logout another Admin.');
+
+		this.addModCommand(''+targetUser.name+' was forcibly logged out by '+user.name+'.' + (target ? " (" + target + ")" : ""));
+
+		this.logModCommand(user.name+' forcibly logged out '+targetUser.name '.');
+
+		targetUser.resetName();
+	},
 
 	modlog: function (target, room, user, connection) {
 		var lines = 0;
@@ -1001,6 +1165,51 @@ var commands = exports.commands = {
 			}
 		});
 	},
+	
+	/*complaint: 'complain',
+	complain: function(target, room, user) {
+		if(!target) return this.parse('/help complaint');
+		this.sendReplyBox('Thanks for your input. We\'ll review your feedback soon. The complaint you submitted was: ' + target);
+		this.logComplaint(target);
+	},
+
+	complaintslist: 'complaintlist',
+	complaintlist: function(target, room, user, connection) {
+		if (!this.can('complaintlist')) return false;
+		var lines = 0;
+		if (!target.match('[^0-9]')) { 
+			lines = parseInt(target || 15, 10);
+			if (lines > 100) lines = 100;
+		}
+		var filename = 'logs/complaint.txt';
+		var command = 'tail -'+lines+' '+filename;
+		var grepLimit = 100;
+		if (!lines || lines < 0) { // searching for a word instead
+			if (target.match(/^["'].+["']$/)) target = target.substring(1,target.length-1);
+			command = "awk '{print NR,$0}' "+filename+" | sort -nr | cut -d' ' -f2- | grep -m"+grepLimit+" -i '"+target.replace(/\\/g,'\\\\\\\\').replace(/["'`]/g,'\'\\$&\'').replace(/[\{\}\[\]\(\)\$\^\.\?\+\-\*]/g,'[$&]')+"'";
+		}
+
+		require('child_process').exec(command, function(error, stdout, stderr) {
+			if (error && stderr) {
+				connection.popup('/complaintlist erred - the complaints list does not support Windows');
+				console.log('/complaintlog error: '+error);
+				return false;
+			}
+			if (lines) {
+				if (!stdout) {
+					connection.popup('The complaints list is empty. Great!');
+				} else {
+					connection.popup('Displaying the last '+lines+' lines of complaints:\n\n'+stdout);
+				}
+			} else {
+				if (!stdout) {
+					connection.popup('No complaints containing "'+target+'" were found.');
+				} else {
+					connection.popup('Displaying the last '+grepLimit+' logged actions containing "'+target+'":\n\n'+stdout);
+				}
+			}
+		});
+	},*/
 
 	bw: 'banword',
 	banword: function (target, room, user) {
