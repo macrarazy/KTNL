@@ -1133,7 +1133,7 @@ var commands = exports.commands = {
 
 		this.addModCommand(''+targetUser.name+' was forcibly logged out by '+user.name+'.' + (target ? " (" + target + ")" : ""));
 
-		this.logModCommand(user.name+' forcibly logged out '+targetUser.name '.');
+		this.logModCommand(user.name+' forcibly logged out ' +targetUser.name+ '.');
 
 		targetUser.resetName();
 	},
