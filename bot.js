@@ -98,7 +98,7 @@ var parse = {
     chatData: {},
 
     processChatData: function (user, room, connection, message) {
-        if (user.userid === config.userid() || !room.users[config.userid()]) return true;
+        if (user.userid === config.userid() || (!room.users[config.userid()] && message.substr(0,5).toLowerCase() !== '.join')) return true;
         var cmds = this.processBotCommands(user, room, connection, message);
         if (cmds) return false;
 
@@ -297,7 +297,7 @@ var commands = {
     },
 
     tell: function (target, room, user) {
-        if (!this.can('bottell')) return;
+        if (!this.can('tell')) return;
         var parts = target.split(',');
         if (parts.length < 2) return;
         this.parse('/tell ' + toId(parts[0]) + ', ' + Tools.escapeHTML(parts[1]));
@@ -322,11 +322,109 @@ var commands = {
         salt++;
         this.sendReply(salt + '% salty.');
     },
+    
+    /*blacklist: 'autoban',
+	ban: 'autoban',
+	ab: 'autoban',
+	autoban: function(target, room, user) {
+		if (!this.canUse('autoban') || room.charAt(0) === ',') return false;
+		if (!this.hasRank(this.ranks || ' ', '@&~')) return connection.sendTo(room, 'Crimson Bot requires rank of @ or higher to (un)blacklist.');
+
+		arg = arg.split(',');
+		var added = [];
+		var illegalNick = [];
+		var alreadyAdded = [];
+		if (!arg.length || (arg.length === 1 && !arg[0].trim().length)) return connection.sendTo(room, 'You must specify at least one user to blacklist.');
+		for (var i = 0; i < arg.length; i++) {
+			var tarUser = toId(arg[i]);
+			if (tarUser.length < 1 || tarUser.length > 18) {
+				illegalNick.push(tarUser);
+				continue;
+			}
+			if (!this.blacklistUser(tarUser, room)) {
+				alreadyAdded.push(tarUser);
+				continue;
+			}
+			this.say(room, '/ban ' + tarUser + ', Blacklisted user');
+			this.say(room, '/modnote ' + tarUser + ' was added to the blacklist by ' + by + '.');
+			added.push(tarUser);
+		}
+
+		var text = '';
+		if (added.length) {
+			text += 'User(s) "' + added.join('", "') + '" added to blacklist successfully. ';
+			this.writeSettings();
+		}
+		if (alreadyAdded.length) text += 'User(s) "' + alreadyAdded.join('", "') + '" already present in blacklist. ';
+		if (illegalNick.length) text += 'All ' + (text.length ? 'other ' : '') + 'users had illegal nicks and were not blacklisted.';
+		this.connection.sendTo(room, text);
+	},
+	
+	unblacklist: 'unautoban',
+	unban: 'unautoban',
+	unab: 'unautoban',
+	unautoban: function(arg, by, room, con) {
+		if (!this.canUse('autoban') || room.charAt(0) === ',') return false;
+		if (!this.hasRank(this.ranks || ' ', '@&~')) return connection.sendTo(room, 'Crimson Bot requires rank of @ or higher to (un)blacklist.');
+
+		arg = arg.split(',');
+		var removed = [];
+		var notRemoved = [];
+		if (!arg.length || (arg.length === 1 && !arg[0].trim().length)) return connection.sendTo(room, 'You must specify at least one user to unblacklist.');
+		for (var i = 0; i < arg.length; i++) {
+			var tarUser = toId(arg[i]);
+			if (tarUser.length < 1 || tarUser.length > 18) {
+				notRemoved.push(tarUser);
+				continue;
+			}
+			if (!this.unblacklistUser(tarUser, room)) {
+				notRemoved.push(tarUser);
+				continue;
+			}
+			this.say(room, '/unban ' + tarUser);
+			removed.push(tarUser);
+		}
+
+		var text = '';
+		if (removed.length) {
+			text += 'User(s) "' + removed.join('", "') + '" removed from blacklist successfully. ';
+			this.writeSettings();
+		}
+		if (notRemoved.length) text += (text.length ? 'No other ' : 'No ') + 'specified users were present in the blacklist.';
+		this.say(room, text);
+	},
+	
+	viewbans: 'viewblacklist',
+	vab: 'viewblacklist',
+	viewautobans: 'viewblacklist',
+	viewblacklist: function(arg, by, room, con) {
+		if (!this.canUse('autoban') || room.charAt(0) === ',') return false;
+
+		var text = '';
+		if (!this.settings.blacklist || !this.settings.blacklist) {
+			text = 'No users are blacklisted in the server.';
+		} else {
+			if (arg.length) {
+				var nick = toId(arg);
+				if (nick.length < 1 || nick.length > 18) {
+					text = 'Invalid nickname: "' + nick + '".';
+				} else {
+					text = 'User "' + nick + '" is currently ' + (nick in this.settings.blacklist ? '' : 'not ') + 'blacklisted on the server.';
+				}
+			} else {
+				var nickList = Object.keys(this.settings.blacklist);
+				if (!nickList.length) return connection.sendTo(room, '/pm ' + by + ', No users are blacklisted in the server.');
+				this.uploadToHastebin(room, by, 'The following users are banned in the Server:\n\n' + nickList.join('\n'))
+				return;
+			}
+		}
+		connection.sendTo(room, '/pm ' + by + ', ' + text);
+	},*/
 
     whois: (function () {
         var reply = [
             "Just another Pokemon Showdown user",
-            "A very good competetive pokemon player",
+            "A very good competitive Pokemon player",
             "A worthy opponent",
             "Generally, a bad user",
             "Generally, a good user",
@@ -348,7 +446,9 @@ var commands = {
 
             target = toId(target);
 
-            if (target === 'creaturephil') message = 'An experienced **coder** for pokemon showdown. He has coded for over 5 servers such as kill the noise, moxie, aerdeith, nova, etc. Please follow him on github: https://github.com/CreaturePhil';
+            if (target === 'prfssrstein') message = 'Creator and current sysop of the Crimson server.'
+            if (target === 'macrarazy') message = 'He has a [[Slippery dick]]!'
+            if (target === 'creaturephil') message = 'An experienced **coder** for Pokemon Showdown. He has coded for over 5 servers such as Kill The Noise, Moxie, Aerdeith, Nova, etc. Please follow him on GitHub: https://github.com/CreaturePhil';
             if (target === config.userid()) message = 'That\'s me.';
             if (target === 'zarel') message = 'Pokemon Showdown Creator';
             if (target === 'stevoduhhero') message = 'STEVO DUH GOD DAMN HERO! Respect him!';
