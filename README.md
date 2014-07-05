@@ -50,6 +50,38 @@ it from 8 to 4. You would change the amount divided by the tourSize from 10 to 5
 License
 ------------------------------------------------------------------------
 
-Pokémon Showdown's server is distributed under the terms of the [MIT License][7].
+Pokémon Showdown's server is distributed under the terms of the [MIT License][8].
 
-  [7]: https://github.com/Zarel/Pokemon-Showdown/blob/master/LICENSE
+  [8]: https://github.com/Zarel/Pokemon-Showdown/blob/master/LICENSE
+
+
+Credits
+------------------------------------------------------------------------
+
+Owner
+
+- Guangcong Luo [Zarel] - Development, Design
+
+Staff
+
+- Hugh Gordon [V4] - Research (game mechanics), Development
+- Leonardo Julca [Slayer95] - Development
+- [The Immortal] - Development
+
+Retired Staff
+
+- Bill Meltsner [bmelts] - Development
+- Cathy J. Fitzpatrick [cathyjf] - Development
+- Juanma Serrano [Joim] - Development
+- Mathieu Dias-Martins [Marty-D] - Research (game mechanics), Development
+
+Contributors
+
+- Andrew Goodsell [Zracknel] - Art (battle weather backdrops)
+- Ben Frengley [TalkTakesTime] - Development
+- Cody Thompson [Rising_Dusk] - Development
+- Kyle Dove [Kyle_Dove] - Art (battle backdrops)
+- Quinton Lee [sirDonovan] - Development
+- Robin Vandenbrande [Quinella] - Development
+- Samuel Teo [Yilx] - Art (main background)
+- Vivian Zou [Vtas] - Art (alternate main background)
