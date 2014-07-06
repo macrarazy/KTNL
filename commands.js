@@ -1610,6 +1610,24 @@ var commands = exports.commands = {
 			connection.sendTo(room, stack);
 		}
 	},
+	
+	seval: function (target, room, user, connection, cmd, message) {
+		if (!user.hasConsoleAccess(connection)) {
+			return this.sendReply("/eval - Access denied.");
+		}
+		if (!this.canBroadcast()) return;
+
+		if (!this.broadcasting) this.sendReply(target);
+		try {
+			var battle = room.battle;
+			var me = user;
+			this.sendReply(eval(target));
+		} catch (e) {
+			this.sendReply('error: ' + e.message);
+			/*var stack = '||' + ('' + e.stack).replace(/\n/g, '\n||');
+			connection.sendTo(room, stack);*/
+		}
+	},
 
 	evalbattle: function (target, room, user, connection, cmd, message) {
 		if (!user.hasConsoleAccess(connection)) {
