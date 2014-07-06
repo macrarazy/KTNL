@@ -232,13 +232,11 @@ exports.groups = {
 		'~': {
 			id: 'admin',
 			name: "Administrator",
-			description: "Supreme Rulers of this server. They can do anything.",
 			root: true
 		},
 		'&': {
 			id: 'leader',
 			name: "Leader",
-			description: "Elite Four, the best of the best in the battlefield. They can force ties and promote users.",
 			inherit: '@',
 			jurisdiction: '@u',
 			banword: true,
@@ -265,7 +263,6 @@ exports.groups = {
 		'\u2605': {
 			id: 'player',
 			name: "Player",
-			description: "Only in battles, they are the players that are battling",
 			inherit: '+',
 			modchat: true,
 			privateroom: true,
@@ -274,7 +271,6 @@ exports.groups = {
 		'@': {
 			id: 'mod',
 			name: "Moderator",
-			description: "Frontier Brains, a twist in every game. They can ban users.",
 			inherit: '%',
 			jurisdiction: 'u',
 			alts: '@u',
@@ -291,7 +287,6 @@ exports.groups = {
 		'%': {
 			id: 'driver',
 			name: "Driver",
-			description: "Gym Leaders, expert in their respective types. They can mute users and check alts.",
 			inherit: '+',
 			jurisdiction: 'u',
 			alts: '%u',
@@ -309,21 +304,9 @@ exports.groups = {
 			tournamentsmoderation: true,
 			warn: true
 		},
-		'$': {
-		        id: "operator",
-		        name: "Operator",
-		        description: "Loyal Gym Trainers in training. They can warn users.",
-		        inherit: '+ ',
-		        jurisdiction: 'u',
-		        broadcast: true,
-		        tell: false,
-		        warn: true,
-		        rank: 2
-	        },
 	        '+': {
 			id: 'voice',
 			name: "Voice",
-			description: "League friends and respected users. They can use ! commands.",
 			inherit: ' ',
 			broadcast: true,
 			tournaments: true,
