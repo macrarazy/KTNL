@@ -370,7 +370,7 @@ var commands = exports.commands = {
 		else return this.sendReply('This league does not have a status set.');
 	},
 
-	roomfounder: function (target, room, user) {
+	/*roomfounder: function (target, room, user) {
 		if (!room.chatRoomData) {
 			return this.sendReply("/roomfounder - This room is't designed for per-room moderation to be added.");
 		}
@@ -386,7 +386,7 @@ var commands = exports.commands = {
 		room.onUpdateIdentity(targetUser);
 		room.chatRoomData.founder = room.founder;
 		Rooms.global.writeChatRoomData();
-	},
+	},*/
 
 	roomintro: function (target, room, user) {
 		if (!target) {
@@ -493,9 +493,9 @@ var commands = exports.commands = {
 		if (room.auth[user.userid] != '#' && user.group != '~') {
 			return this.sendReply('/lockroom - Access denied.');
 		}
-		room.lockedRoom = true;
-		this.addModCommand(user.name + ' has locked the room.');
+		room.isLocked = true;
 		this.parse('/modchat #');
+		this.addModCommand(user.name + ' has locked the room.');
 	},
 
 	roomunlock: 'unlockroom',
@@ -506,9 +506,9 @@ var commands = exports.commands = {
 		if (room.auth[user.userid] != '#' && user.group != '~') {
 			return this.sendReply('/unlockroom - Access denied.');
 		}
-		room.lockedRoom = false;
-		this.addModCommand(user.name + ' has unlocked the room.');
+		room.isLocked = false;
 		this.parse('/modchat off');
+		this.addModCommand(user.name + ' has unlocked the room.');
 	},
 
 	roomauth: function (target, room, user, connection) {
