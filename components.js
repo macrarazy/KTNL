@@ -279,7 +279,7 @@ var components = exports.components = {
     tournumber: 'participant',
     participant: function (target, room, user, connection) {
     	if (!this.canBroadcast()) return;
-    	this.parse('/seval Tournaments.tournaments.' +room.id+ '.generator.getUsers().length');
+    	this.parse('/eval Tournaments.tournaments.' +room.id+ '.generator.getUsers().length');
     },
 
     shop: function (target, room, user) {
