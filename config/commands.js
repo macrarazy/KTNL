@@ -1299,7 +1299,7 @@ var commands = exports.commands = {
 	shofu: function(target, room, user) {
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox('<center><img src="http://static2.businessinsider.com/image/508807266bb3f70f5d000000/15-things-that-make-barack-obama-sad.jpg" height="357" width="476"><br />' +
-			'<img src="http://pbs.twimg.com/profile_images/1538004667/Document0002.png"><br />' +
+			'<img src="http://pbs.twimg.com/profile_images/1538004667/Document0002.png" height="90" width="90"><br />' +
 			'<b><blink>Ace: Darniggatan</blink></b><br />' +
 			'<b>The realest nigga you have ever seen</b>');
 	},
