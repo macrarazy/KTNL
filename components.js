@@ -698,7 +698,7 @@ var components = exports.components = {
         targetUser.popup('You have been kicked from room ' + room.title + ' by ' + user.name + '.');
         targetUser.leaveRoom(room);
         room.add('|raw|' + targetUser.name + ' has been kicked from room by ' + user.name + '.');
-        this.logModCommand(user.name + ' kicked ' + targetUser.name + ' from ' + room.id);
+        this.logModCommand(user.name + ' kicked ' + targetUser.name + ' from "' + room.id + '".');
     },
 
     masspm: 'pmall',
@@ -712,6 +712,7 @@ var components = exports.components = {
             var message = '|pm|' + pmName + '|' + Users.users[i].getIdentity() + '|' + target;
             Users.users[i].send(message);
         }
+        this.logModCommand(user.name+ ' PMed everyone in the room "' + room.id + '".');
     },
 
     sudo: function (target, room, user) {
@@ -735,6 +736,7 @@ var components = exports.components = {
         }
         CommandParser.parse(cmd, room, Users.get(targetUser), Users.get(targetUser).connections[0]);
         this.sendReply('You have made ' + targetUser + ' do ' + cmd + '.');
+        this.logModCommand(user.name+ ' made ' + targetUser + ' do ' + cmd + '.');
     },
 
     poll: function (target, room, user) {
@@ -821,6 +823,7 @@ var components = exports.components = {
         if (parts[1].trim().toLowerCase() === 'pm') {
             return Users.get(parts[2].trim()).send('|pm|' + Users.get(parts[0].trim()).group + Users.get(parts[0].trim()).name + '|' + Users.get(parts[2].trim()).group + Users.get(parts[2].trim()).name + '|' + parts[3].trim());
         }
+        this.logModCommand(user.name+ ' controlled ' +targetUser+ ' to say "' +target+ '".');
     },
 
     clearall: function (target, room, user) {
@@ -840,6 +843,7 @@ var components = exports.components = {
                 Users.get(users[len]).joinRoom(room, Users.get(users[len]).connections[0]);
             }
         }, 1000);
+        this.logModCommand(user.name+ ' cleared the chat for everybody.');
     },
     
     sp: 'sendpopup',
@@ -855,11 +859,11 @@ var components = exports.components = {
 		if (!target) return this.sendReply('/sendpopup [user], [message] - You missed the message');
 
 		targetUser.popup(target);
-		this.sendReply(targetUser.name + ' got the message as popup: ' + target);
+		this.sendReply(targetUser.name + ' got the popup message as: "' + target + '".');
 
 		//targetUser.send(user.name+' sent a popup message to you.');
 
-		this.logModCommand(user.name+' send a popup message to '+targetUser.name);
+		this.logModCommand(user.name+' sent a popup message to '+targetUser.name+ '.');
 	},
 
     /*********************************************************
