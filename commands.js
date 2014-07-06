@@ -1617,7 +1617,7 @@ var commands = exports.commands = {
 		}
 		if (!this.canBroadcast()) return;
 
-		if (!this.broadcasting) this.sendReply(target);
+		if (!this.broadcasting) this.sendReply('The amount of current participants in the tournament is ' + target '.');
 		try {
 			var battle = room.battle;
 			var me = user;
