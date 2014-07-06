@@ -250,14 +250,22 @@ exports.groups = {
 			rangeban: true
 		},
 		'#': {
-			id: 'owner',
-			name: "Room Owner",
-			description: "They are administrators of the room and can almost totally control it",
-			inherit: '@',
+			id: 'founder',
+			name: "Room Founder"
+			inherit: '#',
 			jurisdiction: 'u',
 			declare: true,
 			modchatall: true,
 			roomdesc: true,
+			roompromote: 'u'
+		}
+		'#': {
+			id: 'owner',
+			name: "Room Owner",
+			inherit: '@',
+			jurisdiction: 'u',
+			declare: true,
+			modchatall: true,
 			roompromote: 'u'
 		},
 		'\u2605': {
