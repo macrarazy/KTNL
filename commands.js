@@ -1306,7 +1306,7 @@ var commands = exports.commands = {
 
 		this.logEntry(user.name + " used /hotpatch " + target);
 
-		if (target === 'chat' || target === 'commands') {
+		/*if (target === 'chat' || target === 'commands') {
 
 			try {
 				CommandParser.uncacheTree('./command-parser.js');
@@ -1322,7 +1322,7 @@ var commands = exports.commands = {
 				return this.sendReply("Something failed while trying to hotpatch chat: \n" + e.stack);
 			}
 
-		} else if (target === 'tournaments') {
+		} else*/ if (target === 'tournaments') {
 
 			try {
 				var runningTournaments = Tournaments.tournaments;
