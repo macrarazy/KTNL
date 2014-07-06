@@ -273,14 +273,6 @@ var components = exports.components = {
 
         return this.sendReply('|raw|<center>' + ladder + 'To view the entire ladder use /tourladder <em>all</em> or to view a certain amount of users use /tourladder <em>number</em></center>');
     },
-    
-    participants: 'participant',
-    tourno: 'participant',
-    tournumber: 'participant',
-    participant: function (target, room, user, connection) {
-    	if (!this.canBroadcast()) return;
-    	this.parse('/eval Tournaments.tournaments.' +room.id+ '.generator.getUsers().length');
-    },
 
     shop: function (target, room, user) {
         if (!this.canBroadcast()) return;
