@@ -1298,15 +1298,6 @@ var commands = exports.commands = {
 			'<b>Ace: </b>Mo\' Fuckin\' Common Sense!<br />' +
 			'<b>Quote: </b>Would you like some fresh cut nanis? No? Well your mom bought some. She LOVED it ;D</center>');
 	},
-	
-	zarif: function(target, room, user) {
-		if (!this.canBroadcast()) return;
-		this.sendReplyBox(' <center><img src="http://i.imgur.com/lC0aRUH.gif">' +
-			'<img src="http://i.imgur.com/EA90SwL.png">' +
-			'<img src="http://i.imgur.com/3EIY2d9.png"><br />' +
-			'<b> <blink> Ace: </b>Infernape</blink><br />' +
-			'Three things are infinite: magikarp\'s power, human stupidity and the fucking amount of zubats in a cave; and I\'m not sure about the universe.');
-	},
 
 	/*********************************************************
 	 * Miscellaneous commands
