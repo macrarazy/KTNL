@@ -615,7 +615,7 @@ var commands = exports.commands = {
 			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
 		}
 		if (targetRoom.lockedRoom === true) {
-			if ((!targetRoom.auth === '#') /*&& (!user.isLeader))*/ {
+			if (!targetRoom.auth === '#') {
 				return connection.sendTo(target, "|noinit|joinfailed|The room '"+target+"' is currently locked.");
 			}
 		}
