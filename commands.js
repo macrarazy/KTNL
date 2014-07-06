@@ -485,7 +485,7 @@ var commands = exports.commands = {
 		if (room.chatRoomData) Rooms.global.writeChatRoomData();
 	},
 	
-	/*roomlock: 'lockroom',
+	roomlock: 'lockroom',
 	lockroom: function(target, room, user) {
 		if (!room.auth) {
 			return this.sendReply("Only unofficial chatrooms can be locked.");
@@ -495,6 +495,7 @@ var commands = exports.commands = {
 		}
 		room.lockedRoom = true;
 		this.addModCommand(user.name + ' has locked the room.');
+		this.parse('/modchat #');
 	},
 
 	roomunlock: 'unlockroom',
@@ -507,7 +508,8 @@ var commands = exports.commands = {
 		}
 		room.lockedRoom = false;
 		this.addModCommand(user.name + ' has unlocked the room.');
-	},*/
+		this.parse('/modchat off');
+	},
 
 	roomauth: function (target, room, user, connection) {
 		if (!room.auth) return this.sendReply("/roomauth - This room isn't designed for per-room moderation and therefore has no auth list.");
@@ -615,6 +617,9 @@ var commands = exports.commands = {
 		var targetRoom = Rooms.get(target) || Rooms.get(toId(target));
 		if (!targetRoom) {
 			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
+		}
+		if (!targetRoom.lockedRoom = true && (Config.groups.bySymbol[userGroup].rank < Config.groups.bySymbol[targetRoom.modchat].rank)) {
+			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' is locked from joining.");
 		}
 		if (targetRoom.isPrivate) {
 			if (targetRoom.modjoin) {
