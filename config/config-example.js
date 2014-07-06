@@ -250,16 +250,6 @@ exports.groups = {
 			rangeban: true
 		},
 		'#': {
-			id: 'founder',
-			name: "Room Founder"
-			inherit: '#',
-			jurisdiction: 'u',
-			declare: true,
-			modchatall: true,
-			roomdesc: true,
-			roompromote: 'u'
-		}
-		'#': {
 			id: 'owner',
 			name: "Room Owner",
 			inherit: '@',
