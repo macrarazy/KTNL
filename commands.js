@@ -485,29 +485,27 @@ var commands = exports.commands = {
 		if (room.chatRoomData) Rooms.global.writeChatRoomData();
 	},
 	
-	/*roomlock: 'lockroom',
 	lockroom: function(target, room, user) {
 		if (!room.auth) {
 			return this.sendReply("Only unofficial chatrooms can be locked.");
 		}
-		if (room.auth[user.userid] != '#' && user.group != '~') {
+		if (!room.auth[user.userid] === '#' && user.group != '~') {
 			return this.sendReply('/lockroom - Access denied.');
 		}
 		room.lockedRoom = true;
-		this.addModCommand(user.name + ' has locked the room.');
+		this.add(user.name + ' has locked the room.');
 	},
 
-	roomunlock: 'unlockroom',
 	unlockroom: function(target, room, user) {
 		if (!room.auth) {
 			return this.sendReply("Only unofficial chatrooms can be unlocked.");
 		}
-		if (room.auth[user.userid] != '#' && user.group != '~') {
+		if (!room.auth[user.userid] === '#' && user.group != '~') {
 			return this.sendReply('/unlockroom - Access denied.');
 		}
 		room.lockedRoom = false;
-		this.addModCommand(user.name + ' has unlocked the room.');
-	},*/
+		this.add(user.name + ' has unlocked the room.');
+	},
 
 	roomauth: function (target, room, user, connection) {
 		if (!room.auth) return this.sendReply("/roomauth - This room isn't designed for per-room moderation and therefore has no auth list.");
@@ -616,12 +614,11 @@ var commands = exports.commands = {
 		if (!targetRoom) {
 			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
 		}
-		/*if (!targetRoom.lockedRoom) {
-			var userGroup = user.group;
-			if userGroup !== '#' && userGroup !== '&' && userGroup !== '~' {
-			return connection.sendTo(target, "|noinit|joinfailed|The room '" + target + "' is locked from joining.");
+		if (targetRoom.lockedRoom === true) {
+			if ((!targetRoom.auth === '#') /*&& (!user.isLeader))*/ {
+				return connection.sendTo(target, "|noinit|joinfailed|The room '"+target+"' is currently locked.");
 			}
-		}*/
+		}
 		if (targetRoom.isPrivate) {
 			if (targetRoom.modjoin) {
 				var userGroup = user.group;
