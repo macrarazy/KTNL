@@ -1611,7 +1611,7 @@ var commands = exports.commands = {
 		}
 	},
 	
-	seval: function (target, room, user, connection, cmd, message) {
+	/*seval: function (target, room, user, connection, cmd, message) {
 		if (!user.hasConsoleAccess(connection)) {
 			return this.sendReply("/eval - Access denied.");
 		}
@@ -1624,10 +1624,10 @@ var commands = exports.commands = {
 			this.sendReply(eval(target));
 		} catch (e) {
 			this.sendReply('error: ' + e.message);
-			/*var stack = '||' + ('' + e.stack).replace(/\n/g, '\n||');
-			connection.sendTo(room, stack);*/
+			var stack = '||' + ('' + e.stack).replace(/\n/g, '\n||');
+			connection.sendTo(room, stack);
 		}
-	},
+	},*/
 
 	evalbattle: function (target, room, user, connection, cmd, message) {
 		if (!user.hasConsoleAccess(connection)) {
