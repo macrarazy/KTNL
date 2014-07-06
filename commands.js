@@ -618,8 +618,14 @@ var commands = exports.commands = {
 		if (!targetRoom) {
 			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
 		}
-		if (!targetRoom.lockedRoom = true && (Config.groups.bySymbol[userGroup].rank < Config.groups.bySymbol[targetRoom.modchat].rank)) {
+		if (!targetRoom.isLocked) {
+			var userGroup = user.group;
+			if (targetRoom.auth) {
+				userGroup = targetRoom.auth[user.userid] || Config.groups.default[room.type + 'Room'];
+			}
+			if (Config.groups.bySymbol[userGroup].rank < Config.groups.bySymbol[targetRoom.modchat].rank) {
 			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' is locked from joining.");
+			}
 		}
 		if (targetRoom.isPrivate) {
 			if (targetRoom.modjoin) {
