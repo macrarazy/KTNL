@@ -4,7 +4,7 @@ exports.port = 15000;
 // The server id - the id specified in the server registration.
 //   This should be set properly especially when there are more than one
 //   pokemon showdown server running from the same IP
-exports.serverId = 'example';
+exports.serverId = 'lotus';
 
 // proxyIps - proxy IPs with trusted X-Forwarded-For headers
 //   This can be either false (meaning not to trust any proxies) or an array
@@ -100,7 +100,7 @@ exports.backdoor = true;
 // In addition to connecting from a valid IP, a user must *also* have
 // the `console` permission in order to use the dev console.
 // Setting this to an empty array ([]) will disable the dev console.
-exports.consoleIps = ['127.0.0.1', 'macrarazy', 'prfssrstein'];
+exports.consoleIps = ['127.0.0.1', 'macrarazy', 'blakjack'];
 
 // Whether to watch the config file for changes. If this is enabled,
 // then the config.js file will be reloaded when it is changed.
@@ -214,6 +214,8 @@ exports.appealUri = '';
 //     - staff: Indicates a staff member.
 //     - timer: Ability to forcibly start and stop the inactive timer in battle rooms with the /timer command.
 //     - warn: /warn command.
+//     - showimage: /showimage command.
+//     - htmlbox: /htmlbox command.
 exports.mutedSymbol = '!';
 exports.lockedSymbol = '\u203d';
 exports.groups = {
@@ -247,7 +249,7 @@ exports.groups = {
 			potd: false,
 			tell: false,
 			promote: 'u',
-			rangeban: true
+			rangeban: true,
 		},
 		'#': {
 			id: 'owner',
@@ -256,7 +258,9 @@ exports.groups = {
 			jurisdiction: 'u',
 			declare: true,
 			modchatall: true,
-			roompromote: 'u'
+			roompromote: 'u',
+			htmlbox: true,
+			showimage: true
 		},
 		'\u2605': {
 			id: 'player',
