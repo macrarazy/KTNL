@@ -601,7 +601,7 @@ var components = exports.components = {
     givebuck: 'givemoney',
     givebucks: 'givemoney',
     givemoney: function (target, room, user) {
-        if (!user.can('givemoney')) return;
+        if (!user.can('potd')) return;
         if (!target) return this.parse('/help givemoney');
 
         if (target.indexOf(',') >= 0) {
@@ -632,7 +632,7 @@ var components = exports.components = {
     takebuck: 'takemoney',
     takebucks: 'takemoney',
     takemoney: function (target, room, user) {
-        if (!user.can('takemoney')) return;
+        if (!user.can('potd')) return;
         if (!target) return this.parse('/help takemoney');
 
         if (target.indexOf(',') >= 0) {
