@@ -929,6 +929,17 @@ var commands = exports.commands = {
 		}
 		this.sendReplyBox(buffer);
 	},
+	
+	links: 'hlinks',
+	helpful: 'hlinks',
+	helpfullinks: 'hlinks',
+	hlinks: function (target, room, user) {
+		if (!this.canBroadcast()) return false;
+		this.sendReplyBox('<font color=green><b>Helpful links related to the server:</b></font><br />' +
+			'- <a href="http://lotusserver.weebly.com/"><font color=green>Website</font></a><br />' +
+			'- <a href="#"><font color=orange>Forums</font></a><br />' +
+			'- <a href="https://github.com/mac-BJ-Services/naten-serv/"><font color=blue>GitHub</font></a> (server code)');
+	},
 
 	roomhelp: function (target, room, user) {
 		if (room.id === 'lobby' || room.battle) return this.sendReply("This command is too spammy for lobby/battles.");
@@ -959,11 +970,11 @@ var commands = exports.commands = {
 			"- /declare <em>message</em>: make a large blue declaration to the room<br />" +
 			"- !htmlbox <em>HTML code</em>: broadcasts a box of HTML code to the room<br />" +
 			"- !showimage <em>[url], [width], [height]</em>: shows an image to the room<br />" +
-			/*"- /welcomemessage <em>set/motd/delete, message</em>: sets a welcome message for the room<br />" +*/
+			/*"- /welcomemessage <em>set/motd/delete, message</em>: sets a welcome message for the room<br />" +
 			"<br />" +
 			"Room founders (#) can also use:<br />" +
 			"- /roomdesc <em>description</em>: set the room description on the room join page<br />" +
-			"- /roomowner <em>username</em>: appoint a room owner<br />" +
+			"- /roomowner <em>username</em>: appoint a room owner<br />" +*/
 			"</div>"
 		);
 	},
@@ -1214,10 +1225,10 @@ var commands = exports.commands = {
 	kafka: 'kafkablack',
 	kafkablack: function(target, room, user) {
 		if (!this.canBroadcast()) return false;
-		return this.sendReplyBox('<center> <img src="http://i.imgur.com/bvCvPmd.gif"><br />' +
+		return this.sendReplyBox('<center><img src="http://i.imgur.com/bvCvPmd.gif"><br />' +
 			'<font size="3"><b><i><font color="CCCC33">Kafka</i><br></font><b><br />' +
-			'<blink> Ace: Shimmy </blink></b><br />' +
-			'<b>Shimmy Shimmy</b></center>');
+			'<blink>Ace: Shimmy</blink></b><br />' +
+			'<b>Stop, oh, and wiggle with it. YEAHHH!</b></center>');
         },
 	
 	mac: function(target, room, user) {
@@ -1398,7 +1409,7 @@ var commands = exports.commands = {
 
 	showimage: function (target, room, user) {
 		if (!target) return this.parse('/help showimage');
-		if (!this.can('declare', null, room)) return false;
+		if (!this.can('showimage', null, room)) return false;
 		if (!this.canBroadcast()) return;
 
 		targets = target.split(',');
@@ -1411,7 +1422,7 @@ var commands = exports.commands = {
 
 	htmlbox: function (target, room, user) {
 		if (!target) return this.parse('/help htmlbox');
-		if (!this.can('gdeclare', room)) return;
+		if (!this.can('htmlbox', null, room)) return;
 		if (!this.canHTML(target)) return;
 		if (!this.canBroadcast('!htmlbox')) return;
 
