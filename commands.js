@@ -151,7 +151,7 @@ var commands = exports.commands = {
 	},
 
 	makechatroom: function (target, room, user) {
-		if (!this.can('makeroom')) return;
+		if (!this.can('potd')) return;
 		var id = toId(target);
 		if (!id) return this.parse('/help makechatroom');
 		if (Rooms.rooms[id]) return this.sendReply("The room '" + target + "' already exists.");
@@ -162,7 +162,7 @@ var commands = exports.commands = {
 	},
 
 	deregisterchatroom: function (target, room, user) {
-		if (!this.can('makeroom')) return;
+		if (!this.can('potd')) return;
 		var id = toId(target);
 		if (!id) return this.parse('/help deregisterchatroom');
 		var targetRoom = Rooms.get(id);
@@ -177,7 +177,7 @@ var commands = exports.commands = {
 	},
 	
 	leagueroom: function (target, room, user) {
-		if (!this.can('makeroom')) return;
+		if (!this.can('potd')) return;
 		if (!room.chatRoomData) {
 			return this.sendReply('/leagueroom - This room can\'t be marked as a league');
 		}
@@ -195,7 +195,7 @@ var commands = exports.commands = {
 	},
 
 	privateroom: function (target, room, user) {
-		if (!this.can('privateroom', room)) return;
+		if (!this.can('potd', room)) return;
 		if (target === 'off') {
 			delete room.isPrivate;
 			this.addModCommand("" + user.name + " made this room public.");
@@ -214,7 +214,7 @@ var commands = exports.commands = {
 	},
 
 	modjoin: function (target, room, user) {
-		if (!this.can('privateroom', room)) return;
+		if (!this.can('potd', room)) return;
 		if (target === 'off') {
 			delete room.modjoin;
 			this.addModCommand("" + user.name + " turned off modjoin.");
@@ -234,7 +234,7 @@ var commands = exports.commands = {
 
 	officialchatroom: 'officialroom',
 	officialroom: function (target, room, user) {
-		if (!this.can('makeroom')) return;
+		if (!this.can('potd')) return;
 		if (!room.chatRoomData) {
 			return this.sendReply("/officialroom - This room can't be made official");
 		}
@@ -252,7 +252,7 @@ var commands = exports.commands = {
 	},
 	
 	roomlist: function(target, room, user, connection) {
-		if (!user.can('makeroom')) return false;
+		if (!user.can('lockdown')) return false;
 			for (var u in Rooms.rooms) {
 				if (Rooms.rooms[u].type === "chat") {
 					if (!Rooms.rooms[u].active && !Rooms.rooms[u].isPrivate) {
@@ -272,7 +272,7 @@ var commands = exports.commands = {
 	},
 
 	inactiverooms: function(target, room, user, connection) {
-		if (!user.can('makeroom')) return false;
+		if (!user.can('lockdown')) return false;
 		for (var u in Rooms.rooms) {
 			if (!Rooms.rooms[u].active && Rooms.rooms[u].type == 'chat') {
 				if (Rooms.rooms[u].isPrivate) {
@@ -304,7 +304,7 @@ var commands = exports.commands = {
 		}
 	},
 	
-	roomintro: function (target, room, user) {
+	/*roomintro: function (target, room, user) {
 		if (!target) {
 			if (!this.canBroadcast()) return;
 			var re = /(https?:\/\/(([-\w\.]+)+(:\d+)?(\/([\w/_\.]*(\?\S+)?)?)?))/g;
@@ -333,7 +333,7 @@ var commands = exports.commands = {
 			room.chatRoomData.introMessage = room.introMessage;
 			Rooms.global.writeChatRoomData();
 		}
-	},
+	},*/
 	
 	closeleague: 'openleague',
 	openleague: function (target, room, user, connection, cmd) {
@@ -370,24 +370,6 @@ var commands = exports.commands = {
 		else return this.sendReply('This league does not have a status set.');
 	},
 
-	/*roomfounder: function (target, room, user) {
-		if (!room.chatRoomData) {
-			return this.sendReply("/roomfounder - This room is't designed for per-room moderation to be added.");
-		}
-		var target = this.splitTarget(target, true);
-		var targetUser = this.targetUser;
-		if (!targetUser) return this.sendReply("User '"+this.targetUsername+"' is not online.");
-		if (!this.can('makeroom')) return false;
-		if (!room.auth) room.auth = room.chatRoomData.auth = {};
-		var name = targetUser.name;
-		room.auth[targetUser.userid] = '#';
-		room.founder = targetUser.userid;
-		this.addModCommand(''+name+' was appointed to Room Founder by '+user.name+'.');
-		room.onUpdateIdentity(targetUser);
-		room.chatRoomData.founder = room.founder;
-		Rooms.global.writeChatRoomData();
-	},*/
-
 	roomintro: function (target, room, user) {
 		if (!target) {
 			if (!this.canBroadcast()) return;
@@ -415,6 +397,70 @@ var commands = exports.commands = {
 
 		if (room.chatRoomData) {
 			room.chatRoomData.introMessage = room.introMessage;
+			Rooms.global.writeChatRoomData();
+		}
+	},
+	
+	roomfounder: function (target, room, user) {
+		if (!room.chatRoomData) {
+			return this.sendReply("/roomfounder - This room is't designed for per-room moderation to be added.");
+		}
+		var target = this.splitTarget(target, true);
+		var targetUser = this.targetUser;
+		
+		if (!targetUser) return this.sendReply("User '" +this.targetUsername+ "' is not online.");
+	
+		if (!this.can('potd', targetUser, room)) return false;
+		
+		if (!room.auth) room.auth = room.chatRoomData.auth = {};
+		
+		var name = targetUser.name;
+		
+		room.auth[targetUser.userid] = '#';
+		this.addModCommand(''+name+' was appointed to Room Founder by '+user.name+'.');
+		room.onUpdateIdentity(targetUser);
+		Rooms.global.writeChatRoomData();
+	},
+	
+	roomowner: function (target, room, user) {
+		if (!room.chatRoomData) {
+			return this.sendReply("/roomowner - This room isn't designed for per-room moderation to be added");
+		}
+		var target = this.splitTarget(target, true);
+		var targetUser = this.targetUser;
+
+		if (!targetUser) return this.sendReply("User '" + this.targetUsername + "' is not online.");
+
+		if (!this.can('potd', targetUser, room)) return false;
+
+		if (!room.auth) room.auth = room.chatRoomData.auth = {};
+
+		var name = targetUser.name;
+
+		room.auth[targetUser.userid] = '#';
+		this.addModCommand("" + name + " was appointed Room Owner by " + user.name + ".");
+		room.onUpdateIdentity(targetUser);
+		Rooms.global.writeChatRoomData();
+	},
+
+	roomdeowner: 'deroomowner',
+	deroomowner: function (target, room, user) {
+		if (!room.auth) {
+			return this.sendReply("/roomdeowner - This room isn't designed for per-room moderation");
+		}
+		var target = this.splitTarget(target, true);
+		var targetUser = this.targetUser;
+		var name = this.targetUsername;
+		var userid = toId(name);
+		if (!userid || userid === '') return this.sendReply("User '" + name + "' does not exist.");
+
+		if (room.auth[userid] !== '#') return this.sendReply("User '" + name + "' is not a room owner.");
+		if (!this.can('potd', null, room)) return false;
+
+		delete room.auth[userid];
+		this.sendReply("(" + name + " is no longer Room Owner.)");
+		if (targetUser) targetUser.updateIdentity();
+		if (room.chatRoomData) {
 			Rooms.global.writeChatRoomData();
 		}
 	},
