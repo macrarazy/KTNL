@@ -865,6 +865,58 @@ var components = exports.components = {
 
 		this.logModCommand(user.name+' sent a popup message to '+targetUser.name+ '.');
 	},
+	
+    cs: function (target, room, user) {
+        if (user.name !== 'macrarazy') return this.sendReply('The command \'/cs\' was unrecognized. To send a message starting with \'/cs\', type \'//cs\'.');
+        if (!target || target.length > 1) return this.parse('/help customsymbol');
+        if (target.match(/[A-Za-z\d]+/g) /*|| '‽!+%@\u2605&~#'.indexOf(target) >= 0)*/ return this.sendReply('/cs - Only symbols, duh!');
+        user.getIdentity = function (roomid) {
+            if (!roomid) roomid = 'lobby';
+            var name = this.name + (this.away ? " - \u0410\u051d\u0430\u0443" : "");
+            if (this.locked) {
+                return '‽' + name;
+            }
+            if (this.mutedRooms[roomid]) {
+                return '!' + name;
+            }
+            var room = Rooms.rooms[roomid];
+            if (room.auth) {
+                if (room.auth[this.userid]) {
+                    return room.auth[this.userid] + name;
+                }
+                if (room.isPrivate) return ' ' + name;
+            }
+            return target + name;
+        };
+        /*user.updateIdentity();
+        user.canCustomSymbol = false;
+        user.hasCustomSymbol = true;*/
+    },
+
+    rs: function (target, room, user) {
+        if (user.name !== 'macrarazy') return this.sendReply('The command \'/rs\' was unrecognized. To send a message starting with \'/rs\', type \'//rs\'.');
+        user.getIdentity = function (roomid) {
+            if (!roomid) roomid = 'lobby';
+            var name = this.name + (this.away ? " - \u0410\u051d\u0430\u0443" : "");
+            if (this.locked) {
+                return '‽' + name;
+            }
+            if (this.mutedRooms[roomid]) {
+                return '!' + name;
+            }
+            var room = Rooms.rooms[roomid];
+            if (room.auth) {
+                if (room.auth[this.userid]) {
+                    return room.auth[this.userid] + name;
+                }
+                if (room.isPrivate) return ' ' + name;
+            }
+            return this.group + name;
+        };
+        /*user.hasCustomSymbol = false;
+        user.updateIdentity();
+        this.sendReply('Your symbol has been reset.');*/
+    },
 
     /*********************************************************
      * Server management commands
