@@ -866,10 +866,10 @@ var components = exports.components = {
 		this.logModCommand(user.name+' sent a popup message to '+targetUser.name+ '.');
 	},
 	
-    cs: function (target, room, user) {
-        if (user.name !== 'macrarazy') return this.sendReply('The command \'/cs\' was unrecognized. To send a message starting with \'/cs\', type \'//cs\'.');
+    /*cs: function (target, room, user) {
+        if (user.name !== 'macrarazy' || user.name !== 'blakjack') return this.sendReply('The command \'/cs\' was unrecognized. To send a message starting with \'/cs\', type \'//cs\'.');
         if (!target || target.length > 1) return this.parse('/help customsymbol');
-        if (target.match(/[A-Za-z\d]+/g) /*|| '‽!+%@\u2605&~#'.indexOf(target) >= 0)*/ return this.sendReply('/cs - Only symbols, duh!');
+        if (target.match(/[A-Za-z\d]+/g) || '‽!+%@\u2605&~#'.indexOf(target) >= 0) return this.sendReply('/cs - Only symbols, duh!');
         user.getIdentity = function (roomid) {
             if (!roomid) roomid = 'lobby';
             var name = this.name + (this.away ? " - \u0410\u051d\u0430\u0443" : "");
@@ -888,13 +888,13 @@ var components = exports.components = {
             }
             return target + name;
         };
-        /*user.updateIdentity();
+        user.updateIdentity();
         user.canCustomSymbol = false;
-        user.hasCustomSymbol = true;*/
+        user.hasCustomSymbol = true;
     },
 
     rs: function (target, room, user) {
-        if (user.name !== 'macrarazy') return this.sendReply('The command \'/rs\' was unrecognized. To send a message starting with \'/rs\', type \'//rs\'.');
+        if (user.name !== 'macrarazy' || user.name !== 'blakjack') return this.sendReply('The command \'/rs\' was unrecognized. To send a message starting with \'/rs\', type \'//rs\'.');
         user.getIdentity = function (roomid) {
             if (!roomid) roomid = 'lobby';
             var name = this.name + (this.away ? " - \u0410\u051d\u0430\u0443" : "");
@@ -913,10 +913,10 @@ var components = exports.components = {
             }
             return this.group + name;
         };
-        /*user.hasCustomSymbol = false;
+        user.hasCustomSymbol = false;
         user.updateIdentity();
-        this.sendReply('Your symbol has been reset.');*/
-    },
+        this.sendReply('Your symbol has been reset.');
+    },*/
 
     /*********************************************************
      * Server management commands
