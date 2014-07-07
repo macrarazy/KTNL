@@ -1246,6 +1246,17 @@ var commands = exports.commands = {
 		'<font color=gray>Sometimes... Steel is too much for you!</font></b>');
 	},
 	
+	mascot: function(target, room, user) {
+		if (!this.canBroadcast()) return false;
+		return this.sendReplyBox('<center><img src="http://fc02.deviantart.net/fs71/f/2011/049/a/a/lilypad_foot_by_pinkophilic-d39utbl.png" width="162" height="121"><br />' +
+			'<b><font color=#ff0000">M</font><font color=#ff2100">a</font><font color=#ff4200">s</font><font color=#ff6300">c</font><font color=#ff8500">o</font><font color=#ffa600">t</font> ' +
+			'<font color=#ffe800">o</font><font color=#f3ff00">f</font> ' +
+			'<font color=#d2ff00">t</font><font color=#b1ff00">h</font><font color=#90ff00">e</font> ' +
+			'<font color=#4dff00">L</font><font color=#2cff00">o</font><font color=#0bff00">t</font><font color=#00ff16">u</font><font color=#00ff58">s</font> ' +
+			'<font color=#00ff79">S</font><font color=#00ff9b">e</font><font color=#00ffbc">r</font><font color=#00ffdd">v</font><font color=#00feff">e</font><font color=#00feeg">r</font> ' +
+			'</b></center>');
+	},
+	
 	fishy: 'piscean',
 	piscean: function(target, room, user) {
 		if (!this.canBroadcast()) return;
