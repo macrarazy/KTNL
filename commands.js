@@ -682,7 +682,7 @@ var commands = exports.commands = {
 		if (target.toLowerCase() == "hs" && !user.can('potd')) {
 			return this.sendReply("|noinit|nonexistent|The room '"+target+"' does not exist.");
 		}
-		if (target.toLowerCase() == "bjsworld" && !user.can('cs')) {
+		if (target.toLowerCase() == "bjsworld" && !user.can('updateserver')) {
 			return this.sendReply("|noinit|nonexistent|The room '"+target+"' does not exist.");
 		}
 	},
