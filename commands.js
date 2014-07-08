@@ -490,7 +490,7 @@ var commands = exports.commands = {
 		if (!userid || userid === '') return this.sendReply("User '" + name + "' does not exist.");
 
 		if (room.auth[userid] !== '#') return this.sendReply("User '" + name + "' is not a room owner.");
-		if (!this.can('potd', null, room)) return false;
+		if (!this.can('promote', null, room)) return false;
 
 		delete room.auth[userid];
 		this.sendReply("(" + name + " is no longer Room Owner.)");
@@ -689,7 +689,7 @@ var commands = exports.commands = {
 			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
 		}
 		if (targetRoom.lockedRoom === true) {
-			if ((!targetRoom.auth[user.userid]) || (!user.can('promote')) {
+			if ((!targetRoom.auth[user.userid]) || !user.can('promote')) {
 				return connection.sendTo(target, "|noinit|joinfailed|The room '" +target+ "' is currently locked.");
 			}
 		}
@@ -711,13 +711,13 @@ var commands = exports.commands = {
 			return connection.sendTo(target, "|noinit|joinfailed|The room '" + target + "' could not be joined.");
 		}
 		// Extra "unknown" rooms
-		if (target.toLowerCase() == "spamroom" && (!user.can('lock')) {
+		if (target.toLowerCase() == "spamroom" && !user.can('lock')) {
 			return this.sendReply("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
-		if (target.toLowerCase() == "hs" && (!user.can('promote')) {
+		if (target.toLowerCase() == "hs" && !user.can('promote')) {
 			return this.sendReply("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
-		if (target.toLowerCase() == "bjsworld" && (!user.can('lockdown')) {
+		if (target.toLowerCase() == "bjsworld" && !user.can('lockdown')) {
 			return this.sendReply("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
 	},
