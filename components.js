@@ -689,8 +689,9 @@ var components = exports.components = {
         if (!this.can('kick')) return;
         if (!target) return this.parse('/help kick');
 
-        var targetUser = Users.get(target);
-        if (!targetUser) return this.sendReply('User ' + target + ' not found.');
+        target = this.splitTarget(target);
+        var targetUser = this.targetUser;
+        if (!targetUser || !targetUser.connected) return this.sendReply("User '" + this.targetUsername + "' could not be found.");
 	/*var a = targetUser.name;
 	if (a == "macrarazy" || a == "BlakJack" && user.name !== 'macrarazy' || user.name !== 'BlakJack') {
 		return this.sendReply('Nu\'uh sonny, Jesus denies...');
