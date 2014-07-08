@@ -1147,7 +1147,7 @@ var commands = exports.commands = {
 
 		if (!this.canTalk()) return;
 
-		this.add('|raw|<div class="broadcast-blue"><b><i>Declare by "' + user.name + '"<br />' + Tools.escapeHTML(target) + '</b></div>');
+		this.add('|raw|<div class="broadcast-blue"><b><i>Declare by "' + user.name + '"</i><br />' + Tools.escapeHTML(target) + '</b></div>');
 		this.logModCommand(user.name + " declared " + target);
 	},
 
@@ -1167,7 +1167,7 @@ var commands = exports.commands = {
 		if (!this.can('promote')) return false;
 
 		for (var id in Rooms.rooms) {
-			if (id !== 'global') Rooms.rooms[id].addRaw('<div class="broadcast-blue"><b><i><font size=1>Global declare from <a href="http://lotus.psim.us/' + room.id + '>' + room.id + '</a> by "' + user.name + '"</i><br />' + target + '</b></div>');
+			if (id !== 'global') Rooms.rooms[id].addRaw('<div class="broadcast-blue"><b><i><font size=1>Global declare from <a href="http://lotus.psim.us/' + room.id + '">' + room.id + '</a> by ' + user.name + '</i><br />' + target + '</b></div>');
 		}
 		this.logModCommand(user.name + " globally declared " + target);
 	},
@@ -1178,7 +1178,7 @@ var commands = exports.commands = {
 		if (!this.can('gdeclare')) return false;
 
 		for (var id in Rooms.rooms) {
-			if (id !== 'global') if (Rooms.rooms[id].type !== 'battle') Rooms.rooms[id].addRaw('<div class="broadcast-blue"><b><i><font size=1>Global declare from <a href="http://lotus.psim.us/' + room.id + '>' + room.id + '</a> by "' + user.name + '"</i><br />' + target + '</b></div>');
+			if (id !== 'global') if (Rooms.rooms[id].type !== 'battle') Rooms.rooms[id].addRaw('<div class="broadcast-blue"><b><i><font size=1>Chat declare from <a href="http://lotus.psim.us/' + room.id + '">' + room.id + '</a> by ' + user.name + '</i><br />' + target + '</b></div>');
 		}
 		this.logModCommand(user.name + " globally declared (chat level) " + target);
 	},
