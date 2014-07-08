@@ -815,8 +815,7 @@ var commands = exports.commands = {
 	 * Moderating: Punishments
 	 *********************************************************/
 
-	kick: 'warn',
-	k: 'warn',
+	w: 'warn',
 	warn: function (target, room, user) {
 		if (!target) return this.parse('/help warn');
 		if (user.locked || user.mutedRooms[room.id]) return this.sendReply("You cannot do this while unable to talk.");
@@ -1246,7 +1245,7 @@ var commands = exports.commands = {
 		if (!this.can('promote')) return false;
 
 		for (var id in Rooms.rooms) {
-			if (id !== 'global') Rooms.rooms[id].addRaw('<div class="broadcast-blue"><b><i><font size=1>Global declare from <button name="room" value="/join "' + room.id + '" title="the room">' + room.id + '</button> by ' + user.name + '</font></i><br /><font size=2>' + target + '</font></b></div>');
+			if (id !== 'global') Rooms.rooms[id].addRaw('<div class="broadcast-blue"><b><i><font size=1>Global declare from <button name="room" value="/join "' + room.id + '" title="the room">' + room.title + '</button> by ' + user.name + '</font></i><br /><font size=2>' + target + '</font></b></div>');
 		}
 		this.logModCommand(user.name + " globally declared " + target);
 	},
@@ -1257,7 +1256,7 @@ var commands = exports.commands = {
 		if (!this.can('gdeclare')) return false;
 
 		for (var id in Rooms.rooms) {
-			if (id !== 'global') if (Rooms.rooms[id].type !== 'battle') Rooms.rooms[id].addRaw('<div class="broadcast-blue"><b><i><font size=1>Chat declare from <button name="room" value="/join "' + room.id + '" title="the room">' + room.id + '</button> by ' + user.name + '</font></i><br /><font size=2>' + target + '</font></b></div>');
+			if (id !== 'global') if (Rooms.rooms[id].type !== 'battle') Rooms.rooms[id].addRaw('<div class="broadcast-blue"><b><i><font size=1>Chat declare from <button name="room" value="/join "' + room.id + '" title="the room">' + room.title + '</button> by ' + user.name + '</font></i><br /><font size=2>' + target + '</font></b></div>');
 		}
 		this.logModCommand(user.name + " globally declared (chat level) " + target);
 	},
