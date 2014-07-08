@@ -766,7 +766,7 @@ var commands = exports.commands = {
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox(
 			"Lotus is open source:<br />" +
-			"- <a href=\"https://github.com/mac-BJ-Server/naten-serv\">Server source code</a>" +
+			"- <a href=\"https://github.com/mac-BJ-Server/naten-serv\">Server source code</a><br />" +
 			"- <a href=\"https://github.com/Zarel/Pokemon-Showdown-Client\">Client source code</a>"
 		);
 	},
