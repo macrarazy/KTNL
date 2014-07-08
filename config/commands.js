@@ -773,9 +773,9 @@ var commands = exports.commands = {
 		);
 	},
 
-	staff: function (target, room, user) {
+	mainstaff: function (target, room, user) {
 	    if (!this.canBroadcast()) return;
-	    this.sendReplyBox("<a href=\"http://www.smogon.com/sim/staff_list\">Pokemon Showdown Staff List</a>");
+	    this.sendReplyBox("<a href=\"http://www.smogon.com/sim/staff_list\">Pokemon Showdown! Official Server Staff List</a>");
 	},
 
 	avatars: function (target, room, user) {
