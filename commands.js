@@ -539,7 +539,7 @@ var commands = exports.commands = {
 
                 var nextGroup = target || Users.getNextGroupSymbol(currentGroup, cmd === 'roomdemote', true);
                 if (target === 'deauth') nextGroup = Config.groupsranking[0];
-                if (!Config.groups[nextGroup]) {
+                if (!Config.groups[nextGroup] && target !== '+' || '%' || '@') {
                         return this.sendReply('Group \'' + nextGroup + '\' does not exist.');
                 }
                 if (currentGroup !== ' ' && !user.can('room'+Config.groups[currentGroup].id, null, room)) {
