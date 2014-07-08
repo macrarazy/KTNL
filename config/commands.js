@@ -936,7 +936,7 @@ var commands = exports.commands = {
 	hlinks: function (target, room, user) {
 		if (!this.canBroadcast()) return false;
 		this.sendReplyBox('<font color=green><b>Helpful links related to the server:</b></font><br />' +
-			'- <a href="http://lotusserver.weebly.com/"><font color=green>Website</font></a><br />' +
+			'- <a href="http://lotus-server.weebly.com/"><font color=green>Website</font></a><br />' +
 			'- <a href="#"><font color=orange>Forums</font></a><br />' +
 			'- <a href="https://github.com/mac-BJ-Services/naten-serv/"><font color=blue>GitHub</font></a> (server code)');
 	},
