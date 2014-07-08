@@ -8,91 +8,154 @@
  * your server.
  */
  
-/*#header{
-	background-color:#;
+.userbar:before{
+  background: url('http://i.imgur.com/gtKdovC.gif') !important;
+  display: block;
+  content:"";
+  width:32px;
+  height: 32px;
+  float: left;
+  position: relative;
+  top: -9px;
 }
-
-body {
-	background:#;
+.icon-user{
+        display:none;
 }
-
-.backdrop {
-	background-image: url("battle-background") !important;
+.chat-log{
+    background: url('http://i.imgur.com/MK1U1Zq.png?1') top right no-repeat,
+                        url('http://i.imgur.com/VEufQd4.png');
 }
-
-.ps-room .battle-log-add {
-    background-color:#
+body{
+        background: url('http://i.imgur.com/nsHwcC2.jpg') !important;
+    background-size: contain;
 }
-
-.trainer strong {
-	color:#;
-}
-
-.battle-log h2 {
-	background-color:#;
-	border-color:#;
-}
-
-.chat small {
-	color:#
-}
-
-.userlist li em.group {
-	color:#;
-}
-
-.pm-window.focused h3:hover {
-	background-color:#; 
-	border-color:#;
-}
-
-.pm-window.focused h3 {
-	background-color:#;
-	border-color:#;
-}
-
-.pm-window h3 {
-	background-color:#;
-	border-color:#;
-}
-
-.pm-log-add {
-	background-color:#;
-	border-color:#;
-}
-
-.pm-log-add.focused {
-	background-color:#;
-	border-color:#;
-}
-
-.chat-log-add {
-	background-color:#
-}
-
-.mainmenuwrapper {
-	background-image:url("http://fc05.deviantart.net/fs71/i/2013/356/5/9/day_9_bisharp_by_xheliak-d6z04hz.png");
-}
-
-.chat-log {
-	background: url("chat-background") right top no-repeat;
-	font-size:10pt;
-	overflow:auto
-}
-
 .menugroup .button{
-	background:#
+  background: -webkit-linear-gradient(#8dd049, #65b119) !important;/*Prevents color from changing when mouse is down & away*/
+  background: -o-linear-gradient(#8dd049, #65b119) !important;
+  background: -moz-linear-gradient(#8dd049, #65b119) !important;
+  background: linear-gradient(#8dd049, #65b119) !important;
+  border: solid 1px  #437610;
+  color: #e2f3d1;
+  opacity: .9 !important;
+  -webkit-transform: 2s;
+  transition: 2s;
 }
-
-.menugroup .menugroup{
-	text-align:center
+.menugroup .button:hover{
+  background: -webkit-linear-gradient(#7fca32, #5a9d16) !important;
+  background: -o-linear-gradient(#7fca32, #5a9d16) !important;
+  background: -moz-linear-gradient(#7fca32, #5a9d16) !important;
+  background: linear-gradient(#7fca32, #5a9d16) !important;
+  border: solid 1px  #437610;
+  color: #e2f3d1;
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
-
-.button:hover{
-	background:#
+.select{
+  background: -webkit-linear-gradient(#e2f3d1, #d4edba) !important;
+  background: -o-linear-gradient(#8dd049, #65b119) !important;
+  background: -moz-linear-gradient(#8dd049, #65b119) !important;
+  background: linear-gradient(#c6e7a4, #b8e28d) !important;
+  opacity: .7;
+  border: none;
 }
-
-.userlist {
-	border-left:1px solid #;
-	background:#;
+.menugroup button.big {
+width: 230px;
+padding: 6px 7px 6px 7px;
+font-size: 14pt;
+}
+.menugroup .button.disabled{
+background: white !important;
+}
+.label{
+        color: #c1ad98;
+}
+.challenge{
+        background: #558327;
+    border: 1px solid #437610;
+}
+.backdrop{
+        background: url('http://i.imgur.com/HdY0Q3h.png') !important;
+}
+/*.moveselect{
+text-align: center;
+}
+.moveselect button{
+  background: -webkit-linear-gradient(#4cffa6, #00cc66) !important;
+  background: -o-linear-gradient(#4cffa6, #00cc66) !important;
+  background: -moz-linear-gradient(#4cffa6, #00cc66) !important;
+  background: linear-gradient(#7fffbf, #00cc66) !important;
+  height: 2em;
+  width: 7em;
+  bottom: 5px;
+  border: .2em solid #00994c;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: auto;
+  padding-bottom: auto;
+  text-align: vertical center;
+  line-height: 1em;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  border-radius: 1.5em;
+  color: #006633;
 }*/
+.whatdo{
+  padding-left: auto;
+  padding-right: auto;
+}
+.tabbar a.button.cur, .tabbar a.button.cur:hover{
+  background: -webkit-linear-gradient(#fbe2b9, #e1c597);
+  background: -o-linear-gradient(#fbe2b9, #e1c597);
+  background: -moz-linear-gradient(#fbe2b9, #e1c597);
+  background: linear-gradient(#ffeccf, #e1c597);
+  color: black;
+  border: 1px solid #c8af86 !important;
+}
+.maintabbarbottom{
+background: #e1c597;
+}
+.tabbar a.button{
+  background: -webkit-linear-gradient(#fbe2b9, #c8af86);
+  background: -o-linear-gradient(#fbe2b9, #c8af86);
+  background: -moz-linear-gradient(#fbe2b9, #c8af86);
+  background: linear-gradient(#fbe2b9, #c8af86);
+  border: 1px solid #c8af86 !important;
+}
+.tabbar a.button:hover{
+  background: -webkit-linear-gradient(#fbe7c7,#a8987e);
+  background: -o-linear-gradient(#fbe7c7,#a8987e);
+  background: -moz-linear-gradient(#fbe7c7,#a8987e);
+  background: linear-gradient(#fbe7c7,#a8987e);
+  border: 1px solid #c8af86 !important;
+}
+.tabbar a.button:active{
+  background: -webkit-linear-gradient(#bdab8e,#fbe7c7);
+  background: -o-linear-gradient(#bdab8e,#fbe7c7);
+  background: -moz-linear-gradient(#bdab8e,#fbe7c7);
+  background: linear-gradient(#bdab8e,#fbe7c7);
+  border: 1px solid #c8af86 !important;
+}
+.header .logo{
+ background: url('http://i.imgur.com/ugAHtUR.png?2');
+ width: 146px;
+ height: 44px;
+ content:"";
+ float: left;
+ position: relative;
+ top: 1px;
+ 
+}
+.highlighted{
+background: #f8ffa6;
+}
+ 
+.roomlist{
+background: url('http://i.imgur.com/Jhy8yMr.png') left top no-repeat,
+                url('http://i.imgur.com/Jhy8yMr.png') right top no-repeat;
+}
+.roomlist a.ilink{
+        background: url('http://i.imgur.com/054wCXb.png');
+}
+.ps-room.ps-room-light{
+        opacity: 1 !important;
+}
