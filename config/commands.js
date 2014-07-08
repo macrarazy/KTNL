@@ -765,10 +765,8 @@ var commands = exports.commands = {
 	opensource: function (target, room, user) {
 		if (!this.canBroadcast()) return;
 		this.sendReplyBox(
-			"Pokemon Showdown is open source:<br />" +
-			"- Language: JavaScript (Node.js)<br />" +
-			"- <a href=\"https://github.com/Zarel/Pokemon-Showdown/commits/master\">What's new?</a><br />" +
-			"- <a href=\"https://github.com/Zarel/Pokemon-Showdown\">Server source code</a><br />" +
+			"Lotus is open source:<br />" +
+			"- <a href=\"https://github.com/mac-BJ-Server/naten-serv\">Server source code</a>" +
 			"- <a href=\"https://github.com/Zarel/Pokemon-Showdown-Client\">Client source code</a>"
 		);
 	},
@@ -937,7 +935,7 @@ var commands = exports.commands = {
 		if (!this.canBroadcast()) return false;
 		this.sendReplyBox('<font color=green><b>Helpful links related to the server:</b></font><br />' +
 			'- <a href="http://lotus-server.weebly.com/"><font color=green>Website</font></a><br />' +
-			'- <a href="#"><font color=orange>Forums</font></a><br />' +
+			'- <a href="https://w11.zetaboards.com/PS_Lotus/index/"><font color=orange>Forums</font></a><br />' +
 			'- <a href="https://github.com/mac-BJ-Services/naten-serv/"><font color=blue>GitHub</font></a> (server code)');
 	},
 
