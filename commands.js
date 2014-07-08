@@ -151,7 +151,7 @@ var commands = exports.commands = {
 	},
 
 	makechatroom: function (target, room, user) {
-		if (!this.can('potd')) return;
+		if (!this.can('promote')) return;
 		var id = toId(target);
 		if (!id) return this.parse('/help makechatroom');
 		if (Rooms.rooms[id]) return this.sendReply("The room '" + target + "' already exists.");
@@ -162,7 +162,7 @@ var commands = exports.commands = {
 	},
 
 	deregisterchatroom: function (target, room, user) {
-		if (!this.can('potd')) return;
+		if (!this.can('lockdown')) return;
 		var id = toId(target);
 		if (!id) return this.parse('/help deregisterchatroom');
 		var targetRoom = Rooms.get(id);
@@ -177,7 +177,7 @@ var commands = exports.commands = {
 	},
 	
 	leagueroom: function (target, room, user) {
-		if (!this.can('potd')) return;
+		if (!this.can('promote')) return;
 		if (!room.chatRoomData) {
 			return this.sendReply('/leagueroom - This room can\'t be marked as a league');
 		}
@@ -195,7 +195,7 @@ var commands = exports.commands = {
 	},
 
 	privateroom: function (target, room, user) {
-		if (!this.can('potd', room)) return;
+		if (!this.can('promote', room)) return;
 		if (target === 'off') {
 			delete room.isPrivate;
 			this.addModCommand("" + user.name + " made this room public.");
@@ -214,7 +214,7 @@ var commands = exports.commands = {
 	},
 
 	modjoin: function (target, room, user) {
-		if (!this.can('potd', room)) return;
+		if (!this.can('promote', room)) return;
 		if (target === 'off') {
 			delete room.modjoin;
 			this.addModCommand("" + user.name + " turned off modjoin.");
@@ -234,7 +234,7 @@ var commands = exports.commands = {
 
 	officialchatroom: 'officialroom',
 	officialroom: function (target, room, user) {
-		if (!this.can('potd')) return;
+		if (!this.can('promote')) return;
 		if (!room.chatRoomData) {
 			return this.sendReply("/officialroom - This room can't be made official");
 		}
