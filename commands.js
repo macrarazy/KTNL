@@ -501,70 +501,63 @@ var commands = exports.commands = {
 	},
 
 	roomdemote: 'roompromote',
-        roompromote: function(target, room, user, connection, cmd) {
-                if (!room.auth) {
-                        this.sendReply("/roompromote - This room isn't designed for per-room moderation");
-                        return this.sendReply("Before setting room mods, you need to set it up with /roomowner");
-                }
-                if (!target) return this.parse('/help roompromote');
+	roompromote: function (target, room, user, connection, cmd) {
+		if (!room.auth) {
+			this.sendReply("/roompromote - This room isn't designed for per-room moderation");
+			return this.sendReply("Before setting room mods, you need to set it up with /roomowner");
+		}
+		if (!target) return this.parse('/help roompromote');
 
-                var target = this.splitTarget(target, true);
-                var targetUser = this.targetUser;
-                var userid = toId(this.targetUsername);
-                var name = targetUser ? targetUser.name : this.targetUsername;
+		target = this.splitTarget(target, true);
+		var targetUser = this.targetUser;
+		var userid = toId(this.targetUsername);
+		var name = targetUser ? targetUser.name : this.targetUsername;
 
-                var currentGroup = (room.auth[userid] || ' ');
-                if (!targetUser && !room.auth[userid]) {
-                        return this.sendReply("User '"+this.targetUsername+"' is offline and unauthed, and so can't be promoted.");
-                }
+		if (!userid) return this.parse('/help roompromote');
+		if (!targetUser && (!room.auth || !room.auth[userid])) {
+			return this.sendReply("User '" + name + "' is offline and unauthed, and so can't be promoted.");
+		}
 
-                var nextGroup = target || Users.getNextGroupSymbol(currentGroup, cmd === 'roomdemote', true);
-                if (target === 'deauth') nextGroup = Config.groupsranking[0];
-                if (!Config.groups[nextGroup]) {
-                        return this.sendReply('Group \'' + nextGroup + '\' does not exist.');
-                }
-                if (currentGroup !== ' ' && !user.can('room'+Config.groups[currentGroup].id, null, room)) {
-                        return this.sendReply('/' + cmd + ' - Access denied for promoting from '+Config.groups[currentGroup].name+'.');
-                }
-                if (nextGroup !== ' ' && !user.can('room'+Config.groups[nextGroup].id, null, room)) {
-                        return this.sendReply('/' + cmd + ' - Access denied for promoting to '+Config.groups[nextGroup].name+'.');
-                }
-                if (currentGroup === nextGroup) {
-                        return this.sendReply("User '"+this.targetUsername+"' is already a "+(Config.groups[nextGroup].name || 'regular user')+" in this room.");
-                }
-                if (Config.groups[nextGroup].globalonly) {
-                        return this.sendReply("The rank of "+Config.groups[nextGroup].name+" is global-only and can't be room-promoted to.");
-                }
-                targetUserGroup = ' ';
-                if (Users.usergroups[userid]) {
-					targetUserGroup = Users.usergroups[userid].substr(0,1);
-				}
-                if (Config.groups[nextGroup].rank < Config.groups[targetUserGroup].rank && room.isOfficial && Config.groups[nextGroup].rank > 0) return this.sendReply(name+' is a Global '+Config.groups[targetUserGroup].name+' and can not be demoted to a lower room rank.');
+		var currentGroup = ((room.auth && room.auth[userid]) || ' ')[0];
+		var nextGroup = target || Users.getNextGroupSymbol(currentGroup, cmd === 'roomdemote', true);
+		if (target === 'deauth') nextGroup = Config.groupsranking[0];
+		if (!Config.groups[nextGroup]) {
+			return this.sendReply("Group '" + nextGroup + "' does not exist.");
+		}
 
-                var isDemotion = (Config.groups[nextGroup].rank < Config.groups[currentGroup].rank);
-                var groupName = (Config.groups[nextGroup].name || nextGroup || '').trim() || 'a regular user';
+		if (Config.groups[nextGroup].globalonly) {
+			return this.sendReply("Group 'room" + Config.groups[nextGroup].id + "' does not exist as a room rank.");
+		}
 
-                if (nextGroup === ' ') {
-                        delete room.auth[userid];
-                } else {
-                        room.auth[userid] = nextGroup;
-                }
+		var groupName = Config.groups[nextGroup].name || "regular user";
+		if (currentGroup === nextGroup) {
+			return this.sendReply("User '" + name + "' is already a " + groupName + " in this room.");
+		}
+		if (currentGroup !== ' ' && !user.can('room' + Config.groups[currentGroup].id, null, room)) {
+			return this.sendReply("/" + cmd + " - Access denied for promoting from " + Config.groups[currentGroup].name + ".");
+		}
+		if (nextGroup !== ' ' && !user.can('room' + Config.groups[nextGroup].id, null, room)) {
+			return this.sendReply("/" + cmd + " - Access denied for promoting to " + Config.groups[nextGroup].name + ".");
+		}
 
-                if (isDemotion) {
-                        this.addModCommand(''+name+' was appointed to Room ' + groupName + ' by '+user.name+'.');
-                        if (targetUser) {
-                                targetUser.popup('You were appointed to Room ' + groupName + ' by ' + user.name + '.');
-                        }
-                } else {
-                        this.addModCommand(''+name+' was appointed to Room ' + groupName + ' by '+user.name+'.');
-                }
-                if (targetUser) {
-                        targetUser.updateIdentity();
-                }
-                if (room.chatRoomData) {
-                        Rooms.global.writeChatRoomData();
-                }
-        },
+		if (nextGroup === ' ') {
+			delete room.auth[userid];
+		} else {
+			room.auth[userid] = nextGroup;
+		}
+
+		if (Config.groups[nextGroup].rank < Config.groups[currentGroup].rank) {
+			this.privateModCommand("(" + name + " was demoted to Room " + groupName + " by " + user.name + ".)");
+			if (targetUser) targetUser.popup("You were demoted to Room " + groupName + " by " + user.name + ".");
+		} else if (nextGroup === '#') {
+			this.addModCommand("" + name + " was promoted to " + groupName + " by " + user.name + ".");
+		} else {
+			this.addModCommand("" + name + " was promoted to Room " + groupName + " by " + user.name + ".");
+		}
+
+		if (targetUser) targetUser.updateIdentity();
+		if (room.chatRoomData) Rooms.global.writeChatRoomData();
+	},
 	
 	lockroom: function(target, room, user) {
 		if (!room.auth) {
@@ -695,11 +688,11 @@ var commands = exports.commands = {
 		if (!targetRoom) {
 			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
 		}
-		/*if (targetRoom.lockedRoom === true) {
-			if ((!targetRoom.auth[user.userid]) || (user.can('promote'))) {
+		if (targetRoom.lockedRoom === true) {
+			if ((!targetRoom.auth[user.userid]) || (!user.can('promote')) {
 				return connection.sendTo(target, "|noinit|joinfailed|The room '" +target+ "' is currently locked.");
 			}
-		}*/
+		}
 		if (targetRoom.isPrivate) {
 			if (targetRoom.modjoin) {
 				var userGroup = user.group;
@@ -718,7 +711,7 @@ var commands = exports.commands = {
 			return connection.sendTo(target, "|noinit|joinfailed|The room '" + target + "' could not be joined.");
 		}
 		// Extra "unknown" rooms
-		/*if (target.toLowerCase() == "spamroom" && (!user.can('lock')) {
+		if (target.toLowerCase() == "spamroom" && (!user.can('lock')) {
 			return this.sendReply("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
 		if (target.toLowerCase() == "hs" && (!user.can('promote')) {
@@ -726,7 +719,7 @@ var commands = exports.commands = {
 		}
 		if (target.toLowerCase() == "bjsworld" && (!user.can('lockdown')) {
 			return this.sendReply("|noinit|nonexistent|The room '" +target+ "' does not exist.");
-		}*/
+		}
 	},
 
 	leave: 'part',
