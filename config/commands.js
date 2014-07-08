@@ -1268,6 +1268,15 @@ var commands = exports.commands = {
 			'</b></center>');
 	},
 	
+	mating: function(target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('<center><img src="http://i254.photobucket.com/albums/hh108/naten2006/oie_1944237QcDokLVq_zps0977c0b9.gif">' +
+			'<img src="http://i254.photobucket.com/albums/hh108/naten2006/cooltext1482514275_zps4e7ca2e6.png">' +
+			'<img src="http://www.pkparaiso.com/imagenes/xy/sprites/animados/kecleon.gif"><br />' +
+			'<b>Aces:</b> Uxie and Kecleon<br />' +
+			'<font color=purple>Maten (pronounced Matin\'): Now and Forever.</font></center>');
+	},
+	
 	fishy: 'piscean',
 	piscean: function(target, room, user) {
 		if (!this.canBroadcast()) return;
