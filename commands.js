@@ -1153,7 +1153,7 @@ var commands = exports.commands = {
 
 	htmldeclare: function (target, room, user) {
 		if (!target) return this.parse('/help htmldeclare');
-		if (!this.can('gdeclare', room)) return false;
+		if (!this.can('roommod', null, room)) return false;
 
 		if (!this.canTalk()) return;
 
