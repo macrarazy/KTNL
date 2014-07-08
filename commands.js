@@ -724,9 +724,9 @@ var commands = exports.commands = {
 		if (target.toLowerCase() == "hs" && (!user.can('promote')) {
 			return this.sendReply("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
-		/*if (target.toLowerCase() == "bjsworld" && (!user.can('')) {
+		if (target.toLowerCase() == "bjsworld" && (!user.can('lockdown')) {
 			return this.sendReply("|noinit|nonexistent|The room '" +target+ "' does not exist.");
-		}*/
+		}
 	},
 
 	leave: 'part',
