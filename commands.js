@@ -695,11 +695,11 @@ var commands = exports.commands = {
 		if (!targetRoom) {
 			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
 		}
-		if (targetRoom.lockedRoom === true) {
+		/*if (targetRoom.lockedRoom === true) {
 			if ((!targetRoom.auth[user.userid]) || (user.can('promote'))) {
 				return connection.sendTo(target, "|noinit|joinfailed|The room '" +target+ "' is currently locked.");
 			}
-		}
+		}*/
 		if (targetRoom.isPrivate) {
 			if (targetRoom.modjoin) {
 				var userGroup = user.group;
@@ -718,7 +718,7 @@ var commands = exports.commands = {
 			return connection.sendTo(target, "|noinit|joinfailed|The room '" + target + "' could not be joined.");
 		}
 		// Extra "unknown" rooms
-		if (target.toLowerCase() == "spamroom" && (!user.can('lock')) {
+		/*if (target.toLowerCase() == "spamroom" && (!user.can('lock')) {
 			return this.sendReply("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
 		if (target.toLowerCase() == "hs" && (!user.can('promote')) {
@@ -726,7 +726,7 @@ var commands = exports.commands = {
 		}
 		if (target.toLowerCase() == "bjsworld" && (!user.can('lockdown')) {
 			return this.sendReply("|noinit|nonexistent|The room '" +target+ "' does not exist.");
-		}
+		}*/
 	},
 
 	leave: 'part',
