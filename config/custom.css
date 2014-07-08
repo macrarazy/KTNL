@@ -11,6 +11,7 @@
 
 .chat-log{
     background: url('http://i.imgur.com/MK1U1Zq.png?1') top right no-repeat;
+    opacity: 1 !important;
 }
 body{
         background: url('http://i.imgur.com/nsHwcC2.jpg') !important;
@@ -18,7 +19,7 @@ body{
 }
 .menugroup .button{
   /*background: -webkit-linear-gradient(#8dd049, #65b119) !important;/*Prevents color from changing when mouse is down & away*/
-  background: -o-linear-gradient(#8dd049, #65b119) !important;
+ /* background: -o-linear-gradient(#8dd049, #65b119) !important;
   background: -moz-linear-gradient(#8dd049, #65b119) !important;
   background: linear-gradient(#8dd049, #65b119) !important;*/
   background: #8dd049;
