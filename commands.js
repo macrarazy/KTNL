@@ -577,7 +577,7 @@ var commands = exports.commands = {
 		if (room.chatRoomData) Rooms.global.writeChatRoomData();
 	},
 	
-	roomdemote: function (target, room, user, connection) {
+	roomdeauth: function (target, room, user, connection) {
 		return this.parse('/roomdemote ' + target + ', deauth');
 	},
 
