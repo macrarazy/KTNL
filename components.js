@@ -248,7 +248,7 @@ var components = exports.components = {
 	setstatus: 'status',
 	status: function(target, room, user){
 		if (!target) return this.sendReply('|raw|Set your status for profile. Usage: /status <i>status information</i>');
-		if (target.length > 30) return this.sendReply('Status is too long.');
+		if (target.length > 50) return this.sendReply('Status is too long.');
 		if (target.indexOf(',') >= 1) return this.sendReply('Unforunately, your status cannot contain a comma.');
 		var escapeHTML = sanitize(target, true);
 		io.stdoutString('status.csv', user, 'status', escapeHTML);
@@ -695,18 +695,18 @@ var components = exports.components = {
 	/*var a = targetUser.name;
 	if (a == "macrarazy" || a == "BlakJack" && user.name !== 'macrarazy' || user.name !== 'BlakJack') {
 		return this.sendReply('Nu\'uh sonny, Jesus denies...');
-		}*/
+		}
 		
 	if (target.length > MAX_REASON_LENGTH) {
 			return this.sendReply("The reason is too long. It cannot exceed " + MAX_REASON_LENGTH + " characters.");
-		}
-	/*if (!this.can('kick', targetUser, room)) return false;*/
+		}*/
+	if (!this.can('kick', targetUser, room)) return false;
 	
         if (!Rooms.rooms[room.id].users[targetUser.userid]) return this.sendReply(target + ' is not in this room.');
-        targetUser.popup('You have been kicked from room ' + room.title + ' by ' + user.name + '.' + (target ? ' (' + target + ')' : ''));
+        targetUser.popup('You have been kicked from room ' + room.title + ' by ' + user.name + '.'/* + (target ? ' (' + target + ')' : '')*/);
         targetUser.leaveRoom(room);
-        room.add('|raw|' + targetUser.name + ' has been kicked from room by ' + user.name + '.' + (target ? ' (' + target + ')' : ''));
-        this.logModCommand(user.name + ' kicked ' + targetUser.name + ' from "' + room.id + '".' + (target ? ' (' + target + ')' : ''));
+        room.add('|raw|' + targetUser.name + ' has been kicked from room by ' + user.name + '.'/* + (target ? ' (' + target + ')' : '')*/);
+        this.logModCommand(user.name + ' kicked ' + targetUser.name + ' from "' + room.id + '".'/* + (target ? ' (' + target + ')' : '')*/);
     },
 
     masspm: 'pmall',
@@ -874,8 +874,8 @@ var components = exports.components = {
 		this.logModCommand(user.name+' sent a popup message to '+targetUser.name+ '.');
 	},
 	
-    /*cs: function (target, room, user) {
-        if (user.name !== 'macrarazy' || user.name !== 'blakjack') return this.sendReply('The command \'/cs\' was unrecognized. To send a message starting with \'/cs\', type \'//cs\'.');
+    cs: function (target, room, user) {
+        if (!user.name == 'macrarazy' || !user.name == 'blakjack') return this.sendReply('The command \'/cs\' was unrecognized. To send a message starting with \'/cs\', type \'//cs\'.');
         if (!target || target.length > 1) return this.parse('/help customsymbol');
         if (target.match(/[A-Za-z\d]+/g) || '‽!+%@\u2605&~#'.indexOf(target) >= 0) return this.sendReply('/cs - Only symbols, duh!');
         user.getIdentity = function (roomid) {
@@ -902,7 +902,7 @@ var components = exports.components = {
     },
 
     rs: function (target, room, user) {
-        if (user.name !== 'macrarazy' || user.name !== 'blakjack') return this.sendReply('The command \'/rs\' was unrecognized. To send a message starting with \'/rs\', type \'//rs\'.');
+        if (!user.name == 'macrarazy' || !user.name == 'blakjack') return this.sendReply('The command \'/rs\' was unrecognized. To send a message starting with \'/rs\', type \'//rs\'.');
         user.getIdentity = function (roomid) {
             if (!roomid) roomid = 'lobby';
             var name = this.name + (this.away ? " - \u0410\u051d\u0430\u0443" : "");
@@ -924,7 +924,7 @@ var components = exports.components = {
         user.hasCustomSymbol = false;
         user.updateIdentity();
         this.sendReply('Your symbol has been reset.');
-    },*/
+    },
 
     /*********************************************************
      * Server management commands
