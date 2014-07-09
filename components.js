@@ -622,10 +622,10 @@ var components = exports.components = {
         var giveMoney = Number(cleanedUp);
         if (giveMoney === 1) b = 'buck';
 
-        var money = Core.stdin('money', targetUser.userid);
+        var money = Core.stdin('money.csv', targetUser.userid);
         var total = Number(money) + Number(giveMoney);
 
-        Core.stdout('money', targetUser.userid, total);
+        Core.stdout('money.csv', targetUser.userid, total);
 
         this.sendReply(targetUser.name + ' was given ' + giveMoney + ' ' + b + '. This user now has ' + total + ' bucks.');
         targetUser.send(user.name + ' has given you ' + giveMoney + ' ' + b + '. You now have ' + total + ' bucks.');
@@ -653,10 +653,10 @@ var components = exports.components = {
         var takeMoney = Number(cleanedUp);
         if (takeMoney === 1) b = 'buck';
 
-        var money = Core.stdin('money', targetUser.userid);
+        var money = Core.stdin('money.csv', targetUser.userid);
         var total = Number(money) - Number(takeMoney);
 
-        Core.stdout('money', targetUser.userid, total);
+        Core.stdout('money.csv', targetUser.userid, total);
 
         this.sendReply(targetUser.name + ' has losted ' + takeMoney + ' ' + b + '. This user now has ' + total + ' bucks.');
         targetUser.send(user.name + ' has taken ' + takeMoney + ' ' + b + ' from you. You now have ' + total + ' bucks.');
