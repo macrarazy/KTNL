@@ -537,7 +537,7 @@ var commands = exports.commands = {
 		}
 
 		var currentGroup = ((room.auth && room.auth[userid]) || ' ')[0];
-		var nextGroup = target || Users.getNextGroupSymbol(currentGroup, cmd === 'roomdemote', true);
+		var nextGroup = target || Users.getNextGroupSymbol(currentGroup, cmd == 'roomdemote', true);
 		if (target === 'deauth') nextGroup = Config.groupsranking[0];
 		if (!Config.groups[nextGroup]) {
 			return this.sendReply("Group '" + nextGroup + "' does not exist.");
