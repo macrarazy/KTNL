@@ -250,6 +250,7 @@ exports.groups = {
 			tell: true,
 			promote: 'u',
 			rangeban: true,
+			makeroom: true
 		},
 		'#': {
 			id: 'owner',
