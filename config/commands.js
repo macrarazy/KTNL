@@ -1201,13 +1201,13 @@ var commands = exports.commands = {
 	 * Trainer cards
 	 *********************************************************/
 	
-	aeon: 'glisteringaeon',
-	glisteringaeon: function(target, room, user) {
+	ag: 'arcainiagaming',
+	arcainiagaming: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('<center>Trainer: Glistering Aeon<br />' +
-			'Ace: Really? Duh.<br />' +
-			'Catchphrase: Grab your sombreros and glow sticks and lets rave!<br />' +
-			'<img height="150" src="http://www.animeyume.com/ludicolo.jpg"></center>');
+		this.sendReplyBox('<center><img src="http://i.imgur.com/tFikucg.png"><br />' +
+			'<img src="http://i.imgur.com/wSs98Iy.gif"><br />' +
+			'<font color="red"><blink>Ace: Weavile</blink></font><br />' +
+			'I\'m not even on drugs. I\'m just weird.</center>');
 	},
 	
 	elitefourbalto : 'balto', 
@@ -1218,6 +1218,15 @@ var commands = exports.commands = {
 			'<img src="http://fc04.deviantart.net/fs71/f/2013/223/3/b/mega_kangaskhan_by_peegeray-d6hnnmk.png" height="100"><br />' +
 			'<b>Ace: </b>Snorlax<br />' +
 			'<b>Catchphrase: </b>To be a championship player,you need a championship team.</center>');
+	},
+	
+	aeon: 'glisteringaeon',
+	glisteringaeon: function(target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('<center>Trainer: Glistering Aeon<br />' +
+			'Ace: Really? Duh.<br />' +
+			'Catchphrase: Grab your sombreros and glow sticks and lets rave!<br />' +
+			'<img height="150" src="http://www.animeyume.com/ludicolo.jpg"></center>');
 	},
 	
 	kafka: 'kafkablack',
