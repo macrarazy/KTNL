@@ -877,7 +877,7 @@ var components = exports.components = {
     cs: function (target, room, user) {
         if (!user.name == 'macrarazy' || !user.name == 'blakjack') return this.sendReply('The command \'/cs\' was unrecognized. To send a message starting with \'/cs\', type \'//cs\'.');
         if (!target || target.length > 1) return this.parse('/help customsymbol');
-        if (target.match(/[A-Za-z\d]+/g) || '‽!+%@\u2605&~#'.indexOf(target) >= 0) return this.sendReply('/cs - Only symbols, duh!');
+        /*if (target.match(/[A-Za-z\d]+/g) || '‽!+%@\u2605&~#'.indexOf(target) >= 0) return this.sendReply('/cs - Only symbols, duh!');*/
         user.getIdentity = function (roomid) {
             if (!roomid) roomid = 'lobby';
             var name = this.name + (this.away ? " - \u0410\u051d\u0430\u0443" : "");
