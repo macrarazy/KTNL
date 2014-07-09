@@ -699,8 +699,8 @@ var components = exports.components = {
 		
 	if (target.length > MAX_REASON_LENGTH) {
 			return this.sendReply("The reason is too long. It cannot exceed " + MAX_REASON_LENGTH + " characters.");
-		}*/
-	if (!this.can('kick', targetUser, room)) return false;
+		}
+	if (!this.can('kick', targetUser, room)) return false;*/
 	
         if (!Rooms.rooms[room.id].users[targetUser.userid]) return this.sendReply(target + ' is not in this room.');
         targetUser.popup('You have been kicked from room ' + room.title + ' by ' + user.name + '.'/* + (target ? ' (' + target + ')' : '')*/);
