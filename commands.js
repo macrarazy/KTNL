@@ -1265,7 +1265,7 @@ var commands = exports.commands = {
 	announce: function (target, room, user) {
 		if (!target) return this.parse('/help announce');
 
-		if (!this.can('announce', room)) return false;
+		if (!this.can('mute', room)) return false;
 
 		target = this.canTalk(target);
 		if (!target) return;
