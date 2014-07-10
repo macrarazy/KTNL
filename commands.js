@@ -868,7 +868,7 @@ var commands = exports.commands = {
 		if (target.toLowerCase() == "bjsworld" && !user.can('sudo')) {
 			return connection.sendTo("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
-		if (target.toLowerCase() == "mating" && !user.name == 'macrarazy' || !user.name == 'naten2006' || !user.name == 'freelancermac' || !user.name == 'brittlewind' || !user.name == 'kafkablack') {
+		if (target.toLowerCase() == "mating" && !user.can('mating')) {
 			return connection.sendTo("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
 	},
