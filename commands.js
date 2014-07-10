@@ -868,7 +868,7 @@ var commands = exports.commands = {
 		if (target.toLowerCase() == "bjsworld" && !user.can('sudo')) {
 			return connection.sendTo("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
-		if (target.toLowerCase() == "mating" && !user.can('mating')) {
+		if (target.toLowerCase() == "mating" && !user.can('mate')) {
 			return connection.sendTo("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
 	},
