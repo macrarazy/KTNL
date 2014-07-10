@@ -837,7 +837,7 @@ var commands = exports.commands = {
 			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
 		}
 		if (targetRoom.lockedRoom === true) {
-			if ((!targetRoom.auth[user.userid]) || !user.isStaff) {
+			if ((!targetRoom.auth[user.userid]) || (!user.isStaff)) {
 				return connection.sendTo(target, "|noinit|joinfailed|The room '" +target+ "' is currently locked.");
 			}
 		}
@@ -860,13 +860,16 @@ var commands = exports.commands = {
 		}
 		// Extra "unknown" rooms
 		if (target.toLowerCase() == "spamroom" && !user.can('lock')) {
-			return this.sendReply("|noinit|nonexistent|The room '" +target+ "' does not exist.");
+			return connection.sendTo("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
 		if (target.toLowerCase() == "hs" && !user.can('promote')) {
-			return this.sendReply("|noinit|nonexistent|The room '" +target+ "' does not exist.");
+			return connection.sendTo("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
 		if (target.toLowerCase() == "bjsworld" && !user.can('sudo')) {
-			return this.sendReply("|noinit|nonexistent|The room '" +target+ "' does not exist.");
+			return connection.sendTo("|noinit|nonexistent|The room '" +target+ "' does not exist.");
+		}
+		if (target.toLowerCase() = "mating" && !user.name == 'macrarazy' || !user.name == 'naten2006' || !user.name == 'freelancermac' || !user.name == 'brittlewind' || !user.name == 'kafkablack') {
+			return connection.sendTo("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
 	},
 
