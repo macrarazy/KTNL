@@ -687,7 +687,7 @@ var commands = exports.commands = {
 			return this.sendReply('/unlockroom - Access denied.');
 		}
 		room.lockedRoom = false;
-		this.parse('/modchat +');
+		this.parse('/modchat off');
 		this.addModCommand(user.name + ' has unlocked the room.');
 	},
 
