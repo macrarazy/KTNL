@@ -1466,7 +1466,7 @@ var commands = exports.commands = {
 	},
 	
 	mate: function (target, room, user) {
-		if (!this.isStaff) && (user.name == 'macrarazy' || user.name == 'kafkablack' || user.name == 'freelancermac' || user.name == 'brittlewind' || user.name == 'naten2006') return;
+		if (!this.isStaff && user.name == 'macrarazy' || user.name == 'kafkablack' || user.name == 'freelancermac' || user.name == 'brittlewind' || user.name == 'naten2006') return;
 		this.sendReply('/mate - You are now recognized. You will shortly join it, have fun!');
 		this.parse('/join mating');
 	},
