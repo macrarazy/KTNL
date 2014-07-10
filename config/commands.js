@@ -1229,6 +1229,18 @@ var commands = exports.commands = {
 			'<img height="150" src="http://www.animeyume.com/ludicolo.jpg"></center>');
 	},
 	
+	sss: 'isawa',
+	kurushi: 'isawa',
+	piers: 'isawa',
+	isawa: function(target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('<center><img src="http://i.imgur.com/hwqR2b8.jpg" width="160" height="140">' +
+			'<img src="http://i.imgur.com/qZvvpNG.png?1" width="220">' +
+			'<img src="http://farm3.static.flickr.com/2755/4122651974_353e4287e8.jpg" width="160" height="130"><br />' +
+			'<b>Ace:</b> Piers Nivans<br />' +
+			'Rub-a-dub-dub, Isawa be in your tub</center>');
+	},
+	
 	kafka: 'kafkablack',
 	kafkablack: function(target, room, user) {
 		if (!this.canBroadcast()) return false;
