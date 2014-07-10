@@ -664,29 +664,31 @@ var commands = exports.commands = {
 		if (voices.length > 0) {
 			voices = voices.join(', ');
 		}
-		connection.popup('Founder: '+founder+'\nOwners: \n'+owners+'\nModerators: \n'+mods+'\nDrivers: \n'+drivers+'\nVoices: \n'+voices);
+		connection.popup('Room Founder: '+founder+'\n\nRoom Owners (#): \n'+owners+'\n\nRoom Moderators (@): \n'+mods+'\n\nRoom Drivers (%): \n'+drivers+'\n\nRoom Voices (+): \n'+voices);
 	},
 
 	lockroom: function(target, room, user) {
 		if (!room.auth) {
 			return this.sendReply("Only unofficial chatrooms can be locked.");
 		}
-		if (!room.auth[user.userid] === '#' && user.group != '~') {
+		if (room.auth[user.userid] != '#' && user.group != '~') {
 			return this.sendReply('/lockroom - Access denied.');
 		}
 		room.lockedRoom = true;
-		this.add(user.name + ' has locked the room.');
+		this.parse('/modchat +');
+		this.addModCommand(user.name + ' has locked the room.');
 	},
 
 	unlockroom: function(target, room, user) {
 		if (!room.auth) {
 			return this.sendReply("Only unofficial chatrooms can be unlocked.");
 		}
-		if (!room.auth[user.userid] === '#' && user.group != '~') {
+		if (room.auth[user.userid] != '#' && user.group != '~') {
 			return this.sendReply('/unlockroom - Access denied.');
 		}
 		room.lockedRoom = false;
-		this.add(user.name + ' has unlocked the room.');
+		this.parse('/modchat +');
+		this.addModCommand(user.name + ' has unlocked the room.');
 	},
 
 	/*roomauth: function (target, room, user, connection) {
@@ -835,7 +837,7 @@ var commands = exports.commands = {
 			return connection.sendTo(target, "|noinit|nonexistent|The room '" + target + "' does not exist.");
 		}
 		if (targetRoom.lockedRoom === true) {
-			if ((!targetRoom.auth[user.userid]) || !user.can('promote')) {
+			if ((!targetRoom.auth[user.userid]) || !user.isStaff) {
 				return connection.sendTo(target, "|noinit|joinfailed|The room '" +target+ "' is currently locked.");
 			}
 		}
@@ -863,7 +865,7 @@ var commands = exports.commands = {
 		if (target.toLowerCase() == "hs" && !user.can('promote')) {
 			return this.sendReply("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
-		if (target.toLowerCase() == "bjsworld" && !user.can('lockdown')) {
+		if (target.toLowerCase() == "bjsworld" && !user.can('sudo')) {
 			return this.sendReply("|noinit|nonexistent|The room '" +target+ "' does not exist.");
 		}
 	},
