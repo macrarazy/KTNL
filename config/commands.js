@@ -1327,11 +1327,10 @@ var commands = exports.commands = {
 	receptionist147: 'recep',
 	recep: function(target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.sendReplyBox('<center><img src="http://i.imgur.com/4xzLvzV.gif">' +
-			'<img src="http://i.imgur.com/48CvnKv.gif" height="80" width="290">' +
-			'<img src=http://i.imgur.com/4xzLvzV.gif><br />' +
-			'<b>Ace:</b> Patrick<br />' +
-			'<b>Catchphrase:</b> I may be stupid, but I\'m also dumb.<center>');
+		this.sendReplyBox('<center><img src="http://i.imgur.com/48CvnKv.gif" height="80" width="440"></center><br />' +
+			'<center><center><img src="http://gifstumblr.com/images/the-party-doesnt-start-till-i-walk-in_1087.gif" height="264" width="486"></center><br />' +
+			'<center><b>Ace:</b> Patrick</center><br />' +
+			'<center><b>Catchphrase:</b> KafkaBlack has been kicked from room by Receptionist147.</center>');
 	},
 	
 	shofu: function(target, room, user) {
