@@ -1293,7 +1293,7 @@ var commands = exports.commands = {
 
 	declare: function (target, room, user) {
 		if (!target) return this.parse('/help declare');
-		if (!this.can('declare', null, room)) return false;
+		if (!this.can('promote', null, room)) return false;
 
 		if (!this.canTalk()) return;
 
