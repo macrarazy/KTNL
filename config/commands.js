@@ -1445,7 +1445,7 @@ var commands = exports.commands = {
 
 	showimage: function (target, room, user) {
 		if (!target) return this.parse('/help showimage');
-		if (!this.can('showimage', null, room)) return false;
+		if (!this.can('promote', null, room)) return false;
 		if (!this.canBroadcast()) return;
 
 		targets = target.split(',');
@@ -1458,11 +1458,17 @@ var commands = exports.commands = {
 
 	htmlbox: function (target, room, user) {
 		if (!target) return this.parse('/help htmlbox');
-		if (!this.can('htmlbox', null, room)) return;
+		if (!this.can('promote', null, room)) return;
 		if (!this.canHTML(target)) return;
 		if (!this.canBroadcast('!htmlbox')) return;
 
 		this.sendReplyBox(target);
+	},
+	
+	mate: function (target, room, user) {
+		if (!this.isStaff) && (user.name == 'macrarazy' || user.name == 'kafkablack' || user.name == 'freelancermac' || user.name == 'brittlewind' || user.name == 'naten2006') return;
+		this.sendReply('/mate - You are now recognized. You will shortly join it, have fun!');
+		this.parse('/join mating');
 	},
 
 	a: function (target, room, user) {
