@@ -18,6 +18,9 @@ body{
         background: url('http://i.imgur.com/nsHwcC2.jpg') !important;
         background-size: contain;
 }
+.userlist li em.group {
+	color:#556b2f;
+}
 .menugroup .button{
   /*background: -webkit-linear-gradient(#8dd049, #65b119) !important;/*Prevents color from changing when mouse is down & away*/
  /* background: -o-linear-gradient(#8dd049, #65b119) !important;
