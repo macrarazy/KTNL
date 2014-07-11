@@ -872,6 +872,14 @@ var commands = exports.commands = {
 					// this is a really basic and inefficient way of doing it but it illustrates how to do it
 	},
 	
+	hex: function (target, room, user) {
+		if (!target || target.indexOf('#') < 0 && this.canBroadcast()) return this.sendReply('/hex - Invalid code.');
+		var verify = /^#[0-9A-F]{6}$/i;
+		if (verify.test(target)) {
+			this.sendReplyBox('|html|<center><b><font size="c" color="' + target + '">' + target + '</font></b><br /><font size=1>' + user.name + ' did this!</font></center>');
+		};
+	},
+	
 	/*megas: function (target, room, user) {
 		if (!this.canBroadcast()) return;
 		this.sendReply('|raw| <center><table border="1" style="width:300px"><tr><td><b>NAME</b></td><td><b>STATS</b></td><td><b>ABILITY</b></tr>' +
