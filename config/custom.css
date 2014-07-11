@@ -10,9 +10,9 @@
  
 
 .chat-log{
-    /*background: url('http://i.imgur.com/MK1U1Zq.png?1') top right no-repeat;
-    background: url('http://i.imgur.com/d5eRwZB.png');*/
-    background: url('http://i.imgur.com/1DwA7IV.png);
+    /*background: url('http://i.imgur.com/MK1U1Zq.png?1') top right no-repeat;*/
+    background: url('http://i.imgur.com/d5eRwZB.png');
+    /*background: url('http://i.imgur.com/1DwA7IV.png);*/
     opacity: 1 !important;
 }
 body{
