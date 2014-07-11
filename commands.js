@@ -1290,14 +1290,6 @@ var commands = exports.commands = {
 			Rooms.global.writeChatRoomData();
 		}
 	},
-	
-	hex: function (target, room, user) {
-		if(!target || target.indexOf('#') < 0) return this.sendReply('Invalid Hex Code');
-		var verify = /^#[0-9A-F]{6}$/i;
-		if(verify.test(target)){
-			this.sendReplyBox('<center><b><font size="5" color="' + target + '">' + target + '</font></b></center>');
-		};
-	},
 
 	declare: function (target, room, user) {
 		if (!target) return this.parse('/help declare');
