@@ -876,7 +876,7 @@ var commands = exports.commands = {
 		if (!target || target.indexOf('#') < 0 && this.canBroadcast()) return this.sendReply('/hex - Invalid code.');
 		var verify = /^#[0-9A-F]{6}$/i;
 		if (verify.test(target)) {
-			this.sendReplyBox('|html|<center><b><font size="c" color="' + target + '">' + target + '</font></b><br /><font size=1>' + user.name + ' did this!</font></center>');
+			this.sendReplyBox('<center><b><font size="3" color="' + target + '">' + target + '</font></b><br /><font size=1>' + user.name + ' did this!</font></center>');
 		};
 	},
 	
