@@ -684,15 +684,30 @@ var components = exports.components = {
         user.updateIdentity();
         this.sendReply('You have hidden your staff symbol.');
     },
-
+    
+    k: 'kick',
     kick: function (target, room, user) {
+ 	if (!this.can('kick')) return;
+ 	if (!target) return this.parse('/help kick');
+ 	
+ 	var targetUser = Users.get(target);
+ 	if (!targetUser || !targetUser.connected) return this.sendReply('User '+target+' could not be found.');
+ 	
+ 	if (!Rooms.rooms[room.id].users[targetUser.userid]) return this.sendReply(target+' is not in this room.');
+ 	targetUser.popup('You have been kicked from room '+ room.title +' by '+user.name+'.');
+ 	targetUser.leaveRoom(room);
+ 	room.add('|raw|'+ targetUser.name + ' has been kicked from room by '+ user.name + '.');
+ 	this.logModCommand(user.name + ' kicked ' + targetUser.name + ' from "' + room.id + '".');
+    },
+
+    /*kick: function (target, room, user) {
         if (!this.can('kick')) return;
         if (!target) return this.parse('/help kick');
 
         target = this.splitTarget(target);
         var targetUser = this.targetUser;
         if (!targetUser || !targetUser.connected) return this.sendReply("User '" + this.targetUsername + "' could not be found.");
-	/*var a = targetUser.name;
+	var a = targetUser.name;
 	if (a == "macrarazy" || a == "BlakJack" && user.name !== 'macrarazy' || user.name !== 'BlakJack') {
 		return this.sendReply('Nu\'uh sonny, Jesus denies...');
 		}
@@ -700,14 +715,14 @@ var components = exports.components = {
 	if (target.length > MAX_REASON_LENGTH) {
 			return this.sendReply("The reason is too long. It cannot exceed " + MAX_REASON_LENGTH + " characters.");
 		}
-	if (!this.can('kick', targetUser, room)) return false;*/
+	if (!this.can('kick', targetUser, room)) return false;
 	
         if (!Rooms.rooms[room.id].users[targetUser.userid]) return this.sendReply(target + ' is not in this room.');
-        targetUser.popup('You have been kicked from room ' + room.title + ' by ' + user.name + '.'/* + (target ? ' (' + target + ')' : '')*/);
+        targetUser.popup('You have been kicked from room ' + room.title + ' by ' + user.name + '.');
         targetUser.leaveRoom(room);
-        room.add('|raw|' + targetUser.name + ' has been kicked from room by ' + user.name + '.'/* + (target ? ' (' + target + ')' : '')*/);
-        this.logModCommand(user.name + ' kicked ' + targetUser.name + ' from "' + room.id + '".'/* + (target ? ' (' + target + ')' : '')*/);
-    },
+        room.add('|raw|' + targetUser.name + ' has been kicked from room by ' + user.name + '.');
+        this.logModCommand(user.name + ' kicked ' + targetUser.name + ' from "' + room.id + '".');
+    },*/
 
     masspm: 'pmall',
     pmall: function (target, room, user) {
