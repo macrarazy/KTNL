@@ -868,7 +868,7 @@ var commands = exports.commands = {
 					if (!p.isMega) continue;
 					if (Tools.getTemplate(p.baseSpecies).gen === gen) results.push(p.species);
 					}
-			if (target == 'kanto') {
+			/*if (target == 'kanto') {
 				return this.sendReply('|raw| <center><table border="1" style="width:300px"><tr><td><b>NAME</b></td><td><b>STATS</b></td><td><b>ABILITY</b></tr>' +
 			  	'<tr><td><a href="http://www.serebii.net/pokedex-xy/003.shtml#mega">Mega Venusaur</a></td><td><font color=grey>HP - Atk - Def - SpA - SpD - Spe</font><br />80 - 100 - 123 - 122 - 120 - 80</td><td>Thick Fat</td></tr>' +
 			  	'<tr><td><a href="http://www.serebii.net/pokedex-xy/006.shtml#mega">Mega Charizard X</a></td><td><font color=grey>HP - Atk - Def - SpA - SpD - Spe</font><br />78 - 130 - 111 - 130 - 85 - 100</td><td>Tough Claws</td></tr>' +
@@ -883,7 +883,7 @@ var commands = exports.commands = {
 			  	'<tr><td><a href="http://www.serebii.net/pokedex-xy/150.shtml#mega">Mega Mewtwo X</a></td><td><font color=grey>HP - Atk - Def - SpA - SpD - Spe</font><br />106 - 190 - 100 - 154 - 100 - 130</td><td>Steadfast</td></tr>' +
 			  	'<tr><td><a href="http://www.serebii.net/pokedex-xy/150.shtml#mega">Mega Mewtwo Y</a></td><td><font color=grey>HP - Atk - Def - SpA - SpD - Spe</font><br />106 - 150 - 70 - 194 - 120 - 140</td><td>Insomnia</td></tr>' +
 			  	'</table>' +
-			  	'<b>Still in beta!</b></center>');
+			  	'<b>Still in beta!</b></center>');*/
 					// whatever post-processing you want here
 					// this is a really basic and inefficient way of doing it but it illustrates how to do it
 	},
