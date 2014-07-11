@@ -849,8 +849,16 @@ var commands = exports.commands = {
 	
 	megas: function (target, room, user) {
 		if (!this.canBroadcast()) return;
-		this.send('|raw| <table border="1" style="width:300px"><tr><td><b>SPRITE</b></td><td><b>NAME</b></td><td><b>STATS</b></td><td><b>ABILITY</b></tr>' +
-			'<tr><td><img src="http://play.pokemonshowdown.com/sprites/xyani/venusaur-mega.gif"></td><td>Mega Venusaur</td><td>80 - 100 - 123 - 122 - 120 - 80</td></td><td>Thick Fat</td></tr></table>');
+		this.send('|raw| <table border="1" style="width:300px"><tr><td><b>NAME</b></td><td><b>STATS</b></td><td><b>ABILITY</b></tr>' +
+			  '<tr><td><a href="http://www.serebii.net/pokedex-xy/003.shtml#mega">Mega Venusaur</a></td><td><font color=grey>HP - Atk - Def - SpA - SpD - Spe</font><br />80 - 100 - 123 - 122 - 120 - 80</td><td>Thick Fat</td></tr>' +
+			  '<tr><td><a href="http://www.serebii.net/pokedex-xy/006.shtml#mega">Mega Charizard X</a></td><td><font color=grey>HP - Atk - Def - SpA - SpD - Spe</font><br />78 - 130 - 111 - 130 - 85 - 100</td><td>Tough Claws</td></tr>' +
+			  '<tr><td><a href="#">Mega Charizard Y</a></td><td><font color=grey>HP - Atk - Def - SpA - SpD - Spe</font><br />78 - 104 - 78 - 159 - 115 - 100</td><td>Drought</td></tr>' +
+			  '<tr><td><a href="#">Mega Blastoise</a></td><td><font color=grey>HP - Atk - Def - SpA - SpD - Spe</font><br />79 - 103 - 120 - 135 - 115 - 78</td><td>Mega Launcher</td></tr>' +
+			  '<tr><td><a href="#">Mega Alakazam</a></td><td><font color=grey>HP - Atk - Def - SpA - SpD - Spe</font><br />55 - 50 - 65 - 175 - 95 - 150</td><td>Trace</td></tr>' +
+			  '<tr><td><a href="#">Mega Gengar</a></td><td><font color=grey>HP - Atk - Def - SpA - SpD - Spe</font><br />60 - 65 - 80 - 170 - 95 - 130</td><td>Shadow Tag</td></tr>' +
+			  '<tr><td><a href="#">Mega Kangaskhan</a></td><td><font color=grey>HP - Atk - Def - SpA - SpD - Spe</font><br />105 - 125 - 100 - 60 - 100 - 100</td><td>Parental Bond</td></tr>' +
+			  '</table>' +
+			  '<center><font size=3><b>Still in beta!</b></font></center>');
 	},
 
 	om: 'othermetas',
