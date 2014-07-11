@@ -855,7 +855,7 @@ var commands = exports.commands = {
 			hoenn: 3,
 			sinnoh: 4,
 			unova: 5,
-			kalos: 6
+			kalos: 6,
 			};
 			target = toId(target);
 			if (!aliases[target]) {
