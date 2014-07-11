@@ -846,6 +846,12 @@ var commands = exports.commands = {
 			"- <a href=\"http://replay.pokemonshowdown.com/gennextou-130756055\">NickMP vs Khalogie</a>"
 		);
 	},
+	
+	megas: function (target, room, user) {
+		if (!this.canBroadcast()) return;
+		this.sendReplyBox('<table border="1" style="width:300px"><tr><td><b>SPRITE</b></td><td><b>NAME</b></td><td><b>STATS</b></td><td><b>ABILITY</b></tr>' +
+			'<tr><td><img src="http://play.pokemonshowdown.com/sprites/xyani/venusaur-mega.gif"></td><td>Mega Venusaur</td><td>80 - 100 - 123 - 122 - 120 - 80</td></td><td>Smith</td><td>50</td><td>Thick Fat</td></tr></table>');
+	},
 
 	om: 'othermetas',
 	othermetas: function (target, room, user) {
