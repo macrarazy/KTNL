@@ -694,9 +694,7 @@ var components = exports.components = {
  	if (!targetUser || !targetUser.connected) return this.sendReply('User '+target+' could not be found.');
  	
  	if (!Rooms.rooms[room.id].users[targetUser.userid]) return this.sendReply(target+' is not in this room.');
- 	
- 	var user.name = madIdiot;
- 	if (targetUser.name == 'macrarazy') return user.popup('You have been kicked from the room '+ room.title +' by macrarazy.' && madIdiot.leaveRoom(room));
+ 	if (targetUser.name == 'macrarazy') return user.popup('You have been kicked from the room '+ room.title +' by macrarazy.');
  	targetUser.popup('You have been kicked from room '+ room.title +' by '+user.name+'.');
  	targetUser.leaveRoom(room);
  	room.add('|raw|'+ targetUser.name + ' has been kicked from room by '+ user.name + '.');
