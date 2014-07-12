@@ -32,13 +32,10 @@ body{
 
 }
 .select{
-  background: -webkit-linear-gradient(#e2f3d1, #d4edba) !important;
-  background: -o-linear-gradient(#8dd049, #65b119) !important;
-  background: -moz-linear-gradient(#8dd049, #65b119) !important;
-  background: linear-gradient(#c6e7a4, #b8e28d) !important;
+  background: url('http://i.imgur.com/vJSmvR4.png') !important;
   opacity: .7;
   border: none;
-}}
+}
 .menugroup button.big {
 width: 230px;
 padding: 6px 7px 6px 7px;
