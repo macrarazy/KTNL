@@ -20,23 +20,15 @@ body{
         background-size: contain;
 }
 .menugroup .button{
-  /*background: -webkit-linear-gradient(#8dd049, #65b119) !important;/*Prevents color from changing when mouse is down & away*/
- /* background: -o-linear-gradient(#8dd049, #65b119) !important;
-  background: -moz-linear-gradient(#8dd049, #65b119) !important;
-  background: linear-gradient(#8dd049, #65b119) !important;*/
-  background: #8dd049;
-  border: solid 1px  #437610;
+  background:url('http://i.imgur.com/ccjnsrM.png') !important;
   color: #e2f3d1;
   opacity: .9 !important;
 }
 .menugroup .button:hover{
-  /*background: -webkit-linear-gradient(#7fca32, #5a9d16) !important;
-  background: -o-linear-gradient(#7fca32, #5a9d16) !important;
-  background: -moz-linear-gradient(#7fca32, #5a9d16) !important;
-  background: linear-gradient(#7fca32, #5a9d16) !important;*/
-  background: #7fca32;
+  background: url('http://i.imgur.com/Mk3O2K2.png') !important;
   border: solid 1px  #437610;
   color: #e2f3d1;
+
 }
 .select{
   /*background: -webkit-linear-gradient(#e2f3d1, #d4edba) !important;
