@@ -891,6 +891,13 @@ var commands = exports.commands = {
 					// this is a really basic and inefficient way of doing it but it illustrates how to do it
 	},*/
 	
+	isak: function (target, room, user) {
+		if (!user.name == 'Ace Champ Tyga') return false;
+		this.parse('/join monotye');
+		this.parse('/roomunban macrarazy');
+		this.parse('/leave monotype');
+	},
+	
 	hex: function (target, room, user) {
 		if (!this.canBroadcast()) return;
 		if(!target){
