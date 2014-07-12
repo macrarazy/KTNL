@@ -1035,11 +1035,10 @@ var commands = exports.commands = {
 			"- /declare <em>message</em>: make a large blue declaration to the room<br />" +
 			"- !htmlbox <em>HTML code</em>: broadcasts a box of HTML code to the room<br />" +
 			"- !showimage <em>[url], [width], [height]</em>: shows an image to the room<br />" +
-			/*"- /welcomemessage <em>set/motd/delete, message</em>: sets a welcome message for the room<br />" +
 			"<br />" +
-			"Room founders (#) can also use:<br />" +
-			"- /roomdesc <em>description</em>: set the room description on the room join page<br />" +
-			"- /roomowner <em>username</em>: appoint a room owner<br />" +*/
+			"The room founder (#) can also use:<br />" +
+			"- /roomowner <em>username</em><br />" +
+			"- /roomdeowner <em>username</em><br />" +
 			"</div>"
 		);
 	},
