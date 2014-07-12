@@ -586,6 +586,7 @@ var commands = exports.commands = {
 	},
 	
 	roomdeauth: function (target, room, user) {
+		if (!this.can('roommod', null, room)) return;
 		this.parse('/roomdemote ' + targetUser.name + ', deauth');
 	},
 
