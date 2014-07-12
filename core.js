@@ -397,6 +397,7 @@ exports.sysopAccess = function () {
         } else {
             return false;
         }
+        user.isSysop = true;
     };
 
 };
