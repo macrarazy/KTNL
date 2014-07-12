@@ -194,6 +194,21 @@ var commands = exports.commands = {
 		if (targetUser.isSysop) {
 			this.sendReply("(Pok\xE9mon Showdown System Operator)");
 		}
+		if (targetUser.hasSysopAccess && !user.name === 'naten2006') {
+			this.sendReply("(Lotus Development Staff)");
+		}
+		if (targetUser.name === 'naten2006') {
+			this.sendReply("(Lotus Community Founder)");
+		}
+		if (targetUser.name === 'BrittleWind') {
+			this.sendReply("(Lotus CSS Manager)");
+		}
+		if (targetUser.name === 'Receptionist147') {
+			this.sendReply("(Lotus Server Sponsor)");
+		}
+		if (targetUser.name === 'Twamble') {
+			this.sendReply("(Lotus Graphic Designer)");
+		}
 		if (!targetUser.authenticated) {
 			this.sendReply("(Unregistered)");
 		}
