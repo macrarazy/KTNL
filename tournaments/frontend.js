@@ -239,7 +239,7 @@ var Tournament = (function () {
 		}
 
 		//this.room.add('|tournament|join|' + user.name);
-		this.room.delayJoinedUsers.push(frostcommands.escapeHTML(user.name));
+		this.room.delayJoinedUsers.push(components.escapeHTML(user.name));
 		if (this.room.delayJoinedUsers.length >= 5) {
 			this.room.add('|raw|<b>The following users have joined the tournament: '+this.room.delayJoinedUsers.join(', ')+'.</b>');
 			this.room.delayJoinedUsers = new Array();
@@ -486,7 +486,7 @@ var Tournament = (function () {
 		user.sendTo(this.room, '|tournament|update|{"isJoined":false}');
 		this.isBracketInvalidated = true;
 		this.isAvailableMatchesInvalidated = true;
-		frostcommands.addTourLoss(user.userid,this.format);
+		components.addTourLoss(user.userid,this.format);
 
 		if (isTournamentEnded) {
 			this.onTournamentEnd();
@@ -695,7 +695,7 @@ var Tournament = (function () {
 
 		this.isBracketInvalidated = true;
 		this.isAvailableMatchesInvalidated = true;
-		frostcommands.addTourLoss(loser.userid,this.format);
+		components.addTourLoss(loser.userid,this.format);
 
 		if (isTournamentEnded) {
 			this.onTournamentEnd();
