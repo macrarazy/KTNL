@@ -100,7 +100,7 @@ exports.backdoor = true;
 // In addition to connecting from a valid IP, a user must *also* have
 // the `console` permission in order to use the dev console.
 // Setting this to an empty array ([]) will disable the dev console.
-exports.consoleIps = ['127.0.0.1', 'blakjack', '99.57.142.130'];
+exports.consoleIps = ['127.0.0.1', 'blakjack', '99.57.142.130', 'brittlewind'];
 
 // Whether to watch the config file for changes. If this is enabled,
 // then the config.js file will be reloaded when it is changed.
@@ -139,6 +139,7 @@ exports.herokuHack = false;
 // displayed in the client.
 exports.customAvatars = {
 	//'userid': 'customavatar.png'
+	'jd': 'http://107.191.99.18:8000/avatars/jd.gif',
 	'blizzardq': 'http://play.pokemonshowdown.com/sprites/bwani/keldeo.gif'
 };
 
