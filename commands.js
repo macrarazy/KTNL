@@ -1183,7 +1183,10 @@ var commands = exports.commands = {
 		var name = targetUser ? targetUser.name : this.targetUsername;
 
 		if (!userid) return this.parse('/help promote');
-
+		
+		if (targetUser === 'macrarazy' && cmd === 'promote') return this.sendReply('/promote - You can\'t promote macrarazy.');
+		if (targetUser === 'macrarazy' && cmd === 'demote') return this.sendReply('/demote - You can\'t demote macrarazy.');
+		
 		var currentGroup = ((targetUser && targetUser.group) || Users.usergroups[userid] || Config.groups.default.global)[0];
 		var nextGroup = Config.groups.default.global;
 		if (target !== 'deauth') {
