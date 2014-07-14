@@ -194,9 +194,6 @@ var commands = exports.commands = {
 		if (targetUser.isSysop) {
 			this.sendReply("(Pok\xE9mon Showdown System Operator)");
 		}
-		if (Users.User.prototype.hasSysopAccess && !user.name === 'naten2006') {
-			this.sendReply("(Lotus Development Staff)");
-		}
 		if (targetUser.name === 'naten2006') {
 			this.sendReply("(Lotus Community Founder)");
 		}
