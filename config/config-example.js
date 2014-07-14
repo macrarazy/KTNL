@@ -139,6 +139,7 @@ exports.herokuHack = false;
 // displayed in the client.
 exports.customAvatars = {
 	//'userid': 'customavatar.png'
+	'blizzardq': 'http://play.pokemonshowdown.com/sprites/bwani/keldeo.gif'
 };
 
 // appealUri - specify a URI containing information on how users can appeal
